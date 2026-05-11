@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Play, ArrowLeft, Share2, Bookmark, MessageSquare, Twitter, Facebook, Link2 } from "lucide-react";
+import { Search, Play, ArrowLeft, Share2, Bookmark, MessageSquare, Send, Globe, Link2 } from "lucide-react";
 
 export default function ArticleDetail() {
   return (
@@ -135,11 +135,11 @@ export default function ArticleDetail() {
           
           <div className="flex items-center gap-3">
              <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest mr-2">Share</span>
-             <button className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#1da1f2] hover:border-[#1da1f2]/20 hover:bg-[#1da1f2]/5 transition-all cursor-pointer">
-               <Twitter className="w-4 h-4" />
+             <button className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:text-gray-900 hover:border-gray-900/20 hover:bg-gray-900/5 transition-all cursor-pointer">
+               <Send className="w-4 h-4" />
              </button>
-             <button className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#4267B2] hover:border-[#4267B2]/20 hover:bg-[#4267B2]/5 transition-all cursor-pointer">
-               <Facebook className="w-4 h-4" />
+             <button className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:text-gray-900 hover:border-gray-900/20 hover:bg-gray-900/5 transition-all cursor-pointer">
+               <Globe className="w-4 h-4" />
              </button>
              <button className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:text-gray-900 hover:border-gray-900/20 hover:bg-gray-900/5 transition-all cursor-pointer">
                <Link2 className="w-4 h-4" />
