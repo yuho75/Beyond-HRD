@@ -33,7 +33,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${nanumMyeongjo.variable} font-sans antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen`}
+        className={`${nanumMyeongjo.variable} font-body-md antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen`}
       >
         <Header />
         <main className="flex-grow flex flex-col items-center w-full">
