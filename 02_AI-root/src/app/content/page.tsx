@@ -22,10 +22,10 @@ export default function ContentPage() {
     <div className="font-body-md text-inverse-on-surface min-h-screen bg-[#131313] flex flex-col">
       {/* Top Navigation */}
       <header className="h-16 flex items-center justify-between px-container-padding-editorial max-w-7xl mx-auto w-full border-b border-white/10 sticky top-0 bg-[#131313]/80 backdrop-blur-md z-50">
-        <div className="flex-1 flex items-center gap-3">
-          <img src="/logo.png" alt="AI Root Logo" className="w-8 h-8 rounded" />
+        <a href="/" className="flex-1 flex items-center gap-3 cursor-pointer group">
+          <img src="/logo.png" alt="AI Root Logo" className="w-8 h-8 rounded group-hover:opacity-80 transition-opacity" />
           <span className="font-extrabold tracking-tight text-2xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
-        </div>
+        </a>
         
         <nav className="hidden lg:flex items-center gap-6">
           <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="/">Home</a>
@@ -44,7 +44,7 @@ export default function ContentPage() {
               type="text" 
             />
           </div>
-          <button className="font-technical-sm uppercase tracking-wider px-4 py-2 bg-[#FF6B00] text-white rounded hover:bg-[#e65a00] transition-transform active:scale-95">
+          <button className="font-technical-sm uppercase tracking-wider px-4 py-2 bg-[#FF6B00] text-white rounded hover:bg-[#e65a00] transition-transform active:scale-95 cursor-pointer">
             로그인
           </button>
           <UserCircle className="text-surface-variant cursor-pointer hover:text-white w-6 h-6" />
@@ -145,7 +145,7 @@ export default function ContentPage() {
             
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <button className="w-20 h-20 bg-emerald-tech rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform">
+              <button className="w-20 h-20 bg-emerald-tech rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform cursor-pointer">
                 <Play className="text-black fill-black w-8 h-8 ml-1" />
               </button>
             </div>
@@ -211,7 +211,7 @@ export default function ContentPage() {
               <div className="bg-[#1a1a1a] border border-white/5 rounded-2xl p-6">
                 <h3 className="font-technical-sm uppercase tracking-widest text-surface-variant mb-6">Resources</h3>
                 <div className="flex flex-col gap-3">
-                  <button className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:border-emerald-tech/30 transition-all group">
+                  <button className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:border-emerald-tech/30 transition-all group cursor-pointer">
                     <div className="flex items-center gap-3">
                       <FileText className="w-5 h-5 text-emerald-tech" />
                       <div className="text-left">
@@ -221,7 +221,7 @@ export default function ContentPage() {
                     </div>
                     <Download className="w-4 h-4 text-white/40 group-hover:text-emerald-tech" />
                   </button>
-                  <button className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:border-emerald-tech/30 transition-all group">
+                  <button className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:border-emerald-tech/30 transition-all group cursor-pointer">
                     <div className="flex items-center gap-3">
                       <Terminal className="w-5 h-5 text-blue-400" />
                       <div className="text-left">
@@ -239,7 +239,7 @@ export default function ContentPage() {
                 <p className="text-white/60 text-sm font-body-md mb-6">
                   Join our technical community to discuss this module with other engineers.
                 </p>
-                <button className="w-full py-3 bg-emerald-tech text-black rounded-lg font-technical-sm uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors">
+                <button className="w-full py-3 bg-emerald-tech text-black rounded-lg font-technical-sm uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors cursor-pointer">
                   <MessageSquare className="w-4 h-4" />
                   Ask Community
                 </button>

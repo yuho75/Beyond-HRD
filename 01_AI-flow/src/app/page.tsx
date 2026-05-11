@@ -25,10 +25,10 @@ export default function Home() {
       <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="AI-flow Logo" className="w-8 h-8 rounded" />
+            <a href="/" className="flex items-center gap-2 cursor-pointer group">
+              <img src="/logo.png" alt="AI-flow Logo" className="w-8 h-8 rounded group-hover:opacity-80 transition-opacity" />
               <h1 className="font-extrabold tracking-tight text-2xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AI-flow</h1>
-            </div>
+            </a>
             
             <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
               <a href="#" className="hover:text-gray-900 transition-colors">Politics</a>
@@ -41,10 +41,10 @@ export default function Home() {
           
           <div className="flex items-center gap-4">
             <Search className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-900" />
-            <button className="text-sm font-medium text-indigo-600 border border-indigo-200 px-4 py-1.5 rounded hover:bg-indigo-50 transition-colors">
+            <button className="text-sm font-medium text-indigo-600 border border-indigo-200 px-4 py-1.5 rounded hover:bg-indigo-50 transition-colors cursor-pointer">
               Login
             </button>
-            <button className="text-sm font-medium text-white bg-[#f97316] px-4 py-1.5 rounded hover:bg-[#ea580c] transition-colors shadow-sm">
+            <button className="text-sm font-medium text-white bg-[#f97316] px-4 py-1.5 rounded hover:bg-[#ea580c] transition-colors shadow-sm cursor-pointer">
               Subscribe
             </button>
           </div>
@@ -111,7 +111,7 @@ export default function Home() {
               placeholder="Your email address" 
               className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
             />
-            <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap">
+            <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
               Subscribe
             </button>
           </div>
@@ -121,7 +121,7 @@ export default function Home() {
         <section className="mt-4">
           <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-200">
             <h2 className="text-2xl font-bold text-gray-900">Latest Dispatches</h2>
-            <button className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">
+            <button className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors cursor-pointer">
               View All
             </button>
           </div>

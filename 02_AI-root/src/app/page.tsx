@@ -7,10 +7,10 @@ export default function Home() {
     <div className="font-body-md text-inverse-on-surface min-h-screen bg-[#131313] flex flex-col">
       {/* Top Navigation */}
       <header className="h-16 flex items-center justify-between px-container-padding-editorial max-w-7xl mx-auto w-full border-b border-white/10 sticky top-0 bg-[#131313]/80 backdrop-blur-md z-30">
-        <div className="flex-1 flex items-center gap-3">
-          <img src="/logo.png" alt="AI Root Logo" className="w-8 h-8 rounded" />
+        <a href="/" className="flex-1 flex items-center gap-3 cursor-pointer group">
+          <img src="/logo.png" alt="AI Root Logo" className="w-8 h-8 rounded group-hover:opacity-80 transition-opacity" />
           <span className="font-extrabold tracking-tight text-2xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
-        </div>
+        </a>
         
         <nav className="hidden lg:flex items-center gap-6">
           <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">AI 활용</a>
@@ -29,7 +29,7 @@ export default function Home() {
               type="text" 
             />
           </div>
-          <button className="font-technical-sm uppercase tracking-wider px-4 py-2 bg-[#FF6B00] text-white rounded hover:bg-[#e65a00] transition-transform active:scale-95">
+          <button className="font-technical-sm uppercase tracking-wider px-4 py-2 bg-[#FF6B00] text-white rounded hover:bg-[#e65a00] transition-transform active:scale-95 cursor-pointer">
             로그인
           </button>
           <UserCircle className="text-surface-variant cursor-pointer hover:text-white w-6 h-6" />
@@ -159,7 +159,7 @@ export default function Home() {
               </div>
               
               <div className="mt-12 flex justify-center border-t border-white/10 pt-8">
-                <button className="px-8 py-3 border border-white/10 rounded-lg font-technical-sm uppercase tracking-widest text-white/60 hover:text-white hover:border-white transition-all">
+                <button className="px-8 py-3 border border-white/10 rounded-lg font-technical-sm uppercase tracking-widest text-white/60 hover:text-white hover:border-white transition-all cursor-pointer">
                   더보기
                 </button>
               </div>
