@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Search, UserCircle } from "lucide-react";
 
 export default function Home() {
   const latestDispatches = [
@@ -53,20 +53,17 @@ export default function Home() {
       <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
         
         {/* Hero Section */}
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-10 items-center">
+        <a href="/article" className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-10 items-center hover:border-[#f97316]/30 transition-all group cursor-pointer">
           <div className="w-full md:w-1/2 aspect-[4/3] rounded-xl overflow-hidden bg-gray-900 relative">
-             <div className="absolute inset-0 bg-gradient-to-tr from-red-900/40 to-transparent mix-blend-overlay"></div>
-             {/* Placeholder for the red cube abstract image */}
-             <div className="w-full h-full flex items-center justify-center text-white/20">
-               [Hero Image: Red Cubes]
-             </div>
+             <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+             <div className="absolute inset-0 bg-gradient-to-tr from-[#f97316]/20 to-transparent mix-blend-overlay"></div>
           </div>
           
           <div className="w-full md:w-1/2 flex flex-col justify-center py-6 pr-6">
             <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider rounded-full self-start mb-4">
               Featured Report
             </span>
-            <h2 className="font-display-xl text-4xl md:text-5xl font-bold leading-tight text-gray-900 mb-6">
+            <h2 className="font-display-xl text-4xl md:text-5xl font-bold leading-tight text-gray-900 mb-6 group-hover:text-[#f97316] transition-colors">
               The Dawn of<br />Generative<br />Intelligence
             </h2>
             <p className="text-lg text-gray-600 mb-10 leading-relaxed max-w-md">
@@ -75,7 +72,7 @@ export default function Home() {
             
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                <div className="w-6 h-6 bg-gray-400 rounded-full opacity-50"></div>
+                <UserCircle className="w-6 h-6 text-gray-400" />
               </div>
               <div>
                 <p className="font-bold text-sm text-gray-900">Alex Mercer</p>
@@ -83,7 +80,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </a>
 
         {/* Zippy Subscription Banner */}
         <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
