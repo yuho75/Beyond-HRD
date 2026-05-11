@@ -54,7 +54,7 @@ export default function AdminDashboard() {
                   { name: 'AI-FLOW 관리 (사이트 A)', icon: <Share2 className="w-4 h-4" />, sub: ["요약 피드 관리", "Zippy's Pick 설정"], href: "#" },
                   { name: 'AI-ROOT 관리 (사이트 B)', icon: <Database className="w-4 h-4" />, sub: ["LMS 코스 설정", "과제 및 평가 모니터링"], href: "#" },
                   { name: '통합 콘텐츠 에디터', icon: <FileEdit className="w-4 h-4" />, href: "/admin/editor" },
-                  { name: '사용자 및 서비스 관리', icon: <Users className="w-4 h-4" />, sub: ["학점(Credit) 제어", "구독 플랜 관리"], href: "#" },
+                  { name: '사용자 및 서비스 관리', icon: <Users className="w-4 h-4" />, sub: ["학점(Credit) 제어", "구독 플랜 관리"], href: "/admin/users" },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col">
                     <a href={item.href} className="flex items-center justify-between px-4 py-3 rounded-xl text-white/40 hover:bg-white/5 hover:text-white transition-all text-sm cursor-pointer group">
