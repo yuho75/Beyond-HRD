@@ -1,0 +1,359 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;600;700&amp;family=Hanken+Grotesk:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        body {
+            background-color: #131313;
+            color: #f5eff7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for high-density technical look */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #322f35;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#63597c",
+                        "on-primary-fixed": "#22005d",
+                        "secondary-fixed-dim": "#cdc0e9",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f5eff7",
+                        "secondary-container": "#e1d4fd",
+                        "surface-container-highest": "#e6e0e9",
+                        "on-surface-variant": "#494551",
+                        "inverse-surface": "#322f35",
+                        "tertiary-fixed-dim": "#e7c365",
+                        "outline": "#7a7582",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "primary": "#4f378a",
+                        "tertiary": "#765b00",
+                        "on-tertiary-fixed": "#241a00",
+                        "primary-fixed-dim": "#cfbcff",
+                        "surface-bright": "#fdf7ff",
+                        "surface-container": "#f2ecf4",
+                        "tertiary-fixed": "#ffdf93",
+                        "on-tertiary-container": "#503d00",
+                        "surface-dim": "#ded8e0",
+                        "background": "#fdf7ff",
+                        "primary-container": "#6750a4",
+                        "surface": "#fdf7ff",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "on-surface": "#1d1b20",
+                        "tertiary-container": "#c9a74d",
+                        "on-secondary-fixed": "#1f1635",
+                        "surface-container-low": "#f8f2fa",
+                        "on-secondary-fixed-variant": "#4b4263",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#cbc4d2",
+                        "secondary-fixed": "#e9ddff",
+                        "inverse-primary": "#cfbcff",
+                        "surface-tint": "#6750a4",
+                        "primary-fixed": "#e9ddff",
+                        "surface-container-high": "#ece6ee",
+                        "on-background": "#1d1b20",
+                        "on-primary-container": "#e0d2ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e6e0e9",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#645a7d",
+                        "emerald-tech": "#10B981"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "48px",
+                        "container-padding-technical": "16px",
+                        "gutter": "16px",
+                        "container-padding-editorial": "32px",
+                        "stack-md": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Newsreader"],
+                        "body-md": ["Hanken Grotesk"],
+                        "display-xl": ["Newsreader"],
+                        "technical-sm": ["Hanken Grotesk"],
+                        "label-caps": ["Hanken Grotesk"],
+                        "headline-lg": ["Newsreader"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "technical-sm": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-body-md text-on-surface dark:text-inverse-on-surface">
+<!-- Sidebar Navigation -->
+
+<!-- Main Canvas -->
+<main class="min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="h-16 flex items-center justify-between px-container-padding-editorial max-w-7xl mx-auto w-full border-b border-white/10 sticky top-0 bg-[#131313]/80 backdrop-blur-md z-30"><div class="flex-1 flex items-center">
+<span class="font-headline-lg text-headline-lg font-bold text-surface-bright">AI Root</span>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">AI 활용</a>
+<a class="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">AI 창업</a>
+<a class="font-technical-sm text-emerald-tech border-b-2 border-emerald-tech pb-1 transition-colors" href="#">AI 전략/리더십</a>
+<a class="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">Tools</a>
+<a class="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">Courses</a>
+</nav>
+<div class="flex-1 flex items-center justify-end gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-surface-variant text-[20px]">search</span>
+<input class="bg-white/5 border border-white/10 text-technical-sm py-2 pl-10 pr-4 w-64 focus:ring-1 focus:ring-emerald-tech focus:border-emerald-tech rounded-lg text-white" placeholder="Search archive..." type="text">
+</div>
+<button class="font-technical-sm uppercase tracking-wider px-4 py-2 bg-[#FF6B00] text-white rounded hover:bg-[#e65a00] transition-transform active:scale-95">로그인</button>
+<span class="material-symbols-outlined text-surface-variant cursor-pointer hover:text-white">account_circle</span>
+</div></header>
+<!-- Technical Dashboard Content -->
+<div class="p-container-padding-editorial max-w-7xl mx-auto w-full flex-grow flex flex-col gap-stack-lg">
+<!-- Header -->
+<div class="flex items-end justify-between">
+<div>
+<h1 class="font-display-xl text-display-xl text-surface-bright mb-2">Technical Archive</h1>
+<p class="font-body-lg text-surface-variant max-w-2xl">High-density documentation and roadmaps for deep-tech AI integration. Curated by the Rundown technical team.</p>
+</div>
+<div class="hidden sm:block text-right">
+<span class="font-technical-sm uppercase text-emerald-tech tracking-widest block mb-1"><br></span>
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-emerald-tech animate-pulse"></span>
+<span class="font-technical-sm text-surface-bright"><br></span>
+</div>
+</div>
+</div>
+<!-- Main Layout with Filters and Content -->
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Sidebar Filters -->
+<aside class="w-full lg:w-64 shrink-0 flex flex-col gap-8">
+<!-- Categories -->
+<div>
+<h3 class="font-technical-sm uppercase tracking-widest text-surface-variant mb-4">Categories</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-surface-bright group-hover:text-emerald-tech transition-colors">All Topics</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-white/60 group-hover:text-emerald-tech transition-colors">Business Operations</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-white/60 group-hover:text-emerald-tech transition-colors">Coding &amp; Engineering</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-white/60 group-hover:text-emerald-tech transition-colors">Data Analysis</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-white/60 group-hover:text-emerald-tech transition-colors">Marketing &amp; Sales</span>
+</label>
+</div>
+</div>
+<!-- Skill Level -->
+<div>
+<h3 class="font-technical-sm uppercase tracking-widest text-surface-variant mb-4">Skill Level</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-white/60 group-hover:text-emerald-tech transition-colors">Beginner</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-white/60 group-hover:text-emerald-tech transition-colors">Intermediate</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="form-checkbox bg-transparent border-white/20 text-emerald-tech rounded focus:ring-emerald-tech/50" type="checkbox">
+<span class="font-technical-sm text-white/60 group-hover:text-emerald-tech transition-colors">Advanced</span>
+</label>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-grow flex flex-col gap-stack-lg min-w-0">
+<!-- Featured Section -->
+<section>
+<div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+<h2 class="font-headline-md text-surface-bright">Featured Guides</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Featured Card 1 -->
+<div class="group cursor-pointer bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-tech/50 transition-all flex flex-col">
+<div class="h-48 bg-gradient-to-br from-emerald-tech/20 to-[#131313] border-b border-white/10 relative">
+<div class="absolute top-4 left-4 bg-emerald-tech/10 text-emerald-tech text-[10px] px-2 py-0.5 font-technical-sm uppercase border border-emerald-tech/20 rounded">Advanced</div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h3 class="font-headline-md text-surface-bright mb-2 group-hover:text-emerald-tech transition-colors">Large Language Model Optimization</h3>
+<p class="font-body-md text-surface-variant mb-6 flex-grow">Deploying fine-tuned models for enterprise infrastructure. Learn the end-to-end pipeline for model optimization.</p>
+<div class="flex items-center gap-3 mt-auto">
+<div class="w-8 h-8 rounded-full bg-white/10 overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXlv8bxZhbJy4fiZK5OHPUR7CdiG61znM6ytoTioyxaJIVBN9jHrSXRX3aAjSvUM7ue6wqdDvYjx2J1JQowL6BtSXxlCjV84KxrTS5GhBc0trZN89Gpu27899Oxq51c50jJoP_bINM7HQ1vHgBstRJ5qD7Rokyj7RbkCF3ApK4gley7GiaS3WIPK28Zh0b5DSOMtlt0HYDRZzTyVIzQissKqMzs6Lu43ZB07h65a1wD0gQUjjs40ZFxM9A1yV9J4rL0qw3FnAeqI8">
+</div>
+<span class="font-technical-sm text-surface-bright">Rowan Cheung</span>
+</div>
+</div>
+</div>
+<!-- Featured Card 2 -->
+<div class="group cursor-pointer bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-tech/50 transition-all flex flex-col">
+<div class="h-48 bg-gradient-to-br from-blue-500/20 to-[#131313] border-b border-white/10 relative">
+<div class="absolute top-4 left-4 bg-blue-500/10 text-blue-400 text-[10px] px-2 py-0.5 font-technical-sm uppercase border border-blue-500/20 rounded">Intermediate</div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h3 class="font-headline-md text-surface-bright mb-2 group-hover:text-emerald-tech transition-colors">Vector Database Scaling Strategies</h3>
+<p class="font-body-md text-surface-variant mb-6 flex-grow">High-performance retrieval for multi-agent systems and large scale RAG implementations.</p>
+<div class="flex items-center gap-3 mt-auto">
+<div class="w-8 h-8 rounded-full bg-white/10 overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqy0Jh7Cw0dhTewpAzdCou_In8Vv5Ywv1YPSg3tIqGT3NSyVIGFRqyg_YleKb1wqTzBN2sHGwFSQ41HdXGlgU3J72RHqEpvBMFlKPJr45t5etgEHnybEsGKcKeTaGgOt2MVw9jz6zOzN3SFOpZ4n353DqCjrurJPm4gYohELPDqgVxbJTnur8n838NfTvHLcFFerOsoa7pnXKXP6MDKHUp0xZpzhAdHxtUJwqhBsEJo0J15URYCueYz4UqIxEGu-B_Gkx0CgClrIc">
+</div>
+<span class="font-technical-sm text-surface-bright">Zippy AI</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- All Archive Grid -->
+<section>
+<div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+<h2 class="font-headline-md text-surface-bright">All Guides</h2>
+<div class="flex gap-4 hidden sm:flex">
+<span class="material-symbols-outlined text-emerald-tech cursor-pointer">grid_view</span>
+<span class="material-symbols-outlined text-surface-variant cursor-pointer hover:text-emerald-tech">view_list</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Grid Item 1 -->
+<div class="group cursor-pointer bg-white/5 border border-white/5 rounded-xl overflow-hidden hover:bg-white/[0.08] hover:border-emerald-tech/30 transition-all flex flex-col">
+<div class="h-32 bg-white/5 relative">
+<div class="absolute top-3 left-3 bg-red-500/10 text-red-400 text-[10px] px-2 py-0.5 font-technical-sm uppercase border border-red-500/20 rounded">Security</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h4 class="font-headline-md text-[18px] leading-snug text-surface-bright mb-2 group-hover:text-emerald-tech transition-colors">Prompt Injection &amp; Security Audits</h4>
+<p class="font-technical-sm text-white/40 mb-4 line-clamp-2">Red-teaming LLM applications for production readiness.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-white/10 overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3GNIadwarVXdF70Ad_fPshV1sIW3LOPjLgGHFFcO3MN59lHTlq3k_pHAp6EQ9u3Xa9EqaX3Ys507sk_eeOR2UWXYeQCM7gt8T4BVUjhjAtCvVfbDCZhFO2bf5NPvntjDzF7cUq7KNFEceZ7U7V4su8kqhL3Ol1CFbbTYZR4HdtJWfoFPF3Sf4jS2kzEGpdbuXuxSplOaWvOqcCzfLF6BPdvGVJ8d0T5HF1LjdP_QpsTOk9dbnYmGtkwWdSqL-m2FAHFVheo1lJIw">
+</div>
+<span class="font-technical-sm text-[11px] text-surface-bright">Security Team</span>
+</div>
+<span class="font-technical-sm text-[10px] text-white/30">SEP 29, 2024</span>
+</div>
+</div>
+</div>
+<!-- Grid Item 2 -->
+<div class="group cursor-pointer bg-white/5 border border-white/5 rounded-xl overflow-hidden hover:bg-white/[0.08] hover:border-emerald-tech/30 transition-all flex flex-col">
+<div class="h-32 bg-white/5 relative">
+<div class="absolute top-3 left-3 bg-emerald-tech/10 text-emerald-tech text-[10px] px-2 py-0.5 font-technical-sm uppercase border border-emerald-tech/20 rounded">Advanced</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h4 class="font-headline-md text-[18px] leading-snug text-surface-bright mb-2 group-hover:text-emerald-tech transition-colors">Custom GPU Kernel Development</h4>
+<p class="font-technical-sm text-white/40 mb-4 line-clamp-2">Writing CUDA kernels for non-standard AI architectures and custom operators.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-white/10 overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM-RCbqhdRSAFgqwa7Gxm3SKjQEvNao7MYLyWjrCrBEp4bTKgwJg0EWwwjRhxOP9dutFhl85nRPf4IvRX0Gc4XwnEBe6q5KNodB1Kg1X7uJQ16k2-CmkKQGa6LA6NYpy5Cxcs9x6catOdDdLqxoEvxOS5hORM1KMYThPEy3J14cYi67CauYDxuWp5g8sQh-Py3vcaqRed9Mktpvg0Gkns-Xy2Tokmk07gHz7w4LPvvlmNCHUGtUrCXuaVn-5rR4MVQy6CeJLbvjaA">
+</div>
+<span class="font-technical-sm text-[11px] text-surface-bright">Hardware Ops</span>
+</div>
+<span class="font-technical-sm text-[10px] text-white/30">SEP 15, 2024</span>
+</div>
+</div>
+</div>
+<!-- Grid Item 3 -->
+<div class="group cursor-pointer bg-white/5 border border-white/5 rounded-xl overflow-hidden hover:bg-white/[0.08] hover:border-emerald-tech/30 transition-all flex flex-col">
+<div class="h-32 bg-white/5 relative">
+<div class="absolute top-3 left-3 bg-white/10 text-white/60 text-[10px] px-2 py-0.5 font-technical-sm uppercase border border-white/20 rounded">Beginner</div>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h4 class="font-headline-md text-[18px] leading-snug text-surface-bright mb-2 group-hover:text-emerald-tech transition-colors">Intro to API Integration</h4>
+<p class="font-technical-sm text-white/40 mb-4 line-clamp-2">Connecting modern AI endpoints to legacy systems securely.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-white/10 overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVwwoHpoL6yOYZSuc51Wc_UD1wJNWPQg49KqGrAV2VhoYaIPofwWPfDhFLbXeUH_fcZOeGEOl8zXMqov47NViuJFB1sF2HhH4oR6p3JNtAhrbtaGoPvfWBa1IhcVVrBFXV8MFL0-cTX1R-oj0oYc6YURG1vgQi0hNx4_tnXyN-Jn4S5bFOKvGfBdYKesgXC2GXL-MVp9OE2yN4Ou9sXLkydOIshhwBqbW49xMrAMGJqjRV9YEFqJ4njFpkXxhaMfLV-3EhY81FiVU">
+</div>
+<span class="font-technical-sm text-[11px] text-surface-bright">Rowan Cheung</span>
+</div>
+<span class="font-technical-sm text-[10px] text-white/30">AUG 02, 2024</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex justify-center border-t border-white/10 pt-8">
+<button class="px-8 py-3 border border-white/10 rounded-lg font-technical-sm uppercase tracking-widest text-white/60 hover:text-white hover:border-white transition-all">
+                        더보기</button>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-container-padding-editorial flex flex-col md:flex-row justify-between items-center gap-stack-md border-t border-white/10 bg-inverse-surface mt-auto">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-headline-md text-headline-md font-bold text-surface-bright">AI ROOT</span>
+<p class="font-body-md text-surface-variant text-[12px] opacity-60">© 2024 The Rundown AI, Inc. All rights reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-body-md text-surface-variant hover:text-emerald-tech transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-surface-variant hover:text-emerald-tech transition-colors" href="#">Terms &amp; Conditions</a>
+<a class="font-body-md text-surface-variant hover:text-emerald-tech transition-colors" href="#">Advertise</a>
+<a class="font-body-md text-surface-variant hover:text-emerald-tech transition-colors" href="#">Contact</a>
+</div>
+</footer>
+</main>
+<!-- Floating UI Helper -->
+<div class="fixed bottom-8 right-8 z-50">
+<div class="bg-emerald-tech w-14 h-14 rounded-full flex items-center justify-center shadow-2xl cursor-pointer hover:scale-110 transition-transform group">
+<span class="material-symbols-outlined text-black" style="font-variation-settings: &quot;FILL&quot; 1;">terminal</span>
+<!-- Tooltip -->
+<div class="absolute right-16 bg-white p-2 rounded shadow-lg hidden group-hover:block whitespace-nowrap">
+<p class="text-black font-technical-sm uppercase text-[10px]">Launch Console</p>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+</body></html>

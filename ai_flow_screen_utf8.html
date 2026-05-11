@@ -1,0 +1,324 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>AI-Flow Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Source+Serif+4:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#97999b",
+                        "primary": "#a04100",
+                        "inverse-surface": "#303031",
+                        "on-background": "#1b1c1d",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1b1c1d",
+                        "tertiary-fixed-dim": "#c5c6c8",
+                        "outline-variant": "#e2bfb0",
+                        "inverse-primary": "#ffb693",
+                        "on-secondary-fixed-variant": "#3b4082",
+                        "surface-bright": "#fbf9fa",
+                        "primary-fixed-dim": "#ffb693",
+                        "tertiary-fixed": "#e1e2e4",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#a04100",
+                        "on-secondary-container": "#3e4385",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-tertiary-fixed": "#191c1e",
+                        "error": "#ba1a1a",
+                        "secondary": "#53589c",
+                        "secondary-container": "#aeb3fe",
+                        "on-tertiary-container": "#2f3133",
+                        "on-surface-variant": "#5a4136",
+                        "on-primary-fixed-variant": "#7a3000",
+                        "surface-container-low": "#f5f3f4",
+                        "on-primary-container": "#572000",
+                        "surface-dim": "#dbd9db",
+                        "secondary-fixed": "#e0e0ff",
+                        "tertiary": "#5c5f60",
+                        "surface-container-highest": "#e3e2e3",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#ff6b00",
+                        "outline": "#8e7164",
+                        "surface-container": "#efedee",
+                        "on-primary-fixed": "#351000",
+                        "surface": "#fbf9fa",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#ffdbcc",
+                        "on-secondary-fixed": "#0d1055",
+                        "inverse-on-surface": "#f2f0f1",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#fbf9fa",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e3e2e3",
+                        "surface-container-high": "#e9e8e9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "unit": "8px",
+                        "container-max": "1200px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Source Serif 4"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Source Serif 4"],
+                        "headline-lg": ["Source Serif 4"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.1", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md font-body-md">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none docked full-width top-0 sticky z-50">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-6">
+<a class="font-headline-lg text-headline-lg font-bold text-primary dark:text-inverse-primary tracking-tight" href="#">AI-flow</a>
+<nav class="hidden md:flex gap-6 items-center font-label-md text-label-md">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all px-2 py-1 rounded" href="#">Politics</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all px-2 py-1 rounded" href="#">Economy</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all px-2 py-1 rounded" href="#">World</a>
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary pb-1 px-2 py-1 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all rounded" href="#">Tech</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all px-2 py-1 rounded" href="#">Science</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 mt-4 md:mt-0">
+<button class="text-on-surface hover:text-primary transition-colors scale-95 duration-150 ease-in-out p-2 rounded hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="font-label-md text-label-md bg-transparent border border-secondary text-secondary hover:bg-surface-container-low px-4 py-2 rounded-lg transition-colors scale-95 duration-150 ease-in-out">Login</button>
+<button class="font-label-md text-label-md bg-primary-container text-on-primary font-bold px-4 py-2 rounded-lg hover:bg-primary transition-colors scale-95 duration-150 ease-in-out">Subscribe</button>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 flex flex-col gap-16">
+<!-- Featured Article -->
+<section class="bg-surface-container-lowest border border-tertiary-fixed rounded-xl overflow-hidden flex flex-col md:flex-row">
+<div class="md:w-1/2 h-64 md:h-auto">
+<img alt="AI brain illustration" class="w-full h-full object-cover" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdOvXhRJUUOy4r2oVQESeCoetWd56P0odaYBOk0fTp03M4l2nEDkc5_bW0bHZGksxlJsbrf-lMoxQUhDgH1EqHWL_KfNcBbqbVocy4OtA3bnY0D2MzVF7AxXdUlyF7sdVpBHHr8XDGzNT6RMPDVcwbEnD77AQMf-kPtIuB0PM4AFCTl80ukYVch9Cq8I0CIIgEXaBzfRhlHUQYoGbiq4KYo6at1ztAetPtXGF7THIouK49CuKzXLQpcDbCw7KxU--VTnR-c9SDsGE">
+</div>
+<div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+<span class="inline-block bg-surface-variant text-on-surface px-3 py-1 rounded-full font-label-sm text-label-sm w-max mb-4">Featured Report</span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-4">The Dawn of Generative Intelligence</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8">How new foundation models are reshaping the global economy and what it means for the future of work.</p>
+<div class="flex items-center gap-4 mt-auto">
+<img alt="Author avatar" class="w-10 h-10 rounded-full object-cover" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida/ADBb0uiD09aJY0AVgeL5mhZ47wJhPTuZODtVIREGypWoA1bbXEi-q41W9ePW-ejEIOQp847IAI3RC0Ec2OrcTnXqHaas07KP1ZxypW1ou4uhDvOIXMZRsnnpm7NbMejKQtCYm3jxseWE4VYEcTIchcM2677LmVe0P4n2i1QYZbfqLpE2a9nio3uP1GhefAg-uirq7MQCbP0L1svn7WIfxTC16Yb9i5hVmlqAKVF6oKe24b_Un-i17yel76s4PCI">
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex Mercer</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Oct 24, 2024</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Subscription Box -->
+<section class="bg-primary-fixed border border-outline-variant rounded-xl p-8 flex items-center gap-8 justify-center relative overflow-hidden">
+<div class="absolute -right-10 -bottom-10 opacity-10">
+<img alt="Zippy Face Background" class="w-[200px] h-[200px] object-contain opacity-20" src="https://lh3.googleusercontent.com/aida/ADBb0uiD09aJY0AVgeL5mhZ47wJhPTuZODtVIREGypWoA1bbXEi-q41W9ePW-ejEIOQp847IAI3RC0Ec2OrcTnXqHaas07KP1ZxypW1ou4uhDvOIXMZRsnnpm7NbMejKQtCYm3jxseWE4VYEcTIchcM2677LmVe0P4n2i1QYZbfqLpE2a9nio3uP1GhefAg-uirq7MQCbP0L1svn7WIfxTC16Yb9i5hVmlqAKVF6oKe24b_Un-i17yel76s4PCI">
+</div>
+<div class="z-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+<div class="bg-surface-container-lowest p-4 rounded-full border border-tertiary-fixed shadow-sm">
+<img alt="Zippy Face" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiD09aJY0AVgeL5mhZ47wJhPTuZODtVIREGypWoA1bbXEi-q41W9ePW-ejEIOQp847IAI3RC0Ec2OrcTnXqHaas07KP1ZxypW1ou4uhDvOIXMZRsnnpm7NbMejKQtCYm3jxseWE4VYEcTIchcM2677LmVe0P4n2i1QYZbfqLpE2a9nio3uP1GhefAg-uirq7MQCbP0L1svn7WIfxTC16Yb9i5hVmlqAKVF6oKe24b_Un-i17yel76s4PCI">
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-primary-fixed mb-2">Hello, I'm Zippy!</h2>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant mb-4 max-w-lg">Get the sharpest AI insights delivered directly to your inbox every morning. No fluff, just the signal.</p>
+<form class="flex gap-2">
+<input class="flex-1 px-4 py-2 border border-tertiary-fixed rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-body-md text-body-md" placeholder="Your email address" type="email">
+<button class="bg-primary-container text-on-primary font-bold px-6 py-2 rounded-lg hover:bg-primary transition-colors font-label-md text-label-md" type="submit">Subscribe</button>
+</form>
+</div>
+</div>
+</section>
+<!-- Main Content Grid -->
+<section>
+<div class="flex justify-between items-end border-b border-tertiary-fixed pb-4 mb-8">
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Latest Dispatches</h3>
+<a class="font-label-md text-label-md text-primary hover:underline underline-offset-4" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Chip production" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1ybUKICpg79QiouBTkhRv_IJGPsDP6hhLlPP383zPkBGg-y5wzneGst6kBTg1mtsyFikwTOxhamOUJGu0coq5qjQjSl73YU7aBogJUImsskXvBdwhuwgGNipxl-lpZL8GIUBV88YWDxlsp4Cz31-jdvq6NHXWNYBfQTthkDF04w-K1VPjDqKaUpKphu8UCa2FkjQMDTuBJlkMdJiZsXLBZT8PBhWMYmcs-WxY-1eC_0SWY9NyfkgVEb5PyrAhhuXRjEuF6H0pGjY">
+<span class="absolute top-2 left-2 bg-secondary-container text-on-secondary-container px-2 py-1 rounded font-label-sm text-label-sm">Hardware</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">The Silicon Squeeze: A Global Update</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 23, 2024</p>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Code on screen" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrZCBN7X5nzJelMGNJap_nY_3cbnEDteB_1HKCFD_OQ3Vhs-2zlWFa2MD8XEfbMxBF9InruZr7PqB38rNOKfNhMdH4dCB5_phRW1wgftcaOxkTQE7Cv45mCmuyXNHxUFUBAMORZ6hnXVbS9Ks_2Y7WE6-5jowVoFqPGlljhTjwVMBNzsKNrVes7uUjDrMclj5DlyqbMOxOhhncKwOML2yuUuuqCJOPy8y2P8HJmn8wkpPLr5iPEomgLnzxbe8aCteiubKo6zvjwbs">
+<span class="absolute top-2 left-2 bg-primary-fixed text-on-primary-fixed px-2 py-1 rounded font-label-sm text-label-sm">Software</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">Open Source AI: A New Paradigm</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 22, 2024</p>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Robot dog" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBygZnMWxUm81duaIFPO-yIhKtOWtCnP6UkK_AUnH4iH_4jUzEvDoIwIfOY29die6WxF-3gKnrdADGcXJLBeqwM1ycirBUmt_dRERfEa8toDOKtBSgPGdxQPdQj1jQuKEsjB5IUCJlPOQjbv9E5AMW93YbYWhgydBzVSoKvNVMShuli4Uv3F7XpuKvpTDr_u7mRKDKPiB6_5LvV4IJ00K1DUO-icux66KgnvINChiddM8IpODz1fR025wbBc2ssQhgvaWKMUs51FE">
+<span class="absolute top-2 left-2 bg-tertiary text-on-tertiary px-2 py-1 rounded font-label-sm text-label-sm">Robotics</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">Boston Dynamics Drops New Model</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 21, 2024</p>
+</div>
+</article>
+<!-- Card 4 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Gavel and scale" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPs27ckgUKWMaTrTPlTv3WXza32jxicEbVa-fXL-zZ6kpx3qrjI1cFdQvv9zoTOjN1eSushSIte1oU8BOnohBSj8gNs9IZBztPqgXqBghpiQCbcNN_idaFWbSsAu3xgXu8k0eMgkOKYcZcLlqCPeHW-MbuRaiTyU8EFsd2aeB3fT7N13S2IfjXDtPcs7AWwcpNKYolVpu0c92CrT1CrADsAd0cYDoQVQe9KfMKsdelR6oR1G_BKM0d24hfRKo4FM6IuG1i6pOzrwY">
+<span class="absolute top-2 left-2 bg-error-container text-on-error-container px-2 py-1 rounded font-label-sm text-label-sm">Policy</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">EU AI Act: What You Need to Know</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 20, 2024</p>
+</div>
+</article>
+<!-- Add 8 more similar cards to complete the 12 grid as requested, keeping it concise for the example -->
+<!-- Card 5 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Chip production" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4KB8oJUoDLOq15MYEbuH88y_8omIVdpcKlc6pCRKm740CqsnH2eIb-vIE1CRiGCkpniX75vSZCeeLCRb6M_aRB9WbMDRgljrTBOrOBNqdrkgkq8DtOu23XAp8T3TTvFYiIPEfgMZVWSWtUZnYYETFZINf4bUy81aDW3rDudkcSw4dULlc1zQPB4YdpbUy9IqfEjjCf16ZiTS4H3hKFNh23WlVVeP9OALBOx5ss1SFA9UOhi-JS-WvPGpFn176czsnTVx0fbNjI7A">
+<span class="absolute top-2 left-2 bg-secondary-container text-on-secondary-container px-2 py-1 rounded font-label-sm text-label-sm">Hardware</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">TSMC Earnings Report Breakdown</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 19, 2024</p>
+</div>
+</article>
+<!-- Card 6 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Code on screen" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbCytl5ytb_i177Ziyg2AuvFYYJ3VHSYr6QfByl1KR-e0Dte9yTAupSJoKNEPgCcd80jIVmN14C-l0-3hka_yLRSv1nqXvkJdc2yxu0FzptkvjEXSihZikXQQzX6gnVTyxtRxdafF6yX-PMCt7HJUnMBgEu5sV_8UGlY0PspmhKtlJNPfi9CRVv5c-QVavGZrOB-vbPjnguzxTD2UkrsSr9T0x0Q2QYZECZxqC43OwTcH1Pvi_bRGotcq1ySp6UrmJe2v0J3Xfbtg">
+<span class="absolute top-2 left-2 bg-primary-fixed text-on-primary-fixed px-2 py-1 rounded font-label-sm text-label-sm">Software</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">New Transformer Architecture Detailed</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 18, 2024</p>
+</div>
+</article>
+<!-- Card 7 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Robot dog" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwoorCaALJUwwc5fBZ3zQHlZmnwtI5cmNxO5QY8BR2i8aToe4gopItTyXxitTSHRWRGZEyq2CT_xfeyBEaba3oXS6r_ffKMEPW5eSkGOfhyotg4y5cdxu-dvQQwPVBglKrazFTrril4FlScmnV4PXSwUGNWNvwtRnrltcNcCYwhEVz0DoO2IFZSSJ6JpnUpI3DFcMpM4wYjS9TUn2c4I_R2MQ1C3Xwb0PPTlnRBvXTsINWGg8cS6aQpUYCRGvz2zt1vQmY4XIIrms">
+<span class="absolute top-2 left-2 bg-tertiary text-on-tertiary px-2 py-1 rounded font-label-sm text-label-sm">Robotics</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">Agility Robotics Secures Series C</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 17, 2024</p>
+</div>
+</article>
+<!-- Card 8 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Gavel and scale" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOTUyPEAcAa6Cthwa00C2wBMsC4yD61FP9NpDprI_yUzRx1LHnPY8V9kwXeZskfKx0VfWc3jxMjt4OsVx36Wy0hDDbimeoKIyNk7FIxu1COotiTrnDEbJnGar-AMc4doVKYily-1Ivd0oXbyiHtxlxg7WADznX8G3QWo9nTPeGThggcj-X7sNPkkQLDLG07DbMNg-TAMeIX3pn3KHm-oZYag5EyQYQ0nscJz9Qx5PlPV24iqAQaX2rtT3C4LYnFHniXQ9UH50Z-rE">
+<span class="absolute top-2 left-2 bg-error-container text-on-error-container px-2 py-1 rounded font-label-sm text-label-sm">Policy</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">Copyright Claims in the GenAI Era</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 16, 2024</p>
+</div>
+</article>
+<!-- Card 9 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Chip production" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEOIdqUJ-rgNL8zEhnRGTPzw-ok_ibUb-I8mNrrhybNe-3jVqXid97BiJsriFIzRSoSTu85BYnGT3uioqT3jqrlX_FPL1I9SrFXj9xcVa7TQpmb-lghLz18JA5hn2PQmCOeNrUbpsd9nPUKnqsndtznVf66ELnzjplGJ_cEp8rZcn95O0p8MRbsWIvTIyI4klC1uudpJjXdeB-kuQiG7Zk_oiuTsEMOdM1wn1jUn8m1rJqz-x1QXdRk1Ga6TPetHVwPXe5bVGy16I">
+<span class="absolute top-2 left-2 bg-secondary-container text-on-secondary-container px-2 py-1 rounded font-label-sm text-label-sm">Hardware</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">Nvidia's Next Move</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 15, 2024</p>
+</div>
+</article>
+<!-- Card 10 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Code on screen" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtUnj2S1ViS5L5HEk6xXAuERSx8WqikutiDRJawRkfkQBoSMI439kNHWkOyCeT313OfZEe2fdYhRFkQPhp49L_qVVYSsKHLmUTCvF8Oz7Lpr0f95EqDVN9qNwq2p2fqOLZV8wF0TAja28t2SSDfIz9a5_dfMXvoAGNvVmd3XKnlMsWU_hhyKxH-19niTp4Vgl2QqzZ5rO6vxWDSyS0uhvXXaaHkQB7MYWV2ma2PKCXHP-ABgemhwnRj9ugimBVQCq7pAVaRZZjg9s">
+<span class="absolute top-2 left-2 bg-primary-fixed text-on-primary-fixed px-2 py-1 rounded font-label-sm text-label-sm">Software</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">Fine-Tuning Strategies Analyzed</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 14, 2024</p>
+</div>
+</article>
+<!-- Card 11 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Robot dog" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEASDjYtonsgOM_fYqQOCrjpqCCjjRQPXLugH32hKXf75VBXsxM_Rv_7UQA_R3ZpYPAVSfSP3TyAIfascdFZLTBdAe7XUqggqDTQ90laaW1EKbvBkAYyE7VTPIh8-ECzZ6niaJJ1JFU8rDUvb1xRcrDc65BqeyCojnXP8NCt2paFPpeV7pHr-VwNQ3SflDhEAgAntpCb7h5ZnNt3sKUFeaNwzEveSB1EBLGLMBslqLFiE22SUzwdtdzqBrdFHN9liF5pUvI50-O2A">
+<span class="absolute top-2 left-2 bg-tertiary text-on-tertiary px-2 py-1 rounded font-label-sm text-label-sm">Robotics</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">Automation in Agriculture</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 13, 2024</p>
+</div>
+</article>
+<!-- Card 12 -->
+<article class="bg-surface-container-lowest border border-tertiary-fixed rounded-lg overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img alt="Gavel and scale" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVY3iII92pE5c3MFQIoWtv3LiOwgiZgWPzU9fbr6FSb8dtCOgCxWkMYDw9zFA1w1oznE1lJ6MKlepOc3Z6Ccfe24hIx5Kef4zSoF9OQS4NB1NMrY26gL5fEhjxD5bV0qyYGsLFkB98iJS08qZL21ZhEuxEs3hvHZD8CChapgqKpMSYjg5jeFtd4C6jUMKZeesJ0u7A4YCNEaF9uFUV_YkB4bQfvn9lJS8u0ksw8dQAyIdYxCPdxJIxixzYhjlU4TtZBT0479SFUt4">
+<span class="absolute top-2 left-2 bg-error-container text-on-error-container px-2 py-1 rounded font-label-sm text-label-sm">Policy</span>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl line-clamp-2">The Ethics of AI in Hiring</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-auto pt-4 border-t border-surface-variant">Oct 12, 2024</p>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline full-width py-12 mt-16 flat no shadows Transition-opacity duration-200">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto gap-gutter">
+<div class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">
+                The Pulse
+            </div>
+<nav class="flex flex-wrap justify-center gap-6 font-label-sm text-label-sm">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary hover:underline decoration-primary underline-offset-4" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary hover:underline decoration-primary underline-offset-4" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary hover:underline decoration-primary underline-offset-4" href="#">Contact Us</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary hover:underline decoration-primary underline-offset-4" href="#">Editorial Guidelines</a>
+</nav>
+<div class="font-body-sm text-body-sm text-primary dark:text-inverse-primary">
+                © 2024 The Pulse. Editorial Modernism for the Informed Mind.
+            </div>
+</div>
+</footer>
+
+
+</body></html>

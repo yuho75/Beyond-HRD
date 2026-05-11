@@ -1,127 +1,153 @@
 "use client";
 
-import { ArrowRight, Mail, PlayCircle, MousePointerClick, Sparkles } from "lucide-react";
+import { Search, User, Mail } from "lucide-react";
 
 export default function Home() {
-  const youtubers = [
-    { name: "AI Explained", topic: "Research & Paper Analysis", tag: "Deep Dive" },
-    { name: "Matt Wolfe", topic: "AI Tools & News", tag: "Weekly Wrap" },
-    { name: "Two Minute Papers", topic: "Simulations & AI Papers", tag: "Visual AI" },
-    { name: "Matthew Berman", topic: "LLMs & Local AI", tag: "Tutorials" },
-    { name: "Wes Roth", topic: "AI News & AGI", tag: "News" },
-    { name: "Fireship", topic: "Developer News", tag: "Tech" },
-  ];
-
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
-      {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant/20">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-lg">
-              <Sparkles className="text-white w-4 h-4" />
+    <div className="font-body-md text-on-background min-h-screen bg-background">
+      {/* Top Header / Nav */}
+      <header className="border-b border-outline/20 sticky top-0 bg-background/90 backdrop-blur-md z-30">
+        <div className="max-w-7xl mx-auto px-container-padding flex flex-col">
+          {/* Top bar */}
+          <div className="flex items-center justify-between h-14 text-xs font-technical-sm tracking-wider uppercase border-b border-outline/10 text-on-surface-variant">
+            <div className="flex gap-4">
+              <span>VOL. 42</span>
+              <span>•</span>
+              <span>OCT 24, 2024</span>
             </div>
-            <span className="font-serif font-bold text-2xl tracking-tight text-primary-container">
-              AI Flow
-            </span>
+            <div className="flex items-center gap-4">
+              <span className="cursor-pointer hover:text-primary transition-colors">LOGIN</span>
+              <span className="cursor-pointer hover:text-primary transition-colors">SUBSCRIBE</span>
+            </div>
           </div>
-          <button className="primary-btn text-sm">
-            Subscribe
-          </button>
+          
+          {/* Main Nav */}
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center gap-4 flex-1">
+              <Search className="w-5 h-5 text-on-surface cursor-pointer hover:text-primary transition-colors" />
+            </div>
+            
+            <div className="flex-1 flex justify-center">
+              <h1 className="font-headline-lg font-bold text-4xl tracking-tight text-on-surface">AI-flow</h1>
+            </div>
+            
+            <div className="flex-1 flex justify-end gap-6 font-technical-sm text-sm font-semibold tracking-wide text-on-surface-variant">
+              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">POLITICS</a>
+              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">ECONOMY</a>
+              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">WORLD</a>
+              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">TECH</a>
+            </div>
+          </div>
         </div>
-      </nav>
+      </header>
 
-      {/* Hero Section */}
-      <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto">
-        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 shadow-sm mb-8">
-            <span className="w-2 h-2 rounded-full bg-electric-blue animate-pulse"></span>
-            <span className="text-xs font-bold tracking-wider text-on-surface-variant uppercase">Bi-weekly Curator</span>
+      {/* Main Content Grid */}
+      <main className="max-w-7xl mx-auto px-container-padding py-10 flex flex-col lg:flex-row gap-8">
+        {/* Left Column - Hero Article */}
+        <div className="flex-1 flex flex-col gap-6 lg:pr-8 lg:border-r lg:border-outline/20">
+          <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest self-start rounded-sm">
+            Cover Story
           </div>
-          <h1 className="font-serif text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-8 text-primary-container">
-            The Digital Archive of <br />
-            <span className="text-electric-blue">AI Knowledge.</span>
-          </h1>
-          <p className="text-lg md:text-xl text-on-surface-variant mb-10 leading-relaxed max-w-2xl mx-auto">
-            We crawl, analyze, and summarize the top 20 AI creators on YouTube. 
-            Get the signal, cut the noise. Delivered to your inbox every two weeks.
+          
+          <h2 className="font-display-xl text-5xl md:text-6xl font-bold leading-tight tracking-tight text-on-surface">
+            The Dawn of<br />Generative Intelligence
+          </h2>
+          
+          <p className="font-body-lg text-xl leading-relaxed text-on-surface-variant">
+            How autonomous agents are restructuring corporate hierarchies and redefining what it means to "work" in the 21st century.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button className="primary-btn gap-2 text-lg px-8 py-4">
-              <Mail className="w-5 h-5" />
-              Join the Archive
-            </button>
-            <button className="secondary-btn gap-2 text-lg px-8 py-4">
-              <PlayCircle className="w-5 h-5" />
-              View Latest Summary
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Curator Bento Grid */}
-      <section className="py-24 bg-surface-container-low px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
-            <div>
-              <h2 className="font-serif text-4xl font-bold mb-4 text-primary-container">Tracked Creators</h2>
-              <p className="text-on-surface-variant text-lg">Monitoring the pulse of artificial intelligence.</p>
+          <div className="aspect-video bg-surface-container-high rounded-xl overflow-hidden mt-4 shadow-sm border border-outline/10 group cursor-pointer relative">
+            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors z-10"></div>
+            <div className="w-full h-full flex items-center justify-center bg-primary/5 text-primary/40 font-headline-md">
+              [ Hero Image ]
             </div>
-            <button className="text-electric-blue font-bold flex items-center gap-2 hover:gap-3 transition-all">
-              View All 20 <ArrowRight className="w-4 h-4" />
-            </button>
           </div>
+          
+          <div className="flex items-center gap-3 mt-2">
+            <div className="w-10 h-10 rounded-full bg-surface-container overflow-hidden flex items-center justify-center border border-outline/20">
+               <User className="w-5 h-5 text-on-surface-variant" />
+            </div>
+            <div>
+              <p className="font-technical-sm font-bold text-sm">By Zippy AI</p>
+              <p className="font-technical-sm text-xs text-on-surface-variant">Chief Intelligence Editor</p>
+            </div>
+          </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {youtubers.map((yt, i) => (
-              <div 
-                key={i} 
-                className="bento-card group"
-              >
-                <div className="flex justify-between items-start mb-6">
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-surface-container text-primary-container text-xs font-bold uppercase tracking-wider">
-                    {yt.tag}
-                  </span>
-                  <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline-variant group-hover:bg-electric-blue group-hover:text-white transition-colors duration-300">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-                
-                <h3 className="font-serif text-2xl font-bold mb-3 text-primary-container group-hover:text-electric-blue transition-colors">{yt.name}</h3>
-                <p className="text-on-surface-variant text-sm mb-6">{yt.topic}</p>
-                
-                <div className="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
-                  <span className="text-xs text-outline-variant font-medium uppercase tracking-wider">Last updated: 2 hrs ago</span>
-                </div>
+        {/* Right Column - Secondary Content */}
+        <div className="w-full lg:w-80 shrink-0 flex flex-col gap-10">
+          {/* Subscription Module */}
+          <div className="bg-surface-container border border-outline/20 p-6 rounded-xl relative overflow-hidden shadow-sm group hover:border-primary/50 transition-colors">
+            {/* Background pattern */}
+            <div className="absolute -right-10 -top-10 opacity-5 group-hover:opacity-10 transition-opacity">
+              <svg width="150" height="150" viewBox="0 0 100 100" className="text-primary fill-current">
+                <circle cx="50" cy="50" r="40" />
+              </svg>
+            </div>
+            
+            <h3 className="font-headline-md font-bold text-xl mb-2 relative z-10">Daily Intelligence Brief</h3>
+            <p className="font-body-md text-sm text-on-surface-variant mb-6 relative z-10">
+              Get the most critical AI developments delivered straight to your inbox before the market opens.
+            </p>
+            
+            <div className="flex flex-col gap-3 relative z-10">
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
+                <input 
+                  type="email" 
+                  placeholder="Your email address" 
+                  className="w-full pl-9 pr-4 py-3 bg-background border border-outline/30 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm font-body-md"
+                />
               </div>
-            ))}
+              <button className="w-full py-3 bg-primary text-on-primary font-technical-sm font-bold tracking-wider uppercase text-sm rounded hover:bg-primary-hover active:scale-95 transition-all shadow-md">
+                Subscribe Now
+              </button>
+            </div>
+          </div>
+
+          {/* Latest Dispatches */}
+          <div>
+            <h3 className="font-technical-sm font-bold uppercase tracking-widest text-xs border-b-2 border-primary pb-2 mb-6 inline-block">
+              Latest Dispatches
+            </h3>
+            
+            <div className="flex flex-col gap-6">
+              {[
+                { time: "2 hours ago", title: "OpenAI Announces New Enterprise Integration Tools", tag: "Tech" },
+                { time: "5 hours ago", title: "The Economic Impact of Automated Legal Discovery", tag: "Economy" },
+                { time: "Yesterday", title: "EU Parliament Passes Comprehensive AI Regulatory Framework", tag: "Politics" }
+              ].map((article, i) => (
+                <div key={i} className="group cursor-pointer border-b border-outline/10 pb-6 last:border-0 last:pb-0">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-technical-sm text-xs text-primary font-bold">{article.tag}</span>
+                    <span className="font-technical-sm text-xs text-on-surface-variant">{article.time}</span>
+                  </div>
+                  <h4 className="font-headline-md font-bold text-lg leading-tight group-hover:text-primary transition-colors">
+                    {article.title}
+                  </h4>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
+      </main>
 
-      {/* CTA Footer */}
-      <footer className="bg-primary-container text-white py-24 px-6 text-center relative overflow-hidden">
-        {/* Zippy Stamp / Decorative Element */}
-        <div className="absolute top-10 right-10 zippy-stamp scale-150 opacity-20 hidden md:flex">
-          <MousePointerClick className="w-6 h-6" />
-        </div>
-
-        <div className="max-w-3xl mx-auto relative z-10">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">Ready to upgrade your AI diet?</h2>
-          <p className="text-on-primary-container mb-10 text-xl font-light">Join 10,000+ founders and engineers who read AI Flow.</p>
-          <div className="flex flex-col sm:flex-row max-w-lg mx-auto bg-white/10 p-2 rounded-2xl backdrop-blur-sm gap-2">
-            <input 
-              type="email" 
-              placeholder="name@company.com" 
-              className="bg-transparent flex-1 px-4 py-3 text-white placeholder-white/60 outline-none"
-            />
-            <button className="primary-btn shrink-0">
-              Subscribe
-            </button>
+      {/* Footer */}
+      <footer className="border-t border-outline/20 mt-12 bg-surface-container py-12">
+        <div className="max-w-7xl mx-auto px-container-padding flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <span className="font-headline-lg font-bold text-2xl text-on-surface">AI-flow</span>
+            <span className="font-body-md text-sm text-on-surface-variant">© 2024 AI-flow Media. All rights reserved.</span>
+          </div>
+          <div className="flex gap-6 font-technical-sm text-sm font-bold text-on-surface-variant">
+            <a href="#" className="hover:text-primary transition-colors">About Us</a>
+            <a href="#" className="hover:text-primary transition-colors">Contact</a>
+            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
