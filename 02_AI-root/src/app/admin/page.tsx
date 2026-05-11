@@ -43,7 +43,7 @@ export default function AdminDashboard() {
 
             <nav className="flex flex-col gap-2">
               <div className="mb-4">
-                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-emerald-tech font-bold text-sm border border-emerald-tech/20 transition-all cursor-pointer">
+                <a href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-emerald-tech font-bold text-sm border border-emerald-tech/20 transition-all cursor-pointer">
                   <LayoutDashboard className="w-4 h-4" />
                   대시보드
                 </a>
@@ -51,19 +51,19 @@ export default function AdminDashboard() {
 
               <div className="flex flex-col gap-1">
                 {[
-                  { name: 'AI-FLOW 관리 (사이트 A)', icon: <Share2 className="w-4 h-4" />, sub: ["요약 피드 관리", "Zippy's Pick 설정"] },
-                  { name: 'AI-ROOT 관리 (사이트 B)', icon: <Database className="w-4 h-4" />, sub: ["LMS 코스 설정", "과제 및 평가 모니터링"] },
-                  { name: '통합 콘텐츠 에디터', icon: <FileEdit className="w-4 h-4" /> },
-                  { name: '사용자 및 서비스 관리', icon: <Users className="w-4 h-4" />, sub: ["학점(Credit) 제어", "구독 플랜 관리"] },
+                  { name: 'AI-FLOW 관리 (사이트 A)', icon: <Share2 className="w-4 h-4" />, sub: ["요약 피드 관리", "Zippy's Pick 설정"], href: "#" },
+                  { name: 'AI-ROOT 관리 (사이트 B)', icon: <Database className="w-4 h-4" />, sub: ["LMS 코스 설정", "과제 및 평가 모니터링"], href: "#" },
+                  { name: '통합 콘텐츠 에디터', icon: <FileEdit className="w-4 h-4" />, href: "/admin/editor" },
+                  { name: '사용자 및 서비스 관리', icon: <Users className="w-4 h-4" />, sub: ["학점(Credit) 제어", "구독 플랜 관리"], href: "#" },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col">
-                    <button className="flex items-center justify-between px-4 py-3 rounded-xl text-white/40 hover:bg-white/5 hover:text-white transition-all text-sm cursor-pointer group">
+                    <a href={item.href} className="flex items-center justify-between px-4 py-3 rounded-xl text-white/40 hover:bg-white/5 hover:text-white transition-all text-sm cursor-pointer group">
                       <div className="flex items-center gap-3">
                         {item.icon}
                         {item.name}
                       </div>
                       {item.sub && <ChevronDown className="w-3 h-3 opacity-40 group-hover:opacity-100" />}
-                    </button>
+                    </a>
                     {item.sub && i < 2 && (
                        <div className="flex flex-col ml-11 mt-1 mb-2 gap-2">
                          {item.sub.map(s => (
