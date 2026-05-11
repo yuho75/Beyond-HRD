@@ -12,6 +12,7 @@ import {
   RefreshCcw, 
   FileText, 
   ChevronLeft,
+  ChevronRight,
   LayoutDashboard,
   Share2,
   Database,
