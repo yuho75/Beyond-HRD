@@ -7,6 +7,7 @@ import "react-quill-new/dist/quill.snow.css";
 
 const ReactQuill = dynamic(async () => {
   const { default: RQ } = await import("react-quill-new");
+  // @ts-ignore
   const { default: ImageResize } = await import("quill-image-resize-module-react");
 
   if (typeof window !== 'undefined') {
