@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   description: "Bi-weekly insights from top AI creators, summarized for you.",
 };
 
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,10 +33,15 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${nanumMyeongjo.variable} font-sans antialiased bg-surface text-on-surface`}
+        className={`${nanumMyeongjo.variable} font-sans antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen`}
       >
-        {children}
+        <Header />
+        <main className="flex-grow flex flex-col items-center w-full">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
 }
+
