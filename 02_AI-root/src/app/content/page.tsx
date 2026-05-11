@@ -33,6 +33,7 @@ export default function ContentPage() {
           <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px]" href="#">AI 창업</a>
           <a className="font-technical-sm text-emerald-tech border-b-2 border-emerald-tech pb-1 uppercase tracking-widest text-[11px]" href="#">Courses</a>
           <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px]" href="/mypage">My Page</a>
+          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px]" href="/admin">Admin</a>
         </nav>
         
         <div className="flex-1 flex items-center justify-end gap-4">
