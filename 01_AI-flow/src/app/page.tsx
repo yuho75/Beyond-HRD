@@ -90,17 +90,12 @@ export default function Home() {
         {/* Zippy Subscription Banner */}
         <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
           {/* Faint Zippy background icon */}
-          <div className="absolute -right-8 -bottom-8 opacity-10 pointer-events-none">
-            <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-              <line x1="9" y1="9" x2="9.01" y2="9" />
-              <line x1="15" y1="9" x2="15.01" y2="9" />
-            </svg>
+          <div className="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
+            <img src="/zippy.png" alt="Zippy Face Background" className="w-[200px] h-[200px] object-contain opacity-20" />
           </div>
           
-          <div className="w-16 h-16 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center z-10 text-xl">
-            👓
+          <div className="w-16 h-16 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center z-10 overflow-hidden p-2">
+            <img src="/zippy.png" alt="Zippy Face" className="w-full h-full object-contain" />
           </div>
           
           <div className="flex-1 z-10">
