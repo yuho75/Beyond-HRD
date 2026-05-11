@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Mail, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowRight, Mail, PlayCircle, MousePointerClick, Sparkles } from "lucide-react";
 
 export default function Home() {
   const youtubers = [
@@ -13,19 +13,19 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-[var(--color-surface)] text-[var(--color-on-surface)] font-inter">
+    <main className="min-h-screen bg-surface text-on-surface">
       {/* Navigation */}
-      <nav className="fixed w-full z-50 glass border-b border-white/20">
+      <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant/20">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full tech-gradient flex items-center justify-center">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-lg">
               <Sparkles className="text-white w-4 h-4" />
             </div>
-            <span className="font-jakarta font-bold text-xl tracking-tight text-[var(--color-primary)]">
+            <span className="font-serif font-bold text-2xl tracking-tight text-primary-container">
               AI Flow
             </span>
           </div>
-          <button className="bg-[var(--color-secondary-container)] text-[#666600] px-6 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-transform duration-200">
+          <button className="primary-btn text-sm">
             Subscribe
           </button>
         </div>
@@ -33,26 +33,26 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-surface-lowest)] shadow-sm mb-8 ghost-border">
-            <span className="w-2 h-2 rounded-full bg-[var(--color-secondary-container)] animate-pulse"></span>
-            <span className="text-xs font-bold tracking-wider text-[var(--color-on-surface-variant)] uppercase">Bi-weekly Curator</span>
+        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 shadow-sm mb-8">
+            <span className="w-2 h-2 rounded-full bg-electric-blue animate-pulse"></span>
+            <span className="text-xs font-bold tracking-wider text-on-surface-variant uppercase">Bi-weekly Curator</span>
           </div>
-          <h1 className="font-jakarta text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight mb-8">
+          <h1 className="font-serif text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-8 text-primary-container">
             The Digital Archive of <br />
-            <span className="text-[var(--color-primary)]">AI Knowledge.</span>
+            <span className="text-electric-blue">AI Knowledge.</span>
           </h1>
-          <p className="text-lg md:text-xl text-[var(--color-on-surface-variant)] mb-10 leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl text-on-surface-variant mb-10 leading-relaxed max-w-2xl mx-auto">
             We crawl, analyze, and summarize the top 20 AI creators on YouTube. 
             Get the signal, cut the noise. Delivered to your inbox every two weeks.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="flex items-center justify-center gap-2 tech-gradient text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+            <button className="primary-btn gap-2 text-lg px-8 py-4">
               <Mail className="w-5 h-5" />
               Join the Archive
             </button>
-            <button className="flex items-center justify-center gap-2 bg-[var(--color-surface-lowest)] text-[var(--color-primary)] px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-colors ghost-border">
+            <button className="secondary-btn gap-2 text-lg px-8 py-4">
               <PlayCircle className="w-5 h-5" />
               View Latest Summary
             </button>
@@ -60,39 +60,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Curator Grid */}
-      <section className="py-24 bg-[var(--color-surface-low)] px-6">
+      {/* Curator Bento Grid */}
+      <section className="py-24 bg-surface-container-low px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-end justify-between mb-16">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
             <div>
-              <h2 className="font-jakarta text-3xl font-bold mb-4">Tracked Creators</h2>
-              <p className="text-[var(--color-on-surface-variant)]">Monitoring the pulse of artificial intelligence.</p>
+              <h2 className="font-serif text-4xl font-bold mb-4 text-primary-container">Tracked Creators</h2>
+              <p className="text-on-surface-variant text-lg">Monitoring the pulse of artificial intelligence.</p>
             </div>
-            <button className="text-[var(--color-primary)] font-bold flex items-center gap-2 hover:gap-3 transition-all">
+            <button className="text-electric-blue font-bold flex items-center gap-2 hover:gap-3 transition-all">
               View All 20 <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {youtubers.map((yt, i) => (
               <div 
                 key={i} 
-                className="bg-[var(--color-surface-lowest)] rounded-2xl p-8 hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group"
+                className="bento-card group"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-primary-fixed)] rounded-bl-full -mr-16 -mt-16 opacity-50 group-hover:scale-110 transition-transform"></div>
-                
-                <span className="inline-block px-3 py-1 rounded-full bg-[var(--color-secondary-container)] text-[#666600] text-xs font-bold mb-6">
-                  {yt.tag}
-                </span>
-                
-                <h3 className="font-jakarta text-xl font-bold mb-2">{yt.name}</h3>
-                <p className="text-[var(--color-on-surface-variant)] text-sm">{yt.topic}</p>
-                
-                <div className="mt-8 pt-6 border-t border-[var(--color-outline-variant)] border-opacity-20 flex justify-between items-center">
-                  <span className="text-xs text-[var(--color-on-surface-variant)] font-medium">Last updated: 2 hrs ago</span>
-                  <div className="w-8 h-8 rounded-full bg-[var(--color-surface)] flex items-center justify-center text-[var(--color-primary)]">
+                <div className="flex justify-between items-start mb-6">
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-surface-container text-primary-container text-xs font-bold uppercase tracking-wider">
+                    {yt.tag}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline-variant group-hover:bg-electric-blue group-hover:text-white transition-colors duration-300">
                     <ArrowRight className="w-4 h-4" />
                   </div>
+                </div>
+                
+                <h3 className="font-serif text-2xl font-bold mb-3 text-primary-container group-hover:text-electric-blue transition-colors">{yt.name}</h3>
+                <p className="text-on-surface-variant text-sm mb-6">{yt.topic}</p>
+                
+                <div className="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+                  <span className="text-xs text-outline-variant font-medium uppercase tracking-wider">Last updated: 2 hrs ago</span>
                 </div>
               </div>
             ))}
@@ -101,17 +101,22 @@ export default function Home() {
       </section>
 
       {/* CTA Footer */}
-      <footer className="tech-gradient text-white py-24 px-6 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="font-jakarta text-4xl font-bold mb-6">Ready to upgrade your AI diet?</h2>
-          <p className="text-[#bfc2ff] mb-10 text-lg">Join 10,000+ founders and engineers who read AI Flow.</p>
-          <div className="flex max-w-md mx-auto bg-white/10 p-2 rounded-2xl backdrop-blur-sm">
+      <footer className="bg-primary-container text-white py-24 px-6 text-center relative overflow-hidden">
+        {/* Zippy Stamp / Decorative Element */}
+        <div className="absolute top-10 right-10 zippy-stamp scale-150 opacity-20 hidden md:flex">
+          <MousePointerClick className="w-6 h-6" />
+        </div>
+
+        <div className="max-w-3xl mx-auto relative z-10">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">Ready to upgrade your AI diet?</h2>
+          <p className="text-on-primary-container mb-10 text-xl font-light">Join 10,000+ founders and engineers who read AI Flow.</p>
+          <div className="flex flex-col sm:flex-row max-w-lg mx-auto bg-white/10 p-2 rounded-2xl backdrop-blur-sm gap-2">
             <input 
               type="email" 
               placeholder="name@company.com" 
-              className="bg-transparent flex-1 px-4 text-white placeholder-white/50 outline-none"
+              className="bg-transparent flex-1 px-4 py-3 text-white placeholder-white/60 outline-none"
             />
-            <button className="bg-[var(--color-secondary-container)] text-[#666600] px-6 py-3 rounded-xl font-bold">
+            <button className="primary-btn shrink-0">
               Subscribe
             </button>
           </div>

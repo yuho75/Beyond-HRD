@@ -9,22 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#f8f9fa',
-        primary: '#00004c',
-        primary_container: '#00008b',
-        secondary: '#626200',
-        secondary_container: '#e7e700',
-        surface: '#f8f9fa',
-        surface_container_low: '#f3f4f5',
-        surface_container_lowest: '#ffffff',
-        on_surface: '#191c1d',
-        on_surface_variant: '#454653',
-        error: '#ba1a1a',
+        background: '#fbf8ff',
+        surface: '#fbf8ff',
+        'surface-container-lowest': '#ffffff',
+        'surface-container-low': '#f5f2fb',
+        'surface-container': '#efecf5',
+        'on-surface': '#1b1b21',
+        'on-surface-variant': '#454652',
+        'outline-variant': '#c6c5d4',
+        primary: '#000666',
+        'primary-container': '#1a237e',
+        'on-primary-container': '#8690ee',
+        'electric-blue': '#3B82F6',
+        'electric-yellow': '#FFEB3B',
       },
       fontFamily: {
-        display: ['var(--font-plus-jakarta-sans)'],
-        body: ['var(--font-inter)'],
+        serif: ['var(--font-nanum-myeongjo)', 'serif'],
+        sans: ['Pretendard', 'sans-serif'],
       },
+      borderRadius: {
+        'lg': '0.5rem',
+      },
+      spacing: {
+        '18': '4.5rem',
+      }
     },
   },
   plugins: [],

@@ -1,38 +1,31 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --color-primary: #00004c;
-  --color-primary-container: #00008b;
-  --color-secondary-container: #e7e700;
-  --color-secondary-fixed: #eaea00;
-  --color-surface: #f8f9fa;
-  --color-surface-lowest: #ffffff;
-  --color-surface-low: #f3f4f5;
-  --color-on-surface: #191c1d;
-  --color-on-surface-variant: #454653;
-  --color-outline-variant: #c6c5d5;
+@layer base {
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.on-surface');
+  }
 }
 
-:root {
-  --background: #f8f9fa;
-  --foreground: #191c1d;
-}
+@layer components {
+  .bento-card {
+    @apply bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-4 relative transition-all duration-300;
+  }
+  .bento-card:hover {
+    @apply border-electric-blue -translate-y-1 shadow-[0_8px_20px_rgb(59,130,246,0.1)];
+  }
+  
+  .primary-btn {
+    @apply bg-electric-yellow text-primary-container font-bold px-6 py-2.5 rounded-full hover:scale-105 transition-transform duration-200 inline-flex items-center justify-center;
+  }
+  
+  .secondary-btn {
+    @apply bg-surface-container-lowest text-on-surface border border-electric-blue px-6 py-2.5 rounded-full font-bold hover:bg-electric-blue hover:text-white transition-colors duration-200 inline-flex items-center justify-center;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
-/* Glass effect */
-.glass {
-  background-color: rgba(248, 249, 250, 0.7);
-  backdrop-filter: blur(20px);
-}
-
-.ghost-border {
-  border: 1px solid rgba(198, 197, 213, 0.2);
-}
-
-.tech-gradient {
-  background: linear-gradient(135deg, #00004c, #00008b);
+  .zippy-stamp {
+    @apply w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center shadow-[0_4px_12px_rgb(26,35,126,0.2)];
+  }
 }

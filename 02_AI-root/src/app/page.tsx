@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Lightbulb, TrendingUp, Users, ArrowRight } from "lucide-react";
+import { BookOpen, Lightbulb, TrendingUp, Users, ArrowRight, MousePointerClick } from "lucide-react";
 
 export default function Home() {
   const modules = [
@@ -8,92 +8,109 @@ export default function Home() {
       title: "AI Learning Hub",
       desc: "Master prompt engineering, fine-tuning, and practical implementations.",
       icon: <BookOpen className="w-6 h-6" />,
-      color: "bg-[#e0e0ff]", // primary_fixed
-      textColor: "text-[#00006e]" // on_primary_fixed
+      tag: "Education",
     },
     {
       title: "Business Ideas",
       desc: "Curated, high-potential AI business models and execution guides.",
       icon: <Lightbulb className="w-6 h-6" />,
-      color: "bg-[#eaea00]", // secondary_fixed
-      textColor: "text-[#1d1d00]" // on_secondary_fixed
+      tag: "Strategy",
     },
     {
       title: "Civilization Insights",
       desc: "Deep analysis on the societal impact of the lightweight civilization shift.",
       icon: <TrendingUp className="w-6 h-6" />,
-      color: "bg-[#ffdad4]", // tertiary_fixed
-      textColor: "text-[#410000]" // on_tertiary_fixed
+      tag: "Research",
     },
     {
       title: "Company PR",
       desc: "Discover top AI startups, tools, and enterprise solutions.",
       icon: <Users className="w-6 h-6" />,
-      color: "bg-[#ffffff]", // surface_container_lowest
-      textColor: "text-[#00004c]" // primary
+      tag: "Ecosystem",
     }
   ];
 
   return (
-    <main className="min-h-screen bg-[var(--color-surface)] text-[var(--color-on-surface)] font-inter">
+    <main className="min-h-screen bg-surface text-on-surface">
       {/* Navigation */}
-      <nav className="fixed w-full z-50 glass border-b border-white/20">
+      <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant/20">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)] flex items-center justify-center shadow-lg">
-              <span className="font-jakarta font-bold text-xl text-white">R</span>
+            {/* Original Logo preserved */}
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg">
+              <span className="font-sans font-bold text-xl text-white">R</span>
             </div>
-            <span className="font-jakarta font-bold text-xl tracking-tight text-[var(--color-primary)]">
+            <span className="font-serif font-bold text-2xl tracking-tight text-primary-container">
               AI Root
             </span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-[var(--color-on-surface-variant)] font-medium text-sm">
-            <a href="#" className="hover:text-[var(--color-primary)] transition-colors">Learning</a>
-            <a href="#" className="hover:text-[var(--color-primary)] transition-colors">Ideas</a>
-            <a href="#" className="hover:text-[var(--color-primary)] transition-colors">Insights</a>
-            <a href="#" className="hover:text-[var(--color-primary)] transition-colors">Companies</a>
+          <div className="hidden md:flex items-center gap-8 text-on-surface-variant font-medium text-sm">
+            <a href="#" className="hover:text-primary-container transition-colors">Learning</a>
+            <a href="#" className="hover:text-primary-container transition-colors">Ideas</a>
+            <a href="#" className="hover:text-primary-container transition-colors">Insights</a>
+            <a href="#" className="hover:text-primary-container transition-colors">Companies</a>
           </div>
-          <button className="bg-[var(--color-primary)] text-white px-6 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-transform duration-200">
+          <button className="primary-btn text-sm">
             Sign In
           </button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 max-w-7xl mx-auto relative">
-        <div className="absolute right-0 top-20 w-[500px] h-[500px] bg-[var(--color-primary-fixed)] rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
-        
-        <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[60vh]">
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-secondary-container)] text-[#666600] font-bold text-xs uppercase tracking-wider mb-8">
-              The Foundation of AI
-            </div>
-            <h1 className="font-jakarta text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight mb-8">
-              Rooted in <br/>
-              <span className="text-[var(--color-primary)]">Intelligence.</span>
-            </h1>
-            <p className="text-lg text-[var(--color-on-surface-variant)] mb-10 leading-relaxed max-w-lg">
-              Your comprehensive ecosystem for AI education, innovative business models, and strategic insights for the lightweight civilization.
-            </p>
-            
-            <div className="flex items-center gap-4">
-              <button className="tech-gradient text-white px-8 py-4 rounded-xl font-bold text-lg hover:-translate-y-1 transition-transform shadow-xl shadow-[var(--color-primary-container)]/20">
-                Explore Modules
-              </button>
+      <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto">
+        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 shadow-sm mb-8">
+            <span className="w-2 h-2 rounded-full bg-emerald-green animate-pulse"></span>
+            <span className="text-xs font-bold tracking-wider text-on-surface-variant uppercase">The Foundation of AI</span>
+          </div>
+          <h1 className="font-serif text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-8 text-primary-container">
+            Rooted in <br />
+            <span className="text-emerald-green">Intelligence.</span>
+          </h1>
+          <p className="text-lg md:text-xl text-on-surface-variant mb-10 leading-relaxed max-w-2xl mx-auto">
+            Your comprehensive ecosystem for AI education, innovative business models, and strategic insights for the lightweight civilization.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button className="primary-btn gap-2 text-lg px-8 py-4">
+              Explore Modules
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Bento Grid */}
+      <section className="py-24 bg-surface-container-low px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+            <div>
+              <h2 className="font-serif text-4xl font-bold mb-4 text-primary-container">Core Modules</h2>
+              <p className="text-on-surface-variant text-lg">Navigating the next era of technological advancement.</p>
             </div>
           </div>
-          
-          <div className="grid grid-cols-2 gap-6 relative">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {modules.map((mod, i) => (
               <div 
-                key={i}
-                className={`${mod.color} ${mod.textColor} p-8 rounded-3xl ${i % 2 !== 0 ? 'mt-12' : ''} hover:scale-105 transition-transform duration-300 shadow-sm`}
+                key={i} 
+                className="bento-card group flex flex-col justify-between min-h-[240px]"
               >
-                <div className="mb-6 opacity-80">{mod.icon}</div>
-                <h3 className="font-jakarta text-xl font-bold mb-3">{mod.title}</h3>
-                <p className="text-sm opacity-80 leading-relaxed">{mod.desc}</p>
-                <div className="mt-8 flex justify-end">
-                  <ArrowRight className="w-5 h-5 opacity-50" />
+                <div className="flex justify-between items-start mb-6">
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-surface-container text-primary-container text-xs font-bold uppercase tracking-wider">
+                    {mod.tag}
+                  </span>
+                  <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-outline-variant group-hover:bg-emerald-green group-hover:text-white transition-colors duration-300">
+                    {mod.icon}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="font-serif text-2xl font-bold mb-3 text-primary-container group-hover:text-emerald-green transition-colors">{mod.title}</h3>
+                  <p className="text-on-surface-variant text-base mb-6 leading-relaxed">{mod.desc}</p>
+                </div>
+                
+                <div className="pt-4 border-t border-outline-variant/20 flex justify-end items-center">
+                  <ArrowRight className="w-5 h-5 text-outline-variant group-hover:text-emerald-green group-hover:-translate-x-1 transition-all" />
                 </div>
               </div>
             ))}
@@ -102,15 +119,17 @@ export default function Home() {
       </section>
 
       {/* Insight Banner */}
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto bg-[var(--color-primary-container)] rounded-[2.5rem] p-12 md:p-20 relative overflow-hidden text-center text-white">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto bg-primary-container rounded-[2rem] p-12 md:p-20 relative overflow-hidden text-center text-white">
+          <div className="absolute top-10 right-10 zippy-stamp scale-150 opacity-20 hidden md:flex">
+            <MousePointerClick className="w-6 h-6" />
+          </div>
           
-          <h2 className="font-jakarta text-4xl md:text-5xl font-bold mb-6 relative z-10">Join the AI Vanguard</h2>
-          <p className="text-xl text-[#bfc2ff] mb-10 max-w-2xl mx-auto relative z-10">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 relative z-10">Join the AI Vanguard</h2>
+          <p className="text-on-primary-container mb-10 text-xl font-light max-w-2xl mx-auto relative z-10">
             Promote your AI enterprise, share your insights, and connect with a network of forward-thinking innovators.
           </p>
-          <button className="bg-[var(--color-secondary-container)] text-[#666600] px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform duration-200 relative z-10 shadow-xl shadow-[#e7e700]/20">
+          <button className="primary-btn relative z-10 px-10 py-4 text-lg">
             Register Company
           </button>
         </div>

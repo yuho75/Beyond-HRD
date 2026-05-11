@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Nanum_Myeongjo } from "next/font/google";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const nanumMyeongjo = Nanum_Myeongjo({
+  weight: ["400", "700", "800"],
   subsets: ["latin"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+  variable: "--font-nanum-myeongjo",
   display: "swap",
 });
 
@@ -26,8 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          as="style"
+          crossOrigin="anonymous"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+        />
+      </head>
       <body
-        className={`${jakarta.variable} ${inter.variable} antialiased bg-[var(--color-surface)] text-[var(--color-on-surface)]`}
+        className={`${nanumMyeongjo.variable} font-sans antialiased bg-surface text-on-surface`}
       >
         {children}
       </body>
