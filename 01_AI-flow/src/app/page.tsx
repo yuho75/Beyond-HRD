@@ -1,150 +1,173 @@
 "use client";
 
-import { Search, User, Mail } from "lucide-react";
+import { Search } from "lucide-react";
 
 export default function Home() {
+  const latestDispatches = [
+    { tag: "Hardware", title: "The Silicon Squeeze: A Global Update", date: "Oct 23, 2024", color: "bg-indigo-100 text-indigo-700" },
+    { tag: "Software", title: "Open Source AI: A New Paradigm", date: "Oct 22, 2024", color: "bg-orange-100 text-orange-700" },
+    { tag: "Robotics", title: "Boston Dynamics Drops New Model", date: "Oct 21, 2024", color: "bg-slate-100 text-slate-700" },
+    { tag: "Policy", title: "EU AI Act: What You Need to Know", date: "Oct 20, 2024", color: "bg-red-100 text-red-700" },
+    { tag: "Hardware", title: "TSMC Earnings Report Breakdown", date: "Oct 19, 2024", color: "bg-indigo-100 text-indigo-700" },
+    { tag: "Software", title: "New Transformer Architecture Detailed", date: "Oct 18, 2024", color: "bg-orange-100 text-orange-700" },
+    { tag: "Robotics", title: "Agility Robotics Secures Series C", date: "Oct 17, 2024", color: "bg-slate-100 text-slate-700" },
+    { tag: "Policy", title: "Copyright Claims in the GenAI Era", date: "Oct 16, 2024", color: "bg-red-100 text-red-700" },
+    { tag: "Hardware", title: "Nvidia's Next Move", date: "Oct 15, 2024", color: "bg-indigo-100 text-indigo-700" },
+    { tag: "Software", title: "Fine-Tuning Strategies Analyzed", date: "Oct 14, 2024", color: "bg-orange-100 text-orange-700" },
+    { tag: "Robotics", title: "Automation in Agriculture", date: "Oct 13, 2024", color: "bg-slate-100 text-slate-700" },
+    { tag: "Policy", title: "The Ethics of AI in Hiring", date: "Oct 12, 2024", color: "bg-red-100 text-red-700" }
+  ];
+
   return (
-    <div className="font-body-md text-on-background min-h-screen bg-background">
+    <div className="font-body-md text-on-background min-h-screen bg-[#f8f9fa] flex flex-col items-center">
+      
       {/* Top Header / Nav */}
-      <header className="border-b border-outline/20 sticky top-0 bg-background/90 backdrop-blur-md z-30">
-        <div className="max-w-7xl mx-auto px-container-padding flex flex-col">
-          {/* Top bar */}
-          <div className="flex items-center justify-between h-14 text-xs font-technical-sm tracking-wider uppercase border-b border-outline/10 text-on-surface-variant">
-            <div className="flex gap-4">
-              <span>VOL. 42</span>
-              <span>•</span>
-              <span>OCT 24, 2024</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="cursor-pointer hover:text-primary transition-colors">LOGIN</span>
-              <span className="cursor-pointer hover:text-primary transition-colors">SUBSCRIBE</span>
-            </div>
+      <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-30">
+        <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-8">
+            <h1 className="font-headline-lg font-bold text-2xl text-[#f97316]">AI-flow</h1>
+            
+            <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
+              <a href="#" className="hover:text-gray-900 transition-colors">Politics</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Economy</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">World</a>
+              <a href="#" className="text-gray-900 border-b-2 border-[#f97316] pb-[2px]">Tech</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Science</a>
+            </nav>
           </div>
           
-          {/* Main Nav */}
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-4 flex-1">
-              <Search className="w-5 h-5 text-on-surface cursor-pointer hover:text-primary transition-colors" />
-            </div>
-            
-            <div className="flex-1 flex justify-center">
-              <h1 className="font-headline-lg font-bold text-4xl tracking-tight text-on-surface">AI-flow</h1>
-            </div>
-            
-            <div className="flex-1 flex justify-end gap-6 font-technical-sm text-sm font-semibold tracking-wide text-on-surface-variant">
-              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">POLITICS</a>
-              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">ECONOMY</a>
-              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">WORLD</a>
-              <a href="#" className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">TECH</a>
-            </div>
+          <div className="flex items-center gap-4">
+            <Search className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-900" />
+            <button className="text-sm font-medium text-indigo-600 border border-indigo-200 px-4 py-1.5 rounded hover:bg-indigo-50 transition-colors">
+              Login
+            </button>
+            <button className="text-sm font-medium text-white bg-[#f97316] px-4 py-1.5 rounded hover:bg-[#ea580c] transition-colors shadow-sm">
+              Subscribe
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Main Content Grid */}
-      <main className="max-w-7xl mx-auto px-container-padding py-10 flex flex-col lg:flex-row gap-8">
-        {/* Left Column - Hero Article */}
-        <div className="flex-1 flex flex-col gap-6 lg:pr-8 lg:border-r lg:border-outline/20">
-          <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest self-start rounded-sm">
-            Cover Story
+      {/* Main Content */}
+      <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
+        
+        {/* Hero Section */}
+        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-10 items-center">
+          <div className="w-full md:w-1/2 aspect-[4/3] rounded-xl overflow-hidden bg-gray-900 relative">
+             <div className="absolute inset-0 bg-gradient-to-tr from-red-900/40 to-transparent mix-blend-overlay"></div>
+             {/* Placeholder for the red cube abstract image */}
+             <div className="w-full h-full flex items-center justify-center text-white/20">
+               [Hero Image: Red Cubes]
+             </div>
           </div>
           
-          <h2 className="font-display-xl text-5xl md:text-6xl font-bold leading-tight tracking-tight text-on-surface">
-            The Dawn of<br />Generative Intelligence
-          </h2>
-          
-          <p className="font-body-lg text-xl leading-relaxed text-on-surface-variant">
-            How autonomous agents are restructuring corporate hierarchies and redefining what it means to "work" in the 21st century.
-          </p>
-          
-          <div className="aspect-video bg-surface-container-high rounded-xl overflow-hidden mt-4 shadow-sm border border-outline/10 group cursor-pointer relative">
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors z-10"></div>
-            <div className="w-full h-full flex items-center justify-center bg-primary/5 text-primary/40 font-headline-md">
-              [ Hero Image ]
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3 mt-2">
-            <div className="w-10 h-10 rounded-full bg-surface-container overflow-hidden flex items-center justify-center border border-outline/20">
-               <User className="w-5 h-5 text-on-surface-variant" />
-            </div>
-            <div>
-              <p className="font-technical-sm font-bold text-sm">By Zippy AI</p>
-              <p className="font-technical-sm text-xs text-on-surface-variant">Chief Intelligence Editor</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column - Secondary Content */}
-        <div className="w-full lg:w-80 shrink-0 flex flex-col gap-10">
-          {/* Subscription Module */}
-          <div className="bg-surface-container border border-outline/20 p-6 rounded-xl relative overflow-hidden shadow-sm group hover:border-primary/50 transition-colors">
-            {/* Background pattern */}
-            <div className="absolute -right-10 -top-10 opacity-5 group-hover:opacity-10 transition-opacity">
-              <svg width="150" height="150" viewBox="0 0 100 100" className="text-primary fill-current">
-                <circle cx="50" cy="50" r="40" />
-              </svg>
-            </div>
-            
-            <h3 className="font-headline-md font-bold text-xl mb-2 relative z-10">Daily Intelligence Brief</h3>
-            <p className="font-body-md text-sm text-on-surface-variant mb-6 relative z-10">
-              Get the most critical AI developments delivered straight to your inbox before the market opens.
+          <div className="w-full md:w-1/2 flex flex-col justify-center py-6 pr-6">
+            <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider rounded-full self-start mb-4">
+              Featured Report
+            </span>
+            <h2 className="font-display-xl text-4xl md:text-5xl font-bold leading-tight text-gray-900 mb-6">
+              The Dawn of<br />Generative<br />Intelligence
+            </h2>
+            <p className="text-lg text-gray-600 mb-10 leading-relaxed max-w-md">
+              How new foundation models are reshaping the global economy and what it means for the future of work.
             </p>
             
-            <div className="flex flex-col gap-3 relative z-10">
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
-                <input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  className="w-full pl-9 pr-4 py-3 bg-background border border-outline/30 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm font-body-md"
-                />
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                <div className="w-6 h-6 bg-gray-400 rounded-full opacity-50"></div>
               </div>
-              <button className="w-full py-3 bg-primary text-on-primary font-technical-sm font-bold tracking-wider uppercase text-sm rounded hover:bg-primary-hover active:scale-95 transition-all shadow-md">
-                Subscribe Now
-              </button>
+              <div>
+                <p className="font-bold text-sm text-gray-900">Alex Mercer</p>
+                <p className="text-xs text-gray-500">Oct 24, 2024</p>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Latest Dispatches */}
-          <div>
-            <h3 className="font-technical-sm font-bold uppercase tracking-widest text-xs border-b-2 border-primary pb-2 mb-6 inline-block">
-              Latest Dispatches
-            </h3>
-            
-            <div className="flex flex-col gap-6">
-              {[
-                { time: "2 hours ago", title: "OpenAI Announces New Enterprise Integration Tools", tag: "Tech" },
-                { time: "5 hours ago", title: "The Economic Impact of Automated Legal Discovery", tag: "Economy" },
-                { time: "Yesterday", title: "EU Parliament Passes Comprehensive AI Regulatory Framework", tag: "Politics" }
-              ].map((article, i) => (
-                <div key={i} className="group cursor-pointer border-b border-outline/10 pb-6 last:border-0 last:pb-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-technical-sm text-xs text-primary font-bold">{article.tag}</span>
-                    <span className="font-technical-sm text-xs text-on-surface-variant">{article.time}</span>
-                  </div>
-                  <h4 className="font-headline-md font-bold text-lg leading-tight group-hover:text-primary transition-colors">
-                    {article.title}
-                  </h4>
-                </div>
-              ))}
-            </div>
+        {/* Zippy Subscription Banner */}
+        <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
+          {/* Faint Zippy background icon */}
+          <div className="absolute -right-8 -bottom-8 opacity-10 pointer-events-none">
+            <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+              <line x1="9" y1="9" x2="9.01" y2="9" />
+              <line x1="15" y1="9" x2="15.01" y2="9" />
+            </svg>
           </div>
-        </div>
+          
+          <div className="w-16 h-16 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center z-10 text-xl">
+            👓
+          </div>
+          
+          <div className="flex-1 z-10">
+            <h3 className="text-xl font-bold text-gray-900 mb-1">Hello, I'm Zippy!</h3>
+            <p className="text-sm text-orange-900/80 max-w-lg">
+              Get the sharpest AI insights delivered directly to your inbox every morning. No fluff, just the signal.
+            </p>
+          </div>
+          
+          <div className="flex w-full md:w-auto gap-2 z-10">
+            <input 
+              type="email" 
+              placeholder="Your email address" 
+              className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
+            />
+            <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap">
+              Subscribe
+            </button>
+          </div>
+        </section>
+
+        {/* Latest Dispatches Grid */}
+        <section className="mt-4">
+          <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900">Latest Dispatches</h2>
+            <button className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">
+              View All
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {latestDispatches.map((article, i) => (
+              <div key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
+                <div className="h-40 bg-gray-900 relative">
+                   <div className="w-full h-full flex items-center justify-center text-white/10 text-xs">
+                     [Card Image]
+                   </div>
+                   <div className={`absolute top-3 left-3 ${article.color} text-[10px] px-2 py-0.5 font-bold uppercase rounded`}>
+                     {article.tag}
+                   </div>
+                </div>
+                <div className="p-4 flex flex-col flex-grow">
+                  <h3 className="font-bold text-[15px] leading-tight text-gray-900 mb-6 group-hover:text-[#f97316] transition-colors">
+                    {article.title}
+                  </h3>
+                  <div className="mt-auto">
+                    <span className="text-xs text-gray-400 font-medium">{article.date}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-outline/20 mt-12 bg-surface-container py-12">
-        <div className="max-w-7xl mx-auto px-container-padding flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <span className="font-headline-lg font-bold text-2xl text-on-surface">AI-flow</span>
-            <span className="font-body-md text-sm text-on-surface-variant">© 2024 AI-flow Media. All rights reserved.</span>
+      <footer className="w-full bg-white border-t border-gray-200 mt-auto">
+        <div className="max-w-[1200px] mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-8">
+            <span className="font-bold text-xl text-gray-900">The Pulse</span>
+            <div className="hidden md:flex gap-4 text-xs font-semibold text-gray-500">
+              <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Contact Us</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Editorial Guidelines</a>
+            </div>
           </div>
-          <div className="flex gap-6 font-technical-sm text-sm font-bold text-on-surface-variant">
-            <a href="#" className="hover:text-primary transition-colors">About Us</a>
-            <a href="#" className="hover:text-primary transition-colors">Contact</a>
-            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+          <div>
+            <span className="text-xs text-gray-400">© 2024 The Pulse. Editorial Modernism for the Informed Mind.</span>
           </div>
         </div>
       </footer>
