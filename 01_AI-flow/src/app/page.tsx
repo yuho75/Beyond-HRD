@@ -27,7 +27,7 @@ export default function Home() {
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
               <img src="/logo.png" alt="AI-flow Logo" className="w-8 h-8 rounded" />
-              <h1 className="font-headline-lg font-bold text-2xl text-[#f97316]">AI-flow</h1>
+              <h1 className="font-extrabold tracking-tight text-2xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AI-flow</h1>
             </div>
             
             <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
