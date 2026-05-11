@@ -1,7 +1,6 @@
 "use client";
 
 import { Search, UserCircle } from "lucide-react";
-import Link from "next/link";
 
 export default function Home() {
   const latestDispatches = [
@@ -54,7 +53,11 @@ export default function Home() {
       <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
         
         {/* Hero Section */}
-        <Link href="/article" className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-10 items-center hover:border-[#f97316]/30 transition-all group cursor-pointer">
+        <a 
+          href="/article" 
+          className="relative z-10 block bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-10 items-center hover:border-[#f97316]/30 transition-all group cursor-pointer"
+          style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+        >
           <div className="w-full md:w-1/2 aspect-[4/3] rounded-xl overflow-hidden bg-gray-900 relative">
              <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
              <div className="absolute inset-0 bg-gradient-to-tr from-[#f97316]/20 to-transparent mix-blend-overlay"></div>
@@ -81,7 +84,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </Link>
+        </a>
 
         {/* Zippy Subscription Banner */}
         <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
