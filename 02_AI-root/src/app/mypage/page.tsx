@@ -60,14 +60,14 @@ export default function MyPage() {
 
             <nav className="flex flex-col gap-2">
               {[
-                { name: '개인화 대시보드', icon: <Layout className="w-4 h-4" />, active: true },
-                { name: '나의 학습 저장소', icon: <Bookmark className="w-4 h-4" /> },
-                { name: '성장 리포트', icon: <TrendingUp className="w-4 h-4" /> },
-                { name: '계정 및 구독 관리', icon: <Settings className="w-4 h-4" /> },
+                { name: '개인화 대시보드', icon: <Layout className="w-4 h-4" />, href: "/mypage", active: true },
+                { name: '나의 학습 저장소', icon: <Bookmark className="w-4 h-4" />, href: "/mypage/vault" },
+                { name: '성장 리포트', icon: <TrendingUp className="w-4 h-4" />, href: "/mypage/growth" },
+                { name: '계정 및 구독 관리', icon: <Settings className="w-4 h-4" />, href: "/mypage/settings" },
               ].map((item) => (
                 <a 
                   key={item.name} 
-                  href="#" 
+                  href={item.href} 
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl font-technical-sm text-sm transition-all cursor-pointer ${
                     item.active 
                       ? 'bg-[#c5b3f9] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
