@@ -7,7 +7,8 @@ export default function Home() {
     <div className="font-body-md text-inverse-on-surface min-h-screen bg-[#131313] flex flex-col">
       {/* Top Navigation */}
       <header className="h-16 flex items-center justify-between px-container-padding-editorial max-w-7xl mx-auto w-full border-b border-white/10 sticky top-0 bg-[#131313]/80 backdrop-blur-md z-30">
-        <div className="flex-1 flex items-center">
+        <div className="flex-1 flex items-center gap-3">
+          <img src="/logo.png" alt="AI Root Logo" className="w-8 h-8 rounded" />
           <span className="font-headline-lg text-headline-lg font-bold text-surface-bright">AI Root</span>
         </div>
         

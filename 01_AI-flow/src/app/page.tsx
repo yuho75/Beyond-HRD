@@ -25,7 +25,10 @@ export default function Home() {
       <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <h1 className="font-headline-lg font-bold text-2xl text-[#f97316]">AI-flow</h1>
+            <div className="flex items-center gap-2">
+              <img src="/logo.png" alt="AI-flow Logo" className="w-8 h-8 rounded" />
+              <h1 className="font-headline-lg font-bold text-2xl text-[#f97316]">AI-flow</h1>
+            </div>
             
             <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
               <a href="#" className="hover:text-gray-900 transition-colors">Politics</a>
