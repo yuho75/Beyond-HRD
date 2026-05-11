@@ -31,15 +31,15 @@ export default function AdminDashboard() {
         {/* Sidebar */}
         <aside className="w-72 bg-[#1a1a1a] border-r border-white/5 flex flex-col shrink-0">
           <div className="p-8">
-            <div className="flex items-center gap-4 mb-12">
-              <div className="w-10 h-10 rounded-lg bg-emerald-tech flex items-center justify-center">
+            <a href="/" className="flex items-center gap-4 mb-12 group cursor-pointer">
+              <div className="w-10 h-10 rounded-lg bg-emerald-tech flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Terminal className="text-black w-6 h-6" />
               </div>
               <div>
                 <h2 className="font-bold text-white text-sm">A-Zip Admin</h2>
                 <p className="text-[10px] text-white/40 font-technical-sm uppercase tracking-widest">통합 관리 시스템 V3.0</p>
               </div>
-            </div>
+            </a>
 
             <nav className="flex flex-col gap-2">
               <div className="mb-4">
