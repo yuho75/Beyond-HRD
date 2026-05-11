@@ -97,7 +97,7 @@ export default function Home() {
                 <h2 className="font-headline-md text-surface-bright text-xl">Featured Guides</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="group cursor-pointer bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-tech/50 transition-all flex flex-col">
+                <a href="/content" className="group cursor-pointer bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-tech/50 transition-all flex flex-col">
                   <div className="h-48 bg-gradient-to-br from-emerald-tech/20 to-[#131313] border-b border-white/10 relative">
                     <div className="absolute top-4 left-4 bg-emerald-tech/10 text-emerald-tech text-[10px] px-2 py-0.5 font-technical-sm uppercase border border-emerald-tech/20 rounded">Advanced</div>
                   </div>
@@ -108,7 +108,7 @@ export default function Home() {
                       <span className="font-technical-sm text-surface-bright text-xs">Rowan Cheung</span>
                     </div>
                   </div>
-                </div>
+                </a>
 
                 <div className="group cursor-pointer bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-tech/50 transition-all flex flex-col">
                   <div className="h-48 bg-gradient-to-br from-blue-500/20 to-[#131313] border-b border-white/10 relative">
