@@ -12,12 +12,11 @@ export default function Home() {
           <span className="font-extrabold tracking-tight text-2xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
         </a>
         
-        <nav className="hidden lg:flex items-center gap-6">
-          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">AI 활용</a>
-          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">AI 창업</a>
-          <a className="font-technical-sm text-emerald-tech border-b-2 border-emerald-tech pb-1 transition-colors" href="#">AI 전략/리더십</a>
-          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">Tools</a>
-          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors" href="#">Courses</a>
+        <nav className="hidden lg:flex items-center gap-8">
+          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px]" href="#">AI 활용</a>
+          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px]" href="#">AI 창업</a>
+          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px]" href="/content">Content</a>
+          <a className="font-technical-sm text-surface-variant hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px]" href="/mypage">My Page</a>
         </nav>
         
         <div className="flex-1 flex items-center justify-end gap-4">
