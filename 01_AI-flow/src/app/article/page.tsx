@@ -1,34 +1,15 @@
 "use client";
 
 import { Search, Play, ArrowLeft, Share2, Bookmark, MessageSquare, Send, Globe, Link2 } from "lucide-react";
+import Header from "@/components/Header";
+
 
 export default function ArticleDetail() {
   return (
     <div className="font-body-md text-[#1a1a1a] min-h-screen bg-[#fcfcfc] flex flex-col items-center">
       
-      {/* Top Header / Nav */}
-      <header className="w-full bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-30">
-        <div className="max-w-[1000px] mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-10">
-            <a href="/" className="flex items-center gap-2 cursor-pointer group">
-              <h1 className="font-extrabold tracking-tight text-xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AI-flow</h1>
-            </a>
-            
-            <nav className="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-gray-400">
-              <a href="#" className="text-gray-900 border-b-2 border-[#f97316] pb-1">Articles</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Podcast</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Newsletter</a>
-            </nav>
-          </div>
-          
-          <div className="flex items-center gap-6">
-            <Search className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-900" />
-            <button className="text-[10px] font-bold uppercase tracking-widest text-white bg-[#f97316] px-5 py-2 rounded shadow-sm hover:bg-[#ea580c] transition-all cursor-pointer">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
+
 
       {/* Main Content Area */}
       <main className="max-w-[800px] w-full px-6 py-16 flex flex-col items-center">
