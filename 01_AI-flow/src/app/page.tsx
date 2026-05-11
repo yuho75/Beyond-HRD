@@ -30,12 +30,10 @@ export default function Home() {
               <h1 className="font-extrabold tracking-tight text-2xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AI-flow</h1>
             </a>
             
-            <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
-              <a href="#" className="hover:text-gray-900 transition-colors">Politics</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Economy</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">World</a>
-              <a href="#" className="text-gray-900 border-b-2 border-[#f97316] pb-[2px]">Tech</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Science</a>
+            <nav className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+              <a href="/article" className="hover:text-gray-900 transition-colors">Articles</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Podcast</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Newsletter</a>
             </nav>
           </div>
           
