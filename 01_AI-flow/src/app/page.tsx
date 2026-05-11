@@ -4,18 +4,14 @@ import { Search, UserCircle } from "lucide-react";
 
 export default function Home() {
   const latestDispatches = [
-    { tag: "Hardware", title: "The Silicon Squeeze: A Global Update", date: "Oct 23, 2024", color: "bg-indigo-100 text-indigo-700" },
-    { tag: "Software", title: "Open Source AI: A New Paradigm", date: "Oct 22, 2024", color: "bg-orange-100 text-orange-700" },
-    { tag: "Robotics", title: "Boston Dynamics Drops New Model", date: "Oct 21, 2024", color: "bg-slate-100 text-slate-700" },
-    { tag: "Policy", title: "EU AI Act: What You Need to Know", date: "Oct 20, 2024", color: "bg-red-100 text-red-700" },
-    { tag: "Hardware", title: "TSMC Earnings Report Breakdown", date: "Oct 19, 2024", color: "bg-indigo-100 text-indigo-700" },
-    { tag: "Software", title: "New Transformer Architecture Detailed", date: "Oct 18, 2024", color: "bg-orange-100 text-orange-700" },
-    { tag: "Robotics", title: "Agility Robotics Secures Series C", date: "Oct 17, 2024", color: "bg-slate-100 text-slate-700" },
-    { tag: "Policy", title: "Copyright Claims in the GenAI Era", date: "Oct 16, 2024", color: "bg-red-100 text-red-700" },
-    { tag: "Hardware", title: "Nvidia's Next Move", date: "Oct 15, 2024", color: "bg-indigo-100 text-indigo-700" },
-    { tag: "Software", title: "Fine-Tuning Strategies Analyzed", date: "Oct 14, 2024", color: "bg-orange-100 text-orange-700" },
-    { tag: "Robotics", title: "Automation in Agriculture", date: "Oct 13, 2024", color: "bg-slate-100 text-slate-700" },
-    { tag: "Policy", title: "The Ethics of AI in Hiring", date: "Oct 12, 2024", color: "bg-red-100 text-red-700" }
+    { tag: "Hardware", title: "The Silicon Squeeze: A Global Update", date: "Oct 23, 2024", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600" },
+    { tag: "Software", title: "Open Source AI: A New Paradigm", date: "Oct 22, 2024", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" },
+    { tag: "Robotics", title: "Boston Dynamics Drops New Model", date: "Oct 21, 2024", color: "bg-slate-100 text-slate-700", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" },
+    { tag: "Policy", title: "EU AI Act: What You Need to Know", date: "Oct 20, 2024", color: "bg-red-100 text-red-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" },
+    { tag: "Hardware", title: "TSMC Earnings Report Breakdown", date: "Oct 19, 2024", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600" },
+    { tag: "Software", title: "New Transformer Architecture Detailed", date: "Oct 18, 2024", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&q=80&w=600" },
+    { tag: "Robotics", title: "Agility Robotics Secures Series C", date: "Oct 17, 2024", color: "bg-slate-100 text-slate-700", image: "https://images.unsplash.com/photo-1531746790731-6c087fecd05a?auto=format&fit=crop&q=80&w=600" },
+    { tag: "Policy", title: "Copyright Claims in the GenAI Era", date: "Oct 16, 2024", color: "bg-red-100 text-red-700", image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=600" }
   ];
 
   return (
@@ -129,9 +125,7 @@ export default function Home() {
             {latestDispatches.map((article, i) => (
               <div key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
                 <div className="h-40 bg-gray-900 relative">
-                   <div className="w-full h-full flex items-center justify-center text-white/10 text-xs">
-                     [Card Image]
-                   </div>
+                   <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                    <div className={`absolute top-3 left-3 ${article.color} text-[10px] px-2 py-0.5 font-bold uppercase rounded`}>
                      {article.tag}
                    </div>
@@ -155,7 +149,7 @@ export default function Home() {
       <footer className="w-full bg-white border-t border-gray-200 mt-auto">
         <div className="max-w-[1200px] mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-8">
-            <span className="font-bold text-xl text-gray-900">The Pulse</span>
+            <span className="font-extrabold text-xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AI-flow</span>
             <div className="hidden md:flex gap-4 text-xs font-semibold text-gray-500">
               <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>
               <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
@@ -164,7 +158,7 @@ export default function Home() {
             </div>
           </div>
           <div>
-            <span className="text-xs text-gray-400">© 2024 The Pulse. Editorial Modernism for the Informed Mind.</span>
+            <span className="text-xs text-gray-400">© 2024 AI-flow. Editorial Modernism for the Informed Mind.</span>
           </div>
         </div>
       </footer>
