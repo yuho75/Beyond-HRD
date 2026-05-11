@@ -58,12 +58,12 @@
   --spacing-stack-md: 24px;
   --spacing-unit: 4px;
 
-  --font-headline-md: "Newsreader", serif;
+  --font-headline-md: "Hanken Grotesk", sans-serif;
   --font-body-md: "Hanken Grotesk", sans-serif;
-  --font-display-xl: "Newsreader", serif;
+  --font-display-xl: "Hanken Grotesk", sans-serif;
   --font-technical-sm: "Hanken Grotesk", sans-serif;
   --font-label-caps: "Hanken Grotesk", sans-serif;
-  --font-headline-lg: "Newsreader", serif;
+  --font-headline-lg: "Hanken Grotesk", sans-serif;
   --font-body-lg: "Hanken Grotesk", sans-serif;
 }
 
