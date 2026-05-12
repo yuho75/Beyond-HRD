@@ -51,35 +51,36 @@ export default function Home() {
         </div>
       </a>
 
-      {/* Zippy Subscription Banner (Compact NEWNEEK Style) */}
-      <section className="bg-[#f97316] rounded-2xl p-0 relative overflow-visible flex flex-col md:flex-row items-center mt-12 mb-8 shadow-lg max-w-[1000px] mx-auto w-full">
-        {/* Character popping out - Using the new transparent image */}
-        <div className="absolute -left-2 -top-16 w-40 h-40 hidden lg:block pointer-events-none">
-          <img src="/zippy_new.png" alt="Zippy Character" className="w-full h-full object-contain" />
+      {/* Zippy Subscription Banner */}
+      <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
+        {/* Faint Zippy background icon */}
+        <div className="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
+          <img src="/zippy.png" alt="Zippy Face Background" className="w-[200px] h-[200px] object-contain opacity-20" />
         </div>
         
-        <div className="flex-1 flex flex-col lg:flex-row items-center justify-between w-full lg:pl-44 px-8 py-7 gap-6">
-          <div className="flex flex-col gap-1 text-center lg:text-left">
-            <h3 className="text-xl md:text-2xl font-black text-white leading-tight">
-              매주 화요일, AI 트렌드 받아보기 ✨
-            </h3>
-            <p className="text-orange-100 font-bold text-sm opacity-90">
-              핵심 AI 인사이트를 이메일로 보내드려요.
-            </p>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-2 items-center">
-            <input 
-              type="email" 
-              placeholder="이메일 주소" 
-              className="px-5 py-3 rounded-xl border-none focus:outline-none w-full sm:w-64 text-sm bg-white font-bold"
-            />
-            <button className="px-8 py-3 bg-black text-white font-bold text-sm rounded-xl shadow-md hover:bg-gray-800 transition-all cursor-pointer whitespace-nowrap">
-              무료 구독하기
-            </button>
-          </div>
+        <div className="w-16 h-16 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center z-10 overflow-hidden p-2">
+          <img src="/zippy.png" alt="Zippy Face" className="w-full h-full object-contain" />
+        </div>
+        
+        <div className="flex-1 z-10">
+          <h3 className="text-xl font-bold text-gray-900 mb-1">Hello, I'm Zippy!</h3>
+          <p className="text-sm text-orange-900/80 max-w-lg">
+            Get the sharpest AI insights delivered directly to your inbox every morning. No fluff, just the signal.
+          </p>
+        </div>
+        
+        <div className="flex w-full md:w-auto gap-2 z-10">
+          <input 
+            type="email" 
+            placeholder="Your email address" 
+            className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
+          />
+          <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
+            Subscribe
+          </button>
         </div>
       </section>
+
 
 
 
