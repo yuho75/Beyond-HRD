@@ -51,36 +51,35 @@ export default function Home() {
         </div>
       </a>
 
-      {/* Zippy Subscription Banner - NEWNEEK Style */}
-      <section className="bg-[#ffcc00] rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] border-4 border-black group">
-        {/* Zippy Face Peeking */}
-        <div className="absolute -left-2 -bottom-2 w-32 h-32 z-0 transition-transform group-hover:scale-110 duration-500">
-          <img src="/images/zippy-transparent.png" alt="Zippy" className="w-full h-full object-contain" />
+      {/* Zippy Subscription Banner */}
+      <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
+        {/* Faint Zippy background icon */}
+        <div className="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
+          <img src="/zippy.png" alt="Zippy Face Background" className="w-[200px] h-[200px] object-contain opacity-20" />
         </div>
         
-        <div className="flex-1 z-10 pl-24">
-          <h3 className="text-xl font-black text-black mb-1 italic">
-            "Don't miss the signal!"
-          </h3>
-          <p className="text-xs text-black font-bold uppercase tracking-wide">
-            Zippy's daily AI curation. Short, sharp, and spicy.
+        <div className="w-16 h-16 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center z-10 overflow-hidden p-2">
+          <img src="/zippy.png" alt="Zippy Face" className="w-full h-full object-contain" />
+        </div>
+        
+        <div className="flex-1 z-10">
+          <h3 className="text-xl font-bold text-gray-900 mb-1">Hello, I'm Zippy!</h3>
+          <p className="text-sm text-orange-900/80 max-w-lg">
+            Get the sharpest AI insights delivered directly to your inbox every morning. No fluff, just the signal.
           </p>
         </div>
         
-        <div className="flex w-full md:w-auto gap-3 z-10 items-center">
-          <div className="relative flex-1 md:flex-none">
-            <input 
-              type="email" 
-              placeholder="Your email address" 
-              className="px-4 py-3 w-full md:w-64 text-sm bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:outline-none font-bold"
-            />
-          </div>
-          <button className="px-8 py-3 bg-black text-white font-black text-sm uppercase tracking-widest hover:bg-[#f97316] hover:text-black transition-all cursor-pointer border-4 border-black shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] active:shadow-none active:translate-x-1 active:translate-y-1">
-            GO!
+        <div className="flex w-full md:w-auto gap-2 z-10">
+          <input 
+            type="email" 
+            placeholder="Your email address" 
+            className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
+          />
+          <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
+            Subscribe
           </button>
         </div>
       </section>
-
 
 
 
