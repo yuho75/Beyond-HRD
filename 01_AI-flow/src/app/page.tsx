@@ -16,18 +16,18 @@ export default function Home() {
 
   return (
     <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
-      
+
       {/* Hero Section */}
-      <a 
-        href="/article" 
+      <a
+        href="/article"
         className="relative z-10 block bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-10 items-center hover:border-[#f97316]/30 transition-all group cursor-pointer"
         style={{ cursor: 'pointer', pointerEvents: 'auto' }}
       >
         <div className="w-full md:w-1/2 aspect-[4/3] rounded-xl overflow-hidden bg-gray-900 relative">
-           <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
-           <div className="absolute inset-0 bg-gradient-to-tr from-[#f97316]/20 to-transparent mix-blend-overlay"></div>
+          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#f97316]/20 to-transparent mix-blend-overlay"></div>
         </div>
-        
+
         <div className="w-full md:w-1/2 flex flex-col justify-center py-6 pr-6">
           <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider rounded-full self-start mb-4">
             Featured Report
@@ -38,7 +38,7 @@ export default function Home() {
           <p className="text-lg text-gray-600 mb-10 leading-relaxed max-w-md">
             How new foundation models are reshaping the global economy and what it means for the future of work.
           </p>
-          
+
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
               <UserCircle className="w-6 h-6 text-gray-400" />
@@ -52,10 +52,10 @@ export default function Home() {
       </a>
 
       {/* Zippy Subscription Banner (Compact NEWNEEK Style) */}
-      <section className="bg-[#f97316] rounded-2xl p-0 relative overflow-visible flex flex-col md:flex-row items-center mt-16 mb-8 shadow-lg max-w-[1000px] mx-auto w-full">
-        {/* Character popping out - Reduced size and no extra filters */}
+      <section className="bg-[#f97316] rounded-2xl p-0 relative overflow-visible flex flex-col md:flex-row items-center mt-12 mb-8 shadow-lg max-w-[1000px] mx-auto w-full">
+        {/* Character popping out - Using the new transparent image */}
         <div className="absolute -left-2 -top-16 w-40 h-40 hidden lg:block pointer-events-none">
-          <img src="/zippy.png" alt="Zippy Character" className="w-full h-full object-contain" />
+          <img src="/zippy_new.png" alt="Zippy Character" className="w-full h-full object-contain" />
         </div>
         
         <div className="flex-1 flex flex-col lg:flex-row items-center justify-between w-full lg:pl-44 px-8 py-7 gap-6">
@@ -91,15 +91,15 @@ export default function Home() {
             View All
           </button>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {latestDispatches.map((article, i) => (
             <div key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
               <div className="h-40 bg-gray-900 relative">
-                 <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                 <div className={`absolute top-3 left-3 ${article.color} text-[10px] px-2 py-0.5 font-bold uppercase rounded`}>
-                   {article.tag}
-                 </div>
+                <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className={`absolute top-3 left-3 ${article.color} text-[10px] px-2 py-0.5 font-bold uppercase rounded`}>
+                  {article.tag}
+                </div>
               </div>
               <div className="p-4 flex flex-col flex-grow">
                 <h3 className="font-bold text-[15px] leading-tight text-gray-900 mb-6 group-hover:text-[#f97316] transition-colors">
@@ -113,7 +113,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      
+
     </main>
   );
 }
