@@ -51,38 +51,36 @@ export default function Home() {
         </div>
       </a>
 
-      {/* Zippy Subscription Banner (NEWNEEK Style) */}
-      <section className="bg-[#f97316] rounded-3xl p-0 relative overflow-visible flex flex-col md:flex-row items-center mt-20 mb-8 shadow-xl">
-        {/* Character popping out */}
-        <div className="absolute -left-4 -top-24 w-60 h-60 hidden lg:block pointer-events-none">
-          <img src="/zippy.png" alt="Zippy Character" className="w-full h-full object-contain filter drop-shadow-2xl" />
-          <div className="absolute top-10 right-0 bg-yellow-300 text-black text-[10px] font-black px-2 py-1 rounded-full rotate-12 shadow-sm animate-pulse">
-            NEW!
-          </div>
+      {/* Zippy Subscription Banner (Compact NEWNEEK Style) */}
+      <section className="bg-[#f97316] rounded-2xl p-0 relative overflow-visible flex flex-col md:flex-row items-center mt-16 mb-8 shadow-lg max-w-[1000px] mx-auto w-full">
+        {/* Character popping out - Reduced size and no extra filters */}
+        <div className="absolute -left-2 -top-16 w-40 h-40 hidden lg:block pointer-events-none">
+          <img src="/zippy.png" alt="Zippy Character" className="w-full h-full object-contain" />
         </div>
         
-        <div className="flex-1 flex flex-col lg:flex-row items-center justify-between w-full lg:pl-60 px-8 py-10 gap-8">
-          <div className="flex flex-col gap-2 text-center lg:text-left">
-            <h3 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tight">
-              매주 화요일, AI 트렌드 놓치고 싶지 않으세요? ✨
+        <div className="flex-1 flex flex-col lg:flex-row items-center justify-between w-full lg:pl-44 px-8 py-7 gap-6">
+          <div className="flex flex-col gap-1 text-center lg:text-left">
+            <h3 className="text-xl md:text-2xl font-black text-white leading-tight">
+              매주 화요일, AI 트렌드 받아보기 ✨
             </h3>
-            <p className="text-orange-100 font-bold text-lg opacity-90">
-              지피가 직접 큐레이션한 핵심 AI 인사이트를 이메일로 보내드려요.
+            <p className="text-orange-100 font-bold text-sm opacity-90">
+              핵심 AI 인사이트를 이메일로 보내드려요.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-3 items-center">
+          <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-2 items-center">
             <input 
               type="email" 
-              placeholder="이메일 주소를 입력하세요" 
-              className="px-6 py-4 rounded-full border-none focus:outline-none focus:ring-4 focus:ring-black/10 w-full sm:w-72 text-base bg-white shadow-inner font-bold"
+              placeholder="이메일 주소" 
+              className="px-5 py-3 rounded-xl border-none focus:outline-none w-full sm:w-64 text-sm bg-white font-bold"
             />
-            <button className="px-10 py-4 bg-black text-white font-black text-lg rounded-full shadow-xl hover:bg-gray-800 hover:-translate-y-1 transition-all whitespace-nowrap cursor-pointer">
-              지금 무료 구독하기
+            <button className="px-8 py-3 bg-black text-white font-bold text-sm rounded-xl shadow-md hover:bg-gray-800 transition-all cursor-pointer whitespace-nowrap">
+              무료 구독하기
             </button>
           </div>
         </div>
       </section>
+
 
 
       {/* Latest Dispatches Grid */}
