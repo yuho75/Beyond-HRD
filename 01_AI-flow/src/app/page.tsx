@@ -51,21 +51,19 @@ export default function Home() {
         </div>
       </a>
 
-      {/* Zippy Subscription Banner */}
-      <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
-        {/* Faint Zippy background icon */}
-        <div className="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
-          <img src="/zippy.png" alt="Zippy Face Background" className="w-[200px] h-[200px] object-contain opacity-20" />
+      {/* Zippy Subscription Banner - NEWNEEK Inspired */}
+      <section className="bg-[#fff9e6] rounded-2xl p-6 border-2 border-[#ffcc00]/30 relative overflow-hidden flex flex-col md:flex-row items-center gap-6 shadow-sm group">
+        {/* Zippy Face Peeking - Transparent PNG from Stitch */}
+        <div className="absolute -left-2 -bottom-2 w-28 h-28 z-0 transition-transform group-hover:scale-105 duration-500">
+          <img src="/images/zippy-transparent.png" alt="Zippy" className="w-full h-full object-contain" />
         </div>
         
-        <div className="w-16 h-16 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center z-10 overflow-hidden p-2">
-          <img src="/zippy.png" alt="Zippy Face" className="w-full h-full object-contain" />
-        </div>
-        
-        <div className="flex-1 z-10">
-          <h3 className="text-xl font-bold text-gray-900 mb-1">Hello, I'm Zippy!</h3>
-          <p className="text-sm text-orange-900/80 max-w-lg">
-            Get the sharpest AI insights delivered directly to your inbox every morning. No fluff, just the signal.
+        <div className="flex-1 z-10 pl-24">
+          <h3 className="text-lg font-black text-gray-900 mb-0.5 italic">
+            "Don't miss the signal!"
+          </h3>
+          <p className="text-[11px] text-[#856404] font-bold uppercase tracking-wider">
+            Zippy's Daily AI Curation • Short, Sharp, and Spicy
           </p>
         </div>
         
@@ -73,13 +71,14 @@ export default function Home() {
           <input 
             type="email" 
             placeholder="Your email address" 
-            className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
+            className="px-4 py-2.5 w-full md:w-60 text-sm bg-white border-2 border-black rounded-lg focus:outline-none font-bold placeholder:font-normal"
           />
-          <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
-            Subscribe
+          <button className="px-6 py-2.5 bg-black text-white font-black text-xs uppercase tracking-widest rounded-lg hover:bg-[#f97316] transition-colors cursor-pointer shadow-[3px_3px_0px_0px_rgba(249,115,22,1)] active:shadow-none active:translate-x-[1px] active:translate-y-[1px]">
+            GO!
           </button>
         </div>
       </section>
+
 
 
 
