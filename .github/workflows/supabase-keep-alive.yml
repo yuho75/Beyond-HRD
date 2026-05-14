@@ -13,18 +13,19 @@ jobs:
 
     steps:
       - name: Ping Supabase Health Endpoint
+        shell: bash
         run: |
-          echo "🔔 Pinging Supabase Beyond-HRD project: cvzzywvvglnlotqgdpfq"
-          response=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
-            "https://cvzzywvvglnlotqgdpfq.supabase.co/rest/v1/" \
-            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-            2>/dev/null || echo "000")
-          echo "HTTP Response: $response"
-          if [ "$response" = "200" ] || [ "$response" = "400" ] || [ "$response" = "404" ]; then
+          echo "🔔 Pinging Supabase Beyond-HRD: cvzzywvvglnlotqgdpfq"
+          set +e
+          http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
+            "https://cvzzywvvglnlotqgdpfq.supabase.co/health")
+          curl_exit=$?
+          set -e
+          echo "HTTP Response: $http_code (curl exit code: $curl_exit)"
+          if [ "$http_code" = "200" ] || [ "$http_code" = "401" ] || [ "$http_code" = "404" ]; then
             echo "✅ Supabase Beyond-HRD is alive!"
           else
-            echo "❌ Failed to reach Supabase (code: $response). Project may be paused!"
+            echo "❌ Cannot reach Supabase (code: $http_code, curl exit: $curl_exit)"
             exit 1
           fi
 
