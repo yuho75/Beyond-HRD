@@ -15,10 +15,11 @@ jobs:
       - name: Ping Supabase Health Endpoint
         run: |
           echo "🔔 Pinging Supabase Beyond-HRD project: cvzzywvvglnlotqgdpfq"
-          response=$(curl -s -o /dev/null -w "%{http_code}" \
+          response=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
             "https://cvzzywvvglnlotqgdpfq.supabase.co/rest/v1/" \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}")
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            2>/dev/null || echo "000")
           echo "HTTP Response: $response"
           if [ "$response" = "200" ] || [ "$response" = "400" ] || [ "$response" = "404" ]; then
             echo "✅ Supabase Beyond-HRD is alive!"
