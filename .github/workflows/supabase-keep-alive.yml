@@ -1,0 +1,31 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # 매 6일마다 실행 (UTC 00:00, 한국시간 09:00)
+    - cron: '0 0 */6 * *'
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    name: Ping Supabase (Beyond-HRD) to prevent pausing
+
+    steps:
+      - name: Ping Supabase Health Endpoint
+        run: |
+          echo "🔔 Pinging Supabase Beyond-HRD project: cvzzywvvglnlotqgdpfq"
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://cvzzywvvglnlotqgdpfq.supabase.co/rest/v1/" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}")
+          echo "HTTP Response: $response"
+          if [ "$response" = "200" ] || [ "$response" = "400" ] || [ "$response" = "404" ]; then
+            echo "✅ Supabase Beyond-HRD is alive!"
+          else
+            echo "❌ Failed to reach Supabase (code: $response). Project may be paused!"
+            exit 1
+          fi
+
+      - name: Log timestamp
+        run: echo "✅ Keep-alive ping completed at $(date '+%Y-%m-%d %H:%M:%S UTC')"
