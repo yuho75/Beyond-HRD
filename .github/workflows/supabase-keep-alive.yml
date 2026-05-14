@@ -15,10 +15,10 @@ jobs:
       - name: Ping Supabase Health Endpoint
         shell: bash
         run: |
-          echo "🔔 Pinging Supabase Beyond-HRD: cvzzywvvglnlotqgdpfq"
+          echo "🔔 Pinging Supabase Beyond-HRD: cvzzywvcglnlotqgdpfq"
           set +e
           http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
-            "https://cvzzywvvglnlotqgdpfq.supabase.co/health")
+            "https://cvzzywvcglnlotqgdpfq.supabase.co/health")
           curl_exit=$?
           set -e
           echo "HTTP Response: $http_code (curl exit code: $curl_exit)"
