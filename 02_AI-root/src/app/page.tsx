@@ -134,28 +134,28 @@ export default function Home() {
               { 
                 name: "Commerce", 
                 items: [
-                  { id: 201, title: "AI 기반 초개인화 쇼핑 추천 시스템 구축", tag: "E-Commerce", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Commerce Lab", status: 'PAID', thumb: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=800" },
-                  { id: 202, title: "재고 최적화를 위한 수요 예측 머신러닝", tag: "Logistics", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Ops Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800" },
-                  { id: 203, title: "가상 피팅룸: 생성형 AI와 패션 비즈니스", tag: "Fashion", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "AI Design", status: 'FREE', thumb: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=800" },
-                  { id: 204, title: "무인 결제 시스템의 컴퓨터 비전 기술", tag: "Retail", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Vision AI", status: 'PAID', thumb: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=800" },
+                  { id: 201, title: "AI 기반 초개인화 쇼핑 추천 시스템 구축", tag: "E-Commerce", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Commerce Lab", status: 'PAID', thumb: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800" },
+                  { id: 202, title: "재고 최적화를 위한 수요 예측 머신러닝", tag: "Logistics", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Ops Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800" },
+                  { id: 203, title: "가상 피팅룸: 생성형 AI와 패션 비즈니스", tag: "Fashion", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "AI Design", status: 'FREE', thumb: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=800" },
+                  { id: 204, title: "무인 결제 시스템의 컴퓨터 비전 기술", tag: "Retail", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Vision AI", status: 'PAID', thumb: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=800" },
                 ]
               },
               { 
                 name: "Education", 
                 items: [
                   { id: 301, title: "개인별 맞춤형 학습 경로 설계 AI", tag: "EdTech", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Edu Tech", status: 'FREE', thumb: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800" },
-                  { id: 302, title: "자동 채점 및 피드백 시스템의 한계", tag: "Automation", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Prof. Lee", status: 'PAID', thumb: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=800" },
+                  { id: 302, title: "자동 채점 및 피드백 시스템의 한계", tag: "Automation", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Prof. Lee", status: 'PAID', thumb: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800" },
                   { id: 303, title: "언어 학습을 위한 실시간 AI 튜터링", tag: "Language", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Global Edu", status: 'PRO', thumb: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=800" },
-                  { id: 304, title: "교실 내 AI 도입 가이드라인", tag: "Policy", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Gov AI", status: 'FREE', thumb: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800" },
+                  { id: 304, title: "교실 내 AI 도입 가이드라인", tag: "Policy", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Gov AI", status: 'FREE', thumb: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=800" },
                 ]
               },
               { 
                 name: "Media", 
                 items: [
-                  { id: 401, title: "영상 편집 자동화를 위한 AI 워크플로우", tag: "Production", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "Studio X", status: 'PRO', thumb: "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800" },
+                  { id: 401, title: "영상 편집 자동화를 위한 AI 워크플로우", tag: "Production", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "Studio X", status: 'PRO', thumb: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=800" },
                   { id: 402, title: "가상 인플루언서 제작과 마케팅 전략", tag: "Influencer", color: "text-pink-400", border: "border-pink-500/20", bg: "bg-pink-500/10", author: "Social Lab", status: 'PAID', thumb: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800" },
                   { id: 403, title: "뉴스 요약 및 자동 기사 작성 AI", tag: "Journalism", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "News Tech", status: 'FREE', thumb: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=800" },
-                  { id: 404, title: "음원 생성 AI: 저작권과 비즈니스 기회", tag: "Audio", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Music AI", status: 'PAID', thumb: "https://images.unsplash.com/photo-1514525253344-9914f2553a1c?auto=format&fit=crop&q=80&w=800" },
+                  { id: 404, title: "음원 생성 AI: 저작권과 비즈니스 기회", tag: "Audio", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Music AI", status: 'PAID', thumb: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800" },
                 ]
               },
               { 
@@ -163,17 +163,17 @@ export default function Home() {
                 items: [
                   { id: 501, title: "스마트 홈 AI 비서의 진화", tag: "Smart Home", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "IoT Team", status: 'FREE', thumb: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800" },
                   { id: 502, title: "AI 기반 식단 및 건강 관리 솔루션", tag: "Health", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Health AI", status: 'PAID', thumb: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800" },
-                  { id: 503, title: "여행 계획 자동 최적화 시스템", tag: "Travel", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Trip Planner", status: 'FREE', thumb: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=800" },
+                  { id: 503, title: "여행 계획 자동 최적화 시스템", tag: "Travel", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Trip Planner", status: 'FREE', thumb: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800" },
                   { id: 504, title: "감정 인식 AI와 정신 건강 상담", tag: "Wellness", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "Psych Lab", status: 'PRO', thumb: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800" },
                 ]
               },
               { 
                 name: "Business", 
                 items: [
-                  { id: 601, title: "RAG를 활용한 기업 내부 지식 베이스 구축", tag: "Enterprise", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Rowan Cheung", status: 'PRO', thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" },
-                  { id: 602, title: "AI 기반 계약서 자동 검토 및 법률 자문", tag: "Legal", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Legal Tech", status: 'PAID', thumb: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800" },
-                  { id: 603, title: "코드 리뷰 및 개발 자동화 도구 도입", tag: "DevOps", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "Hardware Ops", status: 'FREE', thumb: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800" },
-                  { id: 604, title: "기업용 AI 거버넌스 및 윤리 가이드라인", tag: "Governance", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Security Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800" },
+                  { id: 601, title: "RAG를 활용한 기업 내부 지식 베이스 구축", tag: "Enterprise", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Rowan Cheung", status: 'PRO', thumb: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800" },
+                  { id: 602, title: "AI 기반 계약서 자동 검토 및 법률 자문", tag: "Legal", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Legal Tech", status: 'PAID', thumb: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800" },
+                  { id: 603, title: "코드 리뷰 및 개발 자동화 도구 도입", tag: "DevOps", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "Hardware Ops", status: 'FREE', thumb: "https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=800" },
+                  { id: 604, title: "기업용 AI 거버넌스 및 윤리 가이드라인", tag: "Governance", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Security Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" },
                 ]
               }
             ].map((section) => (
