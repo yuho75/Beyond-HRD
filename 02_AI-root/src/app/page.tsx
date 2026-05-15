@@ -16,44 +16,43 @@ export default function Home() {
     <div className="font-body-md text-inverse-on-surface min-h-screen bg-[#131313] flex flex-col text-white">
       {/* Top Navigation */}
       <header className="h-16 flex items-center justify-between px-8 max-w-7xl mx-auto w-full border-b border-white/10 sticky top-0 bg-[#131313]/80 backdrop-blur-md z-30">
-        <a href="/" className="flex-1 flex items-center gap-3 cursor-pointer group text-decoration-none">
-          <div className="w-8 h-8 rounded bg-emerald-tech flex items-center justify-center font-bold text-black">R</div>
-          <span className="font-extrabold tracking-tight text-2xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
+        <a href="/" className="flex-none flex items-center gap-3 cursor-pointer group text-decoration-none">
+          <div className="w-8 h-8 rounded bg-emerald-tech flex items-center justify-center font-bold text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]">R</div>
+          <span className="font-extrabold tracking-tight text-xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
         </a>
         
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex flex-1 justify-center items-center gap-6 px-4">
           {/* Categories */}
-          <div className="flex items-center gap-8">
-            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">쇼핑 & 커머스</a>
-            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">교육 & 자기계발</a>
-            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">콘텐츠 & 미디어</a>
-            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">생활 & 라이프</a>
-            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">비즈니스 도구</a>
+          <div className="flex items-center gap-6">
+            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">쇼핑 & 커머스</a>
+            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">교육 & 자기계발</a>
+            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">콘텐츠 & 미디어</a>
+            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">생활 & 라이프</a>
+            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">비즈니스 도구</a>
           </div>
           
           {/* Vertical Separator */}
           <div className="w-[1px] h-3 bg-white/10 mx-2"></div>
 
           {/* System Menus */}
-          <div className="flex items-center gap-6">
-            <a className="font-technical-sm text-white/30 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/mypage">My Page</a>
-            <a className="font-technical-sm text-white/30 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/admin">Admin</a>
+          <div className="flex items-center gap-5">
+            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[9px] no-underline" href="/mypage">My Page</a>
+            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[9px] no-underline" href="/admin">Admin</a>
           </div>
         </nav>
         
-        <div className="flex-1 flex items-center justify-end gap-4">
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20 w-5 h-5" />
+        <div className="flex-none flex items-center justify-end gap-4">
+          <div className="relative hidden xl:block">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20 w-4 h-4" />
             <input 
-              className="bg-white/5 border border-white/10 text-technical-sm py-2 pl-10 pr-4 w-64 focus:ring-1 focus:ring-emerald-tech focus:border-emerald-tech rounded-lg text-white" 
+              className="bg-white/5 border border-white/10 text-[11px] py-1.5 pl-9 pr-4 w-48 focus:ring-1 focus:ring-emerald-tech/50 focus:border-emerald-tech/50 rounded-md text-white transition-all focus:w-56" 
               placeholder="Search archive..." 
               type="text" 
             />
           </div>
-          <button className="font-technical-sm uppercase tracking-wider px-4 py-2 bg-[#FF6B00] text-white rounded hover:bg-[#e65a00] transition-transform active:scale-95 cursor-pointer border-none font-bold">
+          <button className="font-technical-sm uppercase tracking-widest px-4 py-2 bg-[#FF6B00] text-white rounded text-[10px] hover:bg-[#e65a00] transition-all active:scale-95 cursor-pointer border-none font-bold shadow-lg shadow-orange-900/20 whitespace-nowrap">
             로그인
           </button>
-          <UserCircle className="text-white/40 cursor-pointer hover:text-white w-6 h-6" />
         </div>
       </header>
 
