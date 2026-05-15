@@ -81,8 +81,8 @@ export default function Home() {
             {/* Featured Guide (Large Card) */}
             <section>
               <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
-                <h2 className="text-lg font-bold text-white uppercase tracking-widest flex items-center gap-3">
-                  <div className="w-1 h-6 bg-emerald-tech"></div>
+                <h2 className="text-[13px] font-bold text-white uppercase tracking-[0.2em] flex items-center gap-3">
+                  <div className="w-1 h-4 bg-emerald-tech"></div>
                   Featured Guide
                 </h2>
               </div>
@@ -135,18 +135,18 @@ export default function Home() {
                 name: "Commerce", 
                 items: [
                   { id: 201, title: "AI 기반 초개인화 쇼핑 추천 시스템 구축", tag: "E-Commerce", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Commerce Lab", status: 'PAID', thumb: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=800" },
-                  { id: 202, title: "재고 최적화를 위한 수요 예측 머신러닝", tag: "Logistics", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Ops Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800" },
-                  { id: 203, title: "가상 피팅룸: 생성형 AI와 패션 비즈니스", tag: "Fashion", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "AI Design", status: 'FREE', thumb: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800" },
-                  { id: 204, title: "무인 결제 시스템의 컴퓨터 비전 기술", tag: "Retail", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Vision AI", status: 'PAID', thumb: "https://images.unsplash.com/photo-1556742049-04ff4361c26a?auto=format&fit=crop&q=80&w=800" },
+                  { id: 202, title: "재고 최적화를 위한 수요 예측 머신러닝", tag: "Logistics", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Ops Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800" },
+                  { id: 203, title: "가상 피팅룸: 생성형 AI와 패션 비즈니스", tag: "Fashion", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "AI Design", status: 'FREE', thumb: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=800" },
+                  { id: 204, title: "무인 결제 시스템의 컴퓨터 비전 기술", tag: "Retail", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Vision AI", status: 'PAID', thumb: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=800" },
                 ]
               },
               { 
                 name: "Education", 
                 items: [
                   { id: 301, title: "개인별 맞춤형 학습 경로 설계 AI", tag: "EdTech", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Edu Tech", status: 'FREE', thumb: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800" },
-                  { id: 302, title: "자동 채점 및 피드백 시스템의 한계", tag: "Automation", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Prof. Lee", status: 'PAID', thumb: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800" },
+                  { id: 302, title: "자동 채점 및 피드백 시스템의 한계", tag: "Automation", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Prof. Lee", status: 'PAID', thumb: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=800" },
                   { id: 303, title: "언어 학습을 위한 실시간 AI 튜터링", tag: "Language", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Global Edu", status: 'PRO', thumb: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=800" },
-                  { id: 304, title: "교실 내 AI 도입 가이드라인", tag: "Policy", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Gov AI", status: 'FREE', thumb: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" },
+                  { id: 304, title: "교실 내 AI 도입 가이드라인", tag: "Policy", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Gov AI", status: 'FREE', thumb: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800" },
                 ]
               },
               { 
@@ -179,8 +179,8 @@ export default function Home() {
             ].map((section) => (
               <section key={section.name} className="mt-4">
                 <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
-                  <h2 className="text-lg font-bold text-white uppercase tracking-widest flex items-center gap-3">
-                     <div className="w-1 h-6 bg-emerald-tech"></div>
+                  <h2 className="text-[13px] font-bold text-white uppercase tracking-[0.2em] flex items-center gap-3">
+                     <div className="w-1 h-4 bg-emerald-tech"></div>
                      {section.name}
                   </h2>
                 </div>
