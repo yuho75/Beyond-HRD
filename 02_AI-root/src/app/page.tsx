@@ -147,31 +147,40 @@ export default function Home() {
           <button className="hidden sm:block font-technical-sm uppercase tracking-widest px-4 py-2 bg-[#FF6B00] text-white rounded text-[10px] hover:bg-[#e65a00] transition-all active:scale-95 cursor-pointer border-none font-bold shadow-lg shadow-orange-900/20 whitespace-nowrap">
             로그인
           </button>
+          {/* Mobile Menu Button */}
           <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-white/70 hover:text-emerald-tech hover:bg-white/5 rounded-md transition-all z-[60]"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="lg:hidden p-2 text-white/70 hover:text-emerald-tech hover:bg-white/5 rounded-md transition-all"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </header>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-[#131313] z-50 lg:hidden transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="flex flex-col h-full pt-24 px-8 gap-8">
-          <div className="flex flex-col gap-4">
+      <div className={`fixed inset-0 bg-[#0a0a0a] z-[100] lg:hidden transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
+        <div className="flex flex-col h-full pt-20 px-8 gap-8 relative">
+          {/* Close Button inside Overlay */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-5 right-8 p-2 text-white/50 hover:text-white rounded-full bg-white/5 transition-all"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div className="flex flex-col gap-6 mt-4">
             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-tech/50 border-b border-white/5 pb-2">Categories</p>
             {['Commerce', 'Education', 'Media', 'Lifestyle', 'Business'].map((item) => (
-              <a key={item} href="#" className="text-2xl font-bold text-white hover:text-emerald-tech transition-colors py-1" onClick={() => setIsMobileMenuOpen(false)}>
+              <a key={item} href="#" className="text-3xl font-bold text-white hover:text-emerald-tech transition-colors py-1" onClick={() => setIsMobileMenuOpen(false)}>
                 {item}
               </a>
             ))}
           </div>
           
           <div className="flex flex-col gap-4 mt-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 border-b border-white/5 pb-2">Management</p>
-            <a href="/mypage" className="text-xl font-bold text-emerald-tech hover:brightness-125 transition-all" onClick={() => setIsMobileMenuOpen(false)}>My Page</a>
-            <a href="/admin" className="text-xl font-bold text-emerald-tech hover:brightness-125 transition-all" onClick={() => setIsMobileMenuOpen(false)}>Admin</a>
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#00E5FF]/50 border-b border-white/5 pb-2">Management</p>
+            <a href="#" className="text-xl font-bold text-[#00E5FF] hover:brightness-125 transition-all" onClick={() => setIsMobileMenuOpen(false)}>My Page</a>
+            <a href="#" className="text-xl font-bold text-[#00E5FF] hover:brightness-125 transition-all" onClick={() => setIsMobileMenuOpen(false)}>Admin</a>
           </div>
 
           <button className="mt-auto mb-12 w-full py-4 bg-[#FF6B00] text-white rounded-xl text-sm font-bold uppercase tracking-widest shadow-xl shadow-orange-900/20" onClick={() => setIsMobileMenuOpen(false)}>
