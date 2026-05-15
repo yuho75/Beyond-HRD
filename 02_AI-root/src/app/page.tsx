@@ -89,7 +89,7 @@ export default function Home() {
               
               <a href="/content" className="relative z-10 block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row gap-10 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline">
                 <div className="w-full md:w-1/2 aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden bg-gray-900 relative">
-                  <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+                  <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 to-transparent mix-blend-overlay"></div>
                   <div className="absolute top-4 left-4 flex gap-2">
                     <div className="bg-emerald-tech/20 text-emerald-tech text-[10px] px-2 py-0.5 font-bold uppercase border border-emerald-tech/30 rounded backdrop-blur-md">Advanced</div>
@@ -188,7 +188,7 @@ export default function Home() {
                   {section.items.map((item, i) => (
                     <div key={i} className="group cursor-pointer bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden hover:bg-white/[0.04] hover:border-emerald-tech/30 transition-all flex flex-col relative no-underline">
                       <div className="h-40 relative overflow-hidden bg-white/5">
-                        <img src={item.thumb} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50" alt={item.title} />
+                        <img src={item.thumb} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100" alt={item.title} />
                         <div className={`absolute top-3 left-3 ${item.bg} ${item.color} text-[9px] px-2 py-0.5 font-bold uppercase border ${item.border} rounded backdrop-blur-md`}>
                           {item.tag}
                         </div>
