@@ -57,11 +57,11 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="px-8 py-12 max-w-7xl mx-auto w-full flex-grow flex flex-col gap-12">
+      <main className="px-8 pt-8 pb-12 max-w-7xl mx-auto w-full flex-grow flex flex-col gap-12">
         {/* Header */}
 
 
-        <div className="flex flex-col gap-16 mt-8">
+        <div className="flex flex-col gap-16">
           {/* Grid Content */}
           <div className="flex flex-col gap-16 min-w-0">
             {/* Featured Guide (Large Card) */}
