@@ -59,21 +59,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="px-8 py-12 max-w-7xl mx-auto w-full flex-grow flex flex-col gap-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Technical Archive</h1>
-            <p className="text-white/60 max-w-2xl text-lg leading-relaxed">
-              High-density documentation and roadmaps for deep-tech AI integration. Curated by the technical team for rapid enterprise scaling.
-            </p>
-          </div>
-          <div className="hidden sm:block text-right">
-            <span className="font-technical-sm uppercase text-emerald-tech tracking-widest block mb-2 text-xs">System Status: Online</span>
-            <div className="flex items-center gap-2 justify-end">
-              <span className="h-2 w-2 rounded-full bg-emerald-tech animate-pulse"></span>
-              <span className="font-technical-sm text-white text-xs font-bold">All Systems Nominal</span>
-            </div>
-          </div>
-        </div>
+
 
         <div className="flex flex-col gap-16 mt-8">
           {/* Grid Content */}
