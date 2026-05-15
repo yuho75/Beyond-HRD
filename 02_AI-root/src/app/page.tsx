@@ -115,7 +115,7 @@ export default function Home() {
           <span className="font-extrabold tracking-tight text-xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
         </a>
         
-        <nav className="hidden lg:flex flex-1 justify-center items-center gap-8 px-4">
+        <nav className="hidden lg:flex flex-1 justify-center items-center gap-10 px-8">
           {/* Categories */}
           <div className="flex items-center gap-8">
             <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Commerce</a>
@@ -125,16 +125,15 @@ export default function Home() {
             <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Business</a>
           </div>
           {/* Vertical Separator */}
-          <div className="w-[1px] h-3 bg-white/10 mx-2"></div>
+          <div className="w-[1px] h-4 bg-white/20 mx-4"></div>
 
           {/* Philosophy */}
-          <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap flex items-center gap-2" href="#">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-tech animate-pulse"></span>
+          <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">
             Insights
           </a>
           
           {/* Vertical Separator */}
-          <div className="w-[1px] h-3 bg-white/10 mx-2"></div>
+          <div className="w-[1px] h-4 bg-white/20 mx-4"></div>
 
           {/* System Menus */}
           <div className="flex items-center gap-6">
@@ -178,8 +177,7 @@ export default function Home() {
 
             <div className="flex flex-col gap-6 mt-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-tech/50 border-b border-white/5 pb-2">Philosophy</p>
-              <a href="#" className="text-3xl font-bold text-emerald-tech hover:brightness-125 transition-colors py-1 flex items-center gap-3" onClick={() => setIsMobileMenuOpen(false)}>
-                <span className="w-2 h-2 rounded-full bg-emerald-tech"></span>
+              <a href="#" className="text-3xl font-bold text-emerald-tech hover:brightness-125 transition-colors py-1" onClick={() => setIsMobileMenuOpen(false)}>
                 Insights
               </a>
             </div>
