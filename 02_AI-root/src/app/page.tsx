@@ -125,11 +125,11 @@ export default function Home() {
           {/* Grid Content */}
           <div className="flex flex-col gap-16 min-w-0">
             {/* Featured Section (Slider) */}
-            <div className="flex flex-col lg:flex-row gap-8 min-h-[480px]">
+            <div className="flex flex-col lg:flex-row gap-8">
               {/* Main Card (Left) */}
               <div className="flex-1">
-                <a href="/content" className="relative h-full block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col gap-8 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline overflow-hidden">
-                  <div className="w-full aspect-video rounded-xl overflow-hidden bg-gray-900 relative">
+                <a href="/content" className="relative block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row gap-8 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline overflow-hidden">
+                  <div className="w-full md:w-[45%] aspect-video rounded-xl overflow-hidden bg-gray-900 relative flex-none">
                     <img key={activeItem.id} src={activeItem.thumb} alt={activeItem.title} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 animate-in fade-in zoom-in-95" />
                     <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 to-transparent mix-blend-overlay"></div>
                     <div className="absolute top-4 left-4 flex gap-2">
@@ -140,30 +140,30 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="w-full flex flex-col justify-center">
-                    <span className="inline-block px-3 py-1 bg-white/5 text-white/40 text-[10px] font-bold uppercase tracking-widest rounded-full self-start mb-4 border border-white/10 animate-in slide-in-from-left-4">
+                  <div className="flex-1 flex flex-col justify-center py-2">
+                    <span className="inline-block px-3 py-1 bg-white/5 text-white/40 text-[10px] font-bold uppercase tracking-widest rounded-full self-start mb-3 border border-white/10 animate-in slide-in-from-left-4">
                       {activeItem.label}
                     </span>
-                    <h2 className="text-2xl md:text-3xl font-bold leading-tight text-white mb-4 group-hover:text-emerald-tech transition-colors animate-in slide-in-from-left-6">
+                    <h2 className="text-xl md:text-2xl font-bold leading-tight text-white mb-3 group-hover:text-emerald-tech transition-colors animate-in slide-in-from-left-6">
                       {activeItem.title}
                     </h2>
-                    <p className="text-base text-white/40 mb-6 leading-relaxed max-w-2xl animate-in slide-in-from-left-8">
+                    <p className="text-sm text-white/40 mb-5 leading-relaxed line-clamp-2 animate-in slide-in-from-left-8">
                       {activeItem.desc}
                     </p>
 
                     <div className="flex items-center justify-between mt-auto">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-emerald-tech/20 flex items-center justify-center text-emerald-tech font-bold uppercase">{activeItem.author[0]}</div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-emerald-tech/20 flex items-center justify-center text-emerald-tech text-xs font-bold uppercase">{activeItem.author[0]}</div>
                         <div>
-                          <p className="font-bold text-sm text-white">{activeItem.author}</p>
-                          <p className="text-xs text-white/40">{activeItem.date}</p>
+                          <p className="font-bold text-xs text-white">{activeItem.author}</p>
+                          <p className="text-[10px] text-white/40">{activeItem.date}</p>
                         </div>
                       </div>
                       <button 
                         onClick={(e) => toggleBookmark(activeItem.id, e)}
-                        className={`p-3 rounded-full backdrop-blur-md border border-white/10 transition-all ${bookmarks.includes(activeItem.id) ? 'bg-emerald-tech text-black border-emerald-tech shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-black/40 text-white hover:bg-black/60'}`}
+                        className={`p-2.5 rounded-full backdrop-blur-md border border-white/10 transition-all ${bookmarks.includes(activeItem.id) ? 'bg-emerald-tech text-black border-emerald-tech shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-black/40 text-white hover:bg-black/60'}`}
                       >
-                        <Bookmark className="w-5 h-5" fill={bookmarks.includes(activeItem.id) ? "currentColor" : "none"} />
+                        <Bookmark className="w-4 h-4" fill={bookmarks.includes(activeItem.id) ? "currentColor" : "none"} />
                       </button>
                     </div>
                   </div>
@@ -171,17 +171,17 @@ export default function Home() {
               </div>
 
               {/* Slider Navigation (Right) */}
-              <div className="w-full lg:w-[320px] flex flex-col gap-2">
+              <div className="w-full lg:w-[300px] flex flex-col gap-1.5">
                 {featuredItems.map((item, idx) => (
                   <button 
                     key={item.id}
                     onClick={() => setActiveIdx(idx)}
-                    className={`text-left p-4 rounded-xl transition-all border ${activeIdx === idx ? 'bg-white/5 border-emerald-tech/30 border-l-4 border-l-emerald-tech' : 'bg-transparent border-transparent hover:bg-white/[0.02]'}`}
+                    className={`text-left p-3 rounded-xl transition-all border ${activeIdx === idx ? 'bg-white/5 border-emerald-tech/30 border-l-4 border-l-emerald-tech' : 'bg-transparent border-transparent hover:bg-white/[0.02]'}`}
                   >
-                    <span className={`block text-[10px] font-bold uppercase tracking-widest mb-1 ${activeIdx === idx ? 'text-emerald-tech' : 'text-white/30'}`}>
+                    <span className={`block text-[9px] font-bold uppercase tracking-widest mb-1 ${activeIdx === idx ? 'text-emerald-tech' : 'text-white/30'}`}>
                       {item.label}
                     </span>
-                    <h3 className={`text-sm font-bold leading-snug line-clamp-2 ${activeIdx === idx ? 'text-white' : 'text-white/50'}`}>
+                    <h3 className={`text-[13px] font-bold leading-snug line-clamp-1 ${activeIdx === idx ? 'text-white' : 'text-white/50'}`}>
                       {item.title}
                     </h3>
                   </button>
