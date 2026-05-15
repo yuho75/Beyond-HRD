@@ -66,12 +66,7 @@ export default function Home() {
           <div className="flex flex-col gap-16 min-w-0">
             {/* Featured Guide (Large Card) */}
             <section>
-              <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
-                <h2 className="text-[13px] font-bold text-white uppercase tracking-[0.2em] flex items-center gap-3">
-                  <div className="w-1 h-4 bg-emerald-tech"></div>
-                  Featured Guide
-                </h2>
-              </div>
+
               
               <a href="/content" className="relative z-10 block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row gap-10 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline">
                 <div className="w-full md:w-1/2 aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden bg-gray-900 relative">
