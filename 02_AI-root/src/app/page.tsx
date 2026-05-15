@@ -14,21 +14,9 @@ export default function Home() {
 
   const featuredItems = [
     { 
-      id: 601, 
-      category: "Enterprise",
-      label: "Top Story",
-      title: "RAG를 활용한 기업 내부 지식 베이스 구축", 
-      desc: "Deploying fine-tuned models for enterprise infrastructure. Learn the end-to-end pipeline for model quantization, optimization, and scaling.",
-      tag: "Advanced", 
-      status: 'PAID', 
-      thumb: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1600",
-      author: "Rowan Cheung",
-      date: "Nov 24, 2024"
-    },
-    { 
       id: 201, 
       category: "Commerce",
-      label: "New Release",
+      label: "Commerce",
       title: "AI 기반 초개인화 쇼핑 추천 시스템 구축", 
       desc: "Revolutionizing retail with deep learning. Implement real-time recommendation engines that boost conversion by 40%.",
       tag: "E-Commerce", 
@@ -38,9 +26,21 @@ export default function Home() {
       date: "Nov 22, 2024"
     },
     { 
+      id: 301, 
+      category: "Education",
+      label: "Education",
+      title: "개인별 맞춤형 학습 경로 설계 AI", 
+      desc: "The future of learning is adaptive. Build AI agents that understand student progress and tailor curriculum in real-time.",
+      tag: "EdTech", 
+      status: 'FREE', 
+      thumb: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1600",
+      author: "Edu Tech",
+      date: "Nov 18, 2024"
+    },
+    { 
       id: 401, 
       category: "Media",
-      label: "Featured Guide",
+      label: "Media",
       title: "영상 편집 자동화를 위한 AI 워크플로우", 
       desc: "Automate your production pipeline with generative AI. A complete guide to AI-driven video editing and synthesis.",
       tag: "Production", 
@@ -50,16 +50,28 @@ export default function Home() {
       date: "Nov 20, 2024"
     },
     { 
-      id: 301, 
-      category: "Education",
-      label: "Next Up",
-      title: "개인별 맞춤형 학습 경로 설계 AI", 
-      desc: "The future of learning is adaptive. Build AI agents that understand student progress and tailor curriculum in real-time.",
-      tag: "EdTech", 
+      id: 501, 
+      category: "Lifestyle",
+      label: "Lifestyle",
+      title: "스마트 홈 AI 비서의 진화와 미래", 
+      desc: "Seamlessly integrate AI into your daily life. Explore the latest advancements in smart home automation and ambient computing.",
+      tag: "Smart Home", 
       status: 'FREE', 
-      thumb: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1600",
-      author: "Edu Tech",
-      date: "Nov 18, 2024"
+      thumb: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=1600",
+      author: "IoT Team",
+      date: "Nov 16, 2024"
+    },
+    { 
+      id: 601, 
+      category: "Business",
+      label: "Business",
+      title: "RAG를 활용한 기업 내부 지식 베이스 구축", 
+      desc: "Deploying fine-tuned models for enterprise infrastructure. Learn the end-to-end pipeline for model quantization, optimization, and scaling.",
+      tag: "Enterprise", 
+      status: 'PAID', 
+      thumb: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1600",
+      author: "Rowan Cheung",
+      date: "Nov 24, 2024"
     }
   ];
 
@@ -129,7 +141,7 @@ export default function Home() {
               {/* Main Card (Left) */}
               <div className="flex-1">
                 <a href="/content" className="relative block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row gap-8 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline overflow-hidden">
-                  <div className="w-full md:w-[45%] aspect-video rounded-xl overflow-hidden bg-gray-900 relative flex-none">
+                  <div className="w-full md:w-[52%] aspect-video rounded-xl overflow-hidden bg-gray-900 relative flex-none">
                     <img key={activeItem.id} src={activeItem.thumb} alt={activeItem.title} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 animate-in fade-in zoom-in-95" />
                     <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 to-transparent mix-blend-overlay"></div>
                     <div className="absolute top-4 left-4 flex gap-2">
@@ -176,7 +188,7 @@ export default function Home() {
                   <button 
                     key={item.id}
                     onClick={() => setActiveIdx(idx)}
-                    className={`text-left p-3 rounded-xl transition-all border ${activeIdx === idx ? 'bg-white/5 border-emerald-tech/30 border-l-4 border-l-emerald-tech' : 'bg-transparent border-transparent hover:bg-white/[0.02]'}`}
+                    className={`text-left p-3 rounded-xl transition-all border cursor-pointer ${activeIdx === idx ? 'bg-white/5 border-emerald-tech/30 border-l-4 border-l-emerald-tech' : 'bg-transparent border-transparent hover:bg-white/[0.02]'}`}
                   >
                     <span className={`block text-[9px] font-bold uppercase tracking-widest mb-1 ${activeIdx === idx ? 'text-emerald-tech' : 'text-white/30'}`}>
                       {item.label}
