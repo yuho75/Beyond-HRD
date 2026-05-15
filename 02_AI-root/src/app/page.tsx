@@ -115,7 +115,7 @@ export default function Home() {
           <span className="font-extrabold tracking-tight text-xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
         </a>
         
-        <nav className="hidden lg:flex flex-1 justify-center items-center gap-10 px-8">
+        <nav className="hidden lg:flex flex-1 justify-center items-center gap-8 ml-12 px-4">
           {/* Categories */}
           <div className="flex items-center gap-8">
             <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Commerce</a>
@@ -135,10 +135,9 @@ export default function Home() {
           {/* Vertical Separator */}
           <div className="w-[1px] h-4 bg-white/20 mx-4"></div>
 
-          {/* System Menus */}
           <div className="flex items-center gap-6">
-            <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline font-bold" href="/mypage">My Page</a>
-            <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline font-bold" href="/admin">Admin</a>
+            <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="/mypage">My Page</a>
+            <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="/admin">Admin</a>
           </div>
         </nav>
         
