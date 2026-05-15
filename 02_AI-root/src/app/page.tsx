@@ -91,6 +91,18 @@ export default function Home() {
       thumb: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1600",
       author: "Rowan Cheung",
       date: "Nov 24, 2024"
+    },
+    { 
+      id: 701, 
+      category: "Insights",
+      label: "Philosophy",
+      title: "경량문명: AI 시대를 살아가는 생각의 뿌리", 
+      desc: "Beyond the technology, we explore the essence of living in an AI-driven world. Insights on the shift from possession to experience and the core values of the future.",
+      tag: "Philosophy", 
+      status: 'FREE', 
+      thumb: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=1600",
+      author: "Song Gil-young",
+      date: "Nov 25, 2024"
     }
   ];
 
@@ -130,7 +142,7 @@ export default function Home() {
             <div className="w-[1px] h-4 bg-white/20 mx-2"></div>
 
             {/* Philosophy */}
-            <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">
               Insights
             </a>
             
