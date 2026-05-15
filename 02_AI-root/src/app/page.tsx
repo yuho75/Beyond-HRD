@@ -172,7 +172,7 @@ export default function Home() {
                 items: [
                   { id: 601, title: "RAG를 활용한 기업 내부 지식 베이스 구축", tag: "Enterprise", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Rowan Cheung", status: 'PRO', thumb: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800" },
                   { id: 602, title: "AI 기반 계약서 자동 검토 및 법률 자문", tag: "Legal", color: "text-blue-400", border: "border-blue-500/20", bg: "bg-blue-500/10", author: "Legal Tech", status: 'PAID', thumb: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800" },
-                  { id: 603, title: "코드 리뷰 및 개발 자동화 도구 도입", tag: "DevOps", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "Hardware Ops", status: 'FREE', thumb: "https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=800" },
+                  { id: 603, title: "코드 리뷰 및 개발 자동화 도구 도입", tag: "DevOps", color: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/10", author: "Hardware Ops", status: 'FREE', thumb: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800" },
                   { id: 604, title: "기업용 AI 거버넌스 및 윤리 가이드라인", tag: "Governance", color: "text-amber-400", border: "border-amber-500/20", bg: "bg-amber-500/10", author: "Security Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" },
                 ]
               }
