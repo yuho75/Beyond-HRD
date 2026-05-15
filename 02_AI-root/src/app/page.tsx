@@ -159,7 +159,7 @@ export default function Home() {
                     <h2 className="text-xl md:text-2xl font-bold leading-tight text-white mb-3 group-hover:text-emerald-tech transition-colors animate-in slide-in-from-left-6">
                       {activeItem.title}
                     </h2>
-                    <p className="text-sm text-white/40 mb-5 leading-relaxed line-clamp-2 animate-in slide-in-from-left-8">
+                    <p className="text-sm text-white/40 mb-5 leading-relaxed line-clamp-3 animate-in slide-in-from-left-8">
                       {activeItem.desc}
                     </p>
 
