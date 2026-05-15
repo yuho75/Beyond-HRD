@@ -1,10 +1,29 @@
 "use client";
 
-import { Search, Grid, List, Terminal, UserCircle, Bookmark, Lock, Globe } from "lucide-react";
+import { 
+  Zap, 
+  Search, 
+  Lock, 
+  Bookmark, 
+  Layout, 
+  Users, 
+  Settings, 
+  MessageSquare, 
+  Play, 
+  ExternalLink,
+  Grid,
+  List,
+  Terminal,
+  UserCircle,
+  Globe,
+  Menu,
+  X
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Home() {
   const [bookmarks, setBookmarks] = useState<number[]>([0, 2]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleBookmark = (id: number, e: React.MouseEvent) => {
     e.preventDefault();
@@ -125,11 +144,41 @@ export default function Home() {
               type="text" 
             />
           </div>
-          <button className="font-technical-sm uppercase tracking-widest px-4 py-2 bg-[#FF6B00] text-white rounded text-[10px] hover:bg-[#e65a00] transition-all active:scale-95 cursor-pointer border-none font-bold shadow-lg shadow-orange-900/20 whitespace-nowrap">
+          <button className="hidden sm:block font-technical-sm uppercase tracking-widest px-4 py-2 bg-[#FF6B00] text-white rounded text-[10px] hover:bg-[#e65a00] transition-all active:scale-95 cursor-pointer border-none font-bold shadow-lg shadow-orange-900/20 whitespace-nowrap">
             로그인
+          </button>
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-white/70 hover:text-emerald-tech hover:bg-white/5 rounded-md transition-all z-[60]"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </header>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`fixed inset-0 bg-[#131313] z-50 lg:hidden transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        <div className="flex flex-col h-full pt-24 px-8 gap-8">
+          <div className="flex flex-col gap-4">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-tech/50 border-b border-white/5 pb-2">Categories</p>
+            {['Commerce', 'Education', 'Media', 'Lifestyle', 'Business'].map((item) => (
+              <a key={item} href="#" className="text-2xl font-bold text-white hover:text-emerald-tech transition-colors py-1" onClick={() => setIsMobileMenuOpen(false)}>
+                {item}
+              </a>
+            ))}
+          </div>
+          
+          <div className="flex flex-col gap-4 mt-4">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 border-b border-white/5 pb-2">Management</p>
+            <a href="/mypage" className="text-xl font-bold text-emerald-tech hover:brightness-125 transition-all" onClick={() => setIsMobileMenuOpen(false)}>My Page</a>
+            <a href="/admin" className="text-xl font-bold text-emerald-tech hover:brightness-125 transition-all" onClick={() => setIsMobileMenuOpen(false)}>Admin</a>
+          </div>
+
+          <button className="mt-auto mb-12 w-full py-4 bg-[#FF6B00] text-white rounded-xl text-sm font-bold uppercase tracking-widest shadow-xl shadow-orange-900/20" onClick={() => setIsMobileMenuOpen(false)}>
+            로그인
+          </button>
+        </div>
+      </div>
 
       {/* Main Content */}
       <main className="px-8 pt-8 pb-12 max-w-7xl mx-auto w-full flex-grow flex flex-col gap-12">
