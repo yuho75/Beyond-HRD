@@ -36,8 +36,8 @@ export default function Home() {
 
           {/* System Menus */}
           <div className="flex items-center gap-6">
-            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/mypage">My Page</a>
-            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/admin">Admin</a>
+            <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline font-bold" href="/mypage">My Page</a>
+            <a className="font-technical-sm text-emerald-tech hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline font-bold" href="/admin">Admin</a>
           </div>
         </nav>
         
