@@ -21,23 +21,23 @@ export default function Home() {
           <span className="font-extrabold tracking-tight text-xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>
         </a>
         
-        <nav className="hidden lg:flex flex-1 justify-center items-center gap-6 px-4">
+        <nav className="hidden lg:flex flex-1 justify-center items-center gap-8 px-4">
           {/* Categories */}
-          <div className="flex items-center gap-6">
-            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">쇼핑 & 커머스</a>
-            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">교육 & 자기계발</a>
-            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">콘텐츠 & 미디어</a>
-            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">생활 & 라이프</a>
-            <a className="font-technical-sm text-white/60 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[10px] no-underline font-bold whitespace-nowrap" href="#">비즈니스 도구</a>
+          <div className="flex items-center gap-8">
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Commerce</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Education</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Media</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Lifestyle</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Business</a>
           </div>
           
           {/* Vertical Separator */}
           <div className="w-[1px] h-3 bg-white/10 mx-2"></div>
 
           {/* System Menus */}
-          <div className="flex items-center gap-5">
-            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[9px] no-underline" href="/mypage">My Page</a>
-            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[9px] no-underline" href="/admin">Admin</a>
+          <div className="flex items-center gap-6">
+            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/mypage">My Page</a>
+            <a className="font-technical-sm text-white/20 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/admin">Admin</a>
           </div>
         </nav>
         
