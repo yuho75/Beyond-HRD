@@ -183,17 +183,25 @@ export default function Home() {
               </div>
 
               {/* Slider Navigation (Right) */}
-              <div className="w-full lg:w-[300px] flex flex-col gap-1.5">
+              <div className="w-full lg:w-[280px] flex flex-col">
                 {featuredItems.map((item, idx) => (
                   <button 
                     key={item.id}
                     onClick={() => setActiveIdx(idx)}
-                    className={`text-left p-3 rounded-xl transition-all border cursor-pointer ${activeIdx === idx ? 'bg-white/5 border-emerald-tech/30 border-l-4 border-l-emerald-tech' : 'bg-transparent border-transparent hover:bg-white/[0.02]'}`}
+                    className={`text-left py-4 px-5 transition-all border-l-2 cursor-pointer group/nav ${
+                      activeIdx === idx 
+                        ? 'border-emerald-tech bg-emerald-tech/5' 
+                        : 'border-white/5 hover:border-white/20 hover:bg-white/[0.02]'
+                    }`}
                   >
-                    <span className={`block text-[9px] font-bold uppercase tracking-widest mb-1 ${activeIdx === idx ? 'text-emerald-tech' : 'text-white/30'}`}>
+                    <span className={`block text-[9px] font-bold uppercase tracking-[0.2em] mb-2 transition-colors ${
+                      activeIdx === idx ? 'text-emerald-tech' : 'text-white/30 group-hover/nav:text-white/50'
+                    }`}>
                       {item.label}
                     </span>
-                    <h3 className={`text-[13px] font-bold leading-snug line-clamp-1 ${activeIdx === idx ? 'text-white' : 'text-white/50'}`}>
+                    <h3 className={`text-[13px] font-bold leading-tight transition-colors ${
+                      activeIdx === idx ? 'text-white' : 'text-white/40 group-hover/nav:text-white/60'
+                    }`}>
                       {item.title}
                     </h3>
                   </button>
