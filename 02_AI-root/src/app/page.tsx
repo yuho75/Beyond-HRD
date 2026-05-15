@@ -64,119 +64,58 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 mt-8">
-          {/* Sidebar */}
-          <aside className="w-full lg:w-64 shrink-0 flex flex-col gap-10">
-            <div>
-              <h3 className="font-technical-sm uppercase tracking-widest text-white/20 mb-6 text-[10px] font-bold">Categories</h3>
-              <div className="flex flex-col gap-4">
-                {['All Topics', 'Business Operations', 'Coding & Engineering', 'Data Analysis', 'Marketing & Sales'].map((cat, i) => (
-                  <label key={cat} className="flex items-center gap-3 cursor-pointer group">
-                    <input 
-                      type="checkbox" 
-                      defaultChecked={i === 0}
-                      className="accent-emerald-tech h-4 w-4 rounded border-white/10 bg-white/5" 
-                    />
-                    <span className={`text-sm transition-colors ${i === 0 ? 'text-white font-bold' : 'text-white/40'} group-hover:text-emerald-tech`}>
-                      {cat}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="font-technical-sm uppercase tracking-widest text-white/20 mb-6 text-[10px] font-bold">Skill Level</h3>
-              <div className="flex flex-col gap-4">
-                {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
-                  <label key={level} className="flex items-center gap-3 cursor-pointer group">
-                    <input type="checkbox" className="accent-emerald-tech h-4 w-4 rounded border-white/10 bg-white/5" />
-                    <span className="text-sm text-white/40 group-hover:text-emerald-tech transition-colors">{level}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl">
-              <h4 className="text-xs font-bold text-white mb-2">PRO 멤버십 전용</h4>
-              <p className="text-[11px] text-white/40 leading-relaxed mb-4">모든 유료 가이드와 시크릿 로드맵을 확인하시려면 멤버십을 업그레이드하세요.</p>
-              <button className="w-full py-2 bg-emerald-tech text-black text-[10px] font-bold rounded-lg uppercase tracking-wider hover:bg-emerald-tech/80 transition-colors">Upgrade Now</button>
-            </div>
-          </aside>
-
+        <div className="flex flex-col gap-16 mt-8">
           {/* Grid Content */}
-          <div className="flex-grow flex flex-col gap-16 min-w-0">
-            {/* Featured Guides */}
+          <div className="flex flex-col gap-16 min-w-0">
+            {/* Featured Guide (Large Card) */}
             <section>
               <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
                 <h2 className="text-xl font-bold text-white uppercase tracking-widest flex items-center gap-3">
                   <div className="w-1 h-6 bg-emerald-tech"></div>
-                  Featured Guides
+                  Featured Guide
                 </h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Featured Card 1 */}
-                <a href="/content" className="group cursor-pointer bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden hover:border-emerald-tech/30 transition-all flex flex-col shadow-2xl relative no-underline">
-                  <div className="h-56 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60" alt="LLM" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-60"></div>
-                    <div className="absolute top-4 left-4 flex gap-2">
-                       <div className="bg-emerald-tech/20 text-emerald-tech text-[10px] px-2 py-0.5 font-bold uppercase border border-emerald-tech/30 rounded backdrop-blur-md">Advanced</div>
-                       <div className="bg-purple-500 text-white text-[10px] px-2 py-0.5 font-bold uppercase rounded shadow-lg flex items-center gap-1">
-                         <Lock className="w-3 h-3" /> PAID
-                       </div>
-                    </div>
-                    <button 
-                      onClick={(e) => toggleBookmark(101, e)}
-                      className={`absolute top-4 right-4 p-2 rounded-full backdrop-blur-md border border-white/10 transition-all ${bookmarks.includes(101) ? 'bg-emerald-tech text-black border-emerald-tech shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-black/40 text-white hover:bg-black/60'}`}
-                    >
-                      <Bookmark className="w-4 h-4" fill={bookmarks.includes(101) ? "currentColor" : "none"} />
-                    </button>
-                  </div>
-                  <div className="p-8 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-emerald-tech transition-colors leading-tight">Large Language Model Optimization</h3>
-                    <p className="text-white/40 mb-8 flex-grow text-sm leading-relaxed line-clamp-3">Deploying fine-tuned models for enterprise infrastructure. Learn the end-to-end pipeline for model quantization, optimization, and scaling.</p>
-                    <div className="flex items-center justify-between mt-auto">
-                      <div className="flex items-center gap-3">
-                        <div className="w-6 h-6 rounded-full bg-emerald-tech/20 flex items-center justify-center text-[10px] text-emerald-tech font-bold">R</div>
-                        <span className="text-xs text-white/60 font-bold">Rowan Cheung</span>
-                      </div>
-                      <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest font-technical-sm">Nov 2024</span>
-                    </div>
-                  </div>
-                </a>
-
-                {/* Featured Card 2 */}
-                <div className="group cursor-pointer bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden hover:border-emerald-tech/30 transition-all flex flex-col shadow-2xl relative no-underline">
-                  <div className="h-56 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4628c9757?auto=format&fit=crop&q=80&w=1600" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60" alt="Vector DB" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-60"></div>
-                    <div className="absolute top-4 left-4 flex gap-2">
-                       <div className="bg-blue-500/20 text-blue-400 text-[10px] px-2 py-0.5 font-bold uppercase border border-blue-500/30 rounded backdrop-blur-md">Intermediate</div>
-                       <div className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 font-bold uppercase rounded shadow-lg flex items-center gap-1">
-                         <Globe className="w-3 h-3" /> FREE
-                       </div>
-                    </div>
-                    <button 
-                      onClick={(e) => toggleBookmark(102, e)}
-                      className={`absolute top-4 right-4 p-2 rounded-full backdrop-blur-md border border-white/10 transition-all ${bookmarks.includes(102) ? 'bg-emerald-tech text-black border-emerald-tech shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-black/40 text-white hover:bg-black/60'}`}
-                    >
-                      <Bookmark className="w-4 h-4" fill={bookmarks.includes(102) ? "currentColor" : "none"} />
-                    </button>
-                  </div>
-                  <div className="p-8 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-emerald-tech transition-colors leading-tight">Vector Database Scaling Strategies</h3>
-                    <p className="text-white/40 mb-8 flex-grow text-sm leading-relaxed line-clamp-3">High-performance retrieval for multi-agent systems and large scale RAG implementations. Understanding Pinecone, Milvus and Weaviate.</p>
-                    <div className="flex items-center justify-between mt-auto">
-                      <div className="flex items-center gap-3">
-                        <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px] text-blue-400 font-bold">Z</div>
-                        <span className="text-xs text-white/60 font-bold">Zippy AI</span>
-                      </div>
-                      <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest font-technical-sm">Oct 2024</span>
+              
+              <a href="/content" className="relative z-10 block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row gap-10 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline">
+                <div className="w-full md:w-1/2 aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden bg-gray-900 relative">
+                  <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 to-transparent mix-blend-overlay"></div>
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    <div className="bg-emerald-tech/20 text-emerald-tech text-[10px] px-2 py-0.5 font-bold uppercase border border-emerald-tech/30 rounded backdrop-blur-md">Advanced</div>
+                    <div className="bg-purple-500 text-white text-[10px] px-2 py-0.5 font-bold uppercase rounded shadow-lg flex items-center gap-1">
+                      <Lock className="w-3 h-3" /> PAID
                     </div>
                   </div>
                 </div>
-              </div>
+
+                <div className="w-full md:w-1/2 flex flex-col justify-center py-6 pr-6">
+                  <span className="inline-block px-3 py-1 bg-white/5 text-white/40 text-[10px] font-bold uppercase tracking-widest rounded-full self-start mb-4 border border-white/10">
+                    Featured Report
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-bold leading-tight text-white mb-6 group-hover:text-emerald-tech transition-colors">
+                    Large Language Model<br />Optimization for Enterprise
+                  </h2>
+                  <p className="text-lg text-white/40 mb-10 leading-relaxed max-w-md">
+                    Deploying fine-tuned models for enterprise infrastructure. Learn the end-to-end pipeline for model quantization, optimization, and scaling.
+                  </p>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-emerald-tech/20 flex items-center justify-center text-emerald-tech font-bold">R</div>
+                      <div>
+                        <p className="font-bold text-sm text-white">Rowan Cheung</p>
+                        <p className="text-xs text-white/40">Nov 24, 2024</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={(e) => toggleBookmark(101, e)}
+                      className={`p-3 rounded-full backdrop-blur-md border border-white/10 transition-all ${bookmarks.includes(101) ? 'bg-emerald-tech text-black border-emerald-tech shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-black/40 text-white hover:bg-black/60'}`}
+                    >
+                      <Bookmark className="w-5 h-5" fill={bookmarks.includes(101) ? "currentColor" : "none"} />
+                    </button>
+                  </div>
+                </div>
+              </a>
             </section>
 
             {/* All Guides */}
@@ -191,7 +130,7 @@ export default function Home() {
                   <List className="text-white/20 cursor-pointer hover:text-emerald-tech w-5 h-5" />
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {[
                   { id: 0, title: "Prompt Injection & Security Audits", tag: "Security", color: "text-red-400", border: "border-red-500/20", bg: "bg-red-500/10", author: "Security Team", status: 'PRO', thumb: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" },
                   { id: 1, title: "Custom GPU Kernel Development", tag: "Advanced", color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", author: "Hardware Ops", status: 'PAID', thumb: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800" },
