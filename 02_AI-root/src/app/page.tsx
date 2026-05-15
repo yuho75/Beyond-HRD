@@ -22,11 +22,23 @@ export default function Home() {
         </a>
         
         <nav className="hidden lg:flex items-center gap-8">
-          <a className="font-technical-sm text-white/40 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline" href="#">AI 활용</a>
-          <a className="font-technical-sm text-white/40 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline" href="#">AI 창업</a>
-          <a className="font-technical-sm text-white/40 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline" href="/content">Content</a>
-          <a className="font-technical-sm text-white/40 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline" href="/mypage">My Page</a>
-          <a className="font-technical-sm text-white/40 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline" href="/admin">Admin</a>
+          {/* Categories */}
+          <div className="flex items-center gap-8">
+            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">쇼핑 & 커머스</a>
+            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">교육 & 자기계발</a>
+            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">콘텐츠 & 미디어</a>
+            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">생활 & 라이프</a>
+            <a className="font-technical-sm text-white/90 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold" href="#">비즈니스 도구</a>
+          </div>
+          
+          {/* Vertical Separator */}
+          <div className="w-[1px] h-3 bg-white/10 mx-2"></div>
+
+          {/* System Menus */}
+          <div className="flex items-center gap-6">
+            <a className="font-technical-sm text-white/30 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/mypage">My Page</a>
+            <a className="font-technical-sm text-white/30 hover:text-white transition-colors uppercase tracking-widest text-[10px] no-underline" href="/admin">Admin</a>
+          </div>
         </nav>
         
         <div className="flex-1 flex items-center justify-end gap-4">
