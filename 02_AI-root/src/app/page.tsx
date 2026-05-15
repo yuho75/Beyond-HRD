@@ -141,7 +141,7 @@ export default function Home() {
               {/* Main Card (Left) */}
               <div className="flex-1">
                 <a href="/content" className="relative block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row gap-8 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline overflow-hidden">
-                  <div className="w-full md:w-[52%] aspect-video rounded-xl overflow-hidden bg-gray-900 relative flex-none">
+                  <div className="w-full md:w-[60%] aspect-video rounded-xl overflow-hidden bg-gray-900 relative flex-none">
                     <img key={activeItem.id} src={activeItem.thumb} alt={activeItem.title} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 animate-in fade-in zoom-in-95" />
                     <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 to-transparent mix-blend-overlay"></div>
                     <div className="absolute top-4 left-4 flex gap-2">
