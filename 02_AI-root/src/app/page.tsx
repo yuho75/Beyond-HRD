@@ -24,11 +24,11 @@ export default function Home() {
         <nav className="hidden lg:flex flex-1 justify-center items-center gap-8 px-4">
           {/* Categories */}
           <div className="flex items-center gap-8">
-            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Commerce</a>
-            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Education</a>
-            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Media</a>
-            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Lifestyle</a>
-            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[12px] no-underline font-bold whitespace-nowrap" href="#">Business</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Commerce</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Education</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Media</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Lifestyle</a>
+            <a className="font-technical-sm text-white/70 hover:text-emerald-tech transition-colors uppercase tracking-widest text-[11px] no-underline font-bold whitespace-nowrap" href="#">Business</a>
           </div>
           
           {/* Vertical Separator */}
@@ -81,7 +81,7 @@ export default function Home() {
             {/* Featured Guide (Large Card) */}
             <section>
               <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
-                <h2 className="text-xl font-bold text-white uppercase tracking-widest flex items-center gap-3">
+                <h2 className="text-lg font-bold text-white uppercase tracking-widest flex items-center gap-3">
                   <div className="w-1 h-6 bg-emerald-tech"></div>
                   Featured Guide
                 </h2>
@@ -179,7 +179,7 @@ export default function Home() {
             ].map((section) => (
               <section key={section.name} className="mt-4">
                 <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
-                  <h2 className="text-xl font-bold text-white uppercase tracking-widest flex items-center gap-3">
+                  <h2 className="text-lg font-bold text-white uppercase tracking-widest flex items-center gap-3">
                      <div className="w-1 h-6 bg-emerald-tech"></div>
                      {section.name}
                   </h2>
