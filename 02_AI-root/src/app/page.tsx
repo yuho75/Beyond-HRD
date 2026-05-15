@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, Grid, List, Terminal, UserCircle, Bookmark, Lock, Globe } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [bookmarks, setBookmarks] = useState<number[]>([0, 2]);
@@ -11,6 +11,69 @@ export default function Home() {
     e.stopPropagation();
     setBookmarks(prev => prev.includes(id) ? prev.filter(b => b !== id) : [...prev, id]);
   };
+
+  const featuredItems = [
+    { 
+      id: 601, 
+      category: "Enterprise",
+      label: "Top Story",
+      title: "RAG를 활용한 기업 내부 지식 베이스 구축", 
+      desc: "Deploying fine-tuned models for enterprise infrastructure. Learn the end-to-end pipeline for model quantization, optimization, and scaling.",
+      tag: "Advanced", 
+      status: 'PAID', 
+      thumb: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1600",
+      author: "Rowan Cheung",
+      date: "Nov 24, 2024"
+    },
+    { 
+      id: 201, 
+      category: "Commerce",
+      label: "New Release",
+      title: "AI 기반 초개인화 쇼핑 추천 시스템 구축", 
+      desc: "Revolutionizing retail with deep learning. Implement real-time recommendation engines that boost conversion by 40%.",
+      tag: "E-Commerce", 
+      status: 'PRO', 
+      thumb: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1600",
+      author: "Commerce Lab",
+      date: "Nov 22, 2024"
+    },
+    { 
+      id: 401, 
+      category: "Media",
+      label: "Featured Guide",
+      title: "영상 편집 자동화를 위한 AI 워크플로우", 
+      desc: "Automate your production pipeline with generative AI. A complete guide to AI-driven video editing and synthesis.",
+      tag: "Production", 
+      status: 'PRO', 
+      thumb: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=1600",
+      author: "Studio X",
+      date: "Nov 20, 2024"
+    },
+    { 
+      id: 301, 
+      category: "Education",
+      label: "Next Up",
+      title: "개인별 맞춤형 학습 경로 설계 AI", 
+      desc: "The future of learning is adaptive. Build AI agents that understand student progress and tailor curriculum in real-time.",
+      tag: "EdTech", 
+      status: 'FREE', 
+      thumb: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1600",
+      author: "Edu Tech",
+      date: "Nov 18, 2024"
+    }
+  ];
+
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  // Auto-slide effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIdx(prev => (prev + 1) % featuredItems.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [featuredItems.length]);
+
+  const activeItem = featuredItems[activeIdx];
 
   return (
     <div className="font-body-md text-inverse-on-surface min-h-screen bg-[#131313] flex flex-col text-white">
@@ -58,57 +121,73 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="px-8 pt-8 pb-12 max-w-7xl mx-auto w-full flex-grow flex flex-col gap-12">
-        {/* Header */}
-
-
         <div className="flex flex-col gap-16">
           {/* Grid Content */}
           <div className="flex flex-col gap-16 min-w-0">
-            {/* Featured Guide (Large Card) */}
-            <section>
-
-              
-              <a href="/content" className="relative z-10 block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row gap-10 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline">
-                <div className="w-full md:w-1/2 aspect-video rounded-xl overflow-hidden bg-gray-900 relative">
-                  <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 to-transparent mix-blend-overlay"></div>
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <div className="bg-emerald-tech/20 text-emerald-tech text-[10px] px-2 py-0.5 font-bold uppercase border border-emerald-tech/30 rounded backdrop-blur-md">Advanced</div>
-                    <div className="bg-purple-500 text-white text-[10px] px-2 py-0.5 font-bold uppercase rounded shadow-lg flex items-center gap-1">
-                      <Lock className="w-3 h-3" /> PAID
-                    </div>
-                  </div>
-                </div>
-
-                <div className="w-full md:w-1/2 flex flex-col justify-center py-6 pr-6">
-                  <span className="inline-block px-3 py-1 bg-white/5 text-white/40 text-[10px] font-bold uppercase tracking-widest rounded-full self-start mb-4 border border-white/10">
-                    Featured Report
-                  </span>
-                  <h2 className="text-3xl md:text-4xl font-bold leading-tight text-white mb-6 group-hover:text-emerald-tech transition-colors">
-                    Large Language Model<br />Optimization for Enterprise
-                  </h2>
-                  <p className="text-lg text-white/40 mb-10 leading-relaxed max-w-md">
-                    Deploying fine-tuned models for enterprise infrastructure. Learn the end-to-end pipeline for model quantization, optimization, and scaling.
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-emerald-tech/20 flex items-center justify-center text-emerald-tech font-bold">R</div>
-                      <div>
-                        <p className="font-bold text-sm text-white">Rowan Cheung</p>
-                        <p className="text-xs text-white/40">Nov 24, 2024</p>
+            {/* Featured Section (Slider) */}
+            <div className="flex flex-col lg:flex-row gap-8 min-h-[480px]">
+              {/* Main Card (Left) */}
+              <div className="flex-1">
+                <a href="/content" className="relative h-full block bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 shadow-2xl flex flex-col gap-8 items-center hover:border-emerald-tech/30 transition-all group cursor-pointer no-underline overflow-hidden">
+                  <div className="w-full aspect-video rounded-xl overflow-hidden bg-gray-900 relative">
+                    <img key={activeItem.id} src={activeItem.thumb} alt={activeItem.title} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 animate-in fade-in zoom-in-95" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 to-transparent mix-blend-overlay"></div>
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      <div className="bg-emerald-tech/20 text-emerald-tech text-[10px] px-2 py-0.5 font-bold uppercase border border-emerald-tech/30 rounded backdrop-blur-md">{activeItem.tag}</div>
+                      <div className="bg-purple-500 text-white text-[10px] px-2 py-0.5 font-bold uppercase rounded shadow-lg flex items-center gap-1">
+                        <Lock className="w-3 h-3" /> {activeItem.status}
                       </div>
                     </div>
-                    <button 
-                      onClick={(e) => toggleBookmark(101, e)}
-                      className={`p-3 rounded-full backdrop-blur-md border border-white/10 transition-all ${bookmarks.includes(101) ? 'bg-emerald-tech text-black border-emerald-tech shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-black/40 text-white hover:bg-black/60'}`}
-                    >
-                      <Bookmark className="w-5 h-5" fill={bookmarks.includes(101) ? "currentColor" : "none"} />
-                    </button>
                   </div>
-                </div>
-              </a>
-            </section>
+
+                  <div className="w-full flex flex-col justify-center">
+                    <span className="inline-block px-3 py-1 bg-white/5 text-white/40 text-[10px] font-bold uppercase tracking-widest rounded-full self-start mb-4 border border-white/10 animate-in slide-in-from-left-4">
+                      {activeItem.label}
+                    </span>
+                    <h2 className="text-2xl md:text-3xl font-bold leading-tight text-white mb-4 group-hover:text-emerald-tech transition-colors animate-in slide-in-from-left-6">
+                      {activeItem.title}
+                    </h2>
+                    <p className="text-base text-white/40 mb-6 leading-relaxed max-w-2xl animate-in slide-in-from-left-8">
+                      {activeItem.desc}
+                    </p>
+
+                    <div className="flex items-center justify-between mt-auto">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-emerald-tech/20 flex items-center justify-center text-emerald-tech font-bold uppercase">{activeItem.author[0]}</div>
+                        <div>
+                          <p className="font-bold text-sm text-white">{activeItem.author}</p>
+                          <p className="text-xs text-white/40">{activeItem.date}</p>
+                        </div>
+                      </div>
+                      <button 
+                        onClick={(e) => toggleBookmark(activeItem.id, e)}
+                        className={`p-3 rounded-full backdrop-blur-md border border-white/10 transition-all ${bookmarks.includes(activeItem.id) ? 'bg-emerald-tech text-black border-emerald-tech shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-black/40 text-white hover:bg-black/60'}`}
+                      >
+                        <Bookmark className="w-5 h-5" fill={bookmarks.includes(activeItem.id) ? "currentColor" : "none"} />
+                      </button>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              {/* Slider Navigation (Right) */}
+              <div className="w-full lg:w-[320px] flex flex-col gap-2">
+                {featuredItems.map((item, idx) => (
+                  <button 
+                    key={item.id}
+                    onClick={() => setActiveIdx(idx)}
+                    className={`text-left p-4 rounded-xl transition-all border ${activeIdx === idx ? 'bg-white/5 border-emerald-tech/30 border-l-4 border-l-emerald-tech' : 'bg-transparent border-transparent hover:bg-white/[0.02]'}`}
+                  >
+                    <span className={`block text-[10px] font-bold uppercase tracking-widest mb-1 ${activeIdx === idx ? 'text-emerald-tech' : 'text-white/30'}`}>
+                      {item.label}
+                    </span>
+                    <h3 className={`text-sm font-bold leading-snug line-clamp-2 ${activeIdx === idx ? 'text-white' : 'text-white/50'}`}>
+                      {item.title}
+                    </h3>
+                  </button>
+                ))}
+              </div>
+            </div>
 
             {/* Category Sections */}
             {[
