@@ -2,8 +2,8 @@ name: Supabase Keep-Alive
 
 on:
   schedule:
-    # 매 3일마다 실행 (UTC 00:00, 한국시간 09:00)
-    - cron: '0 0 */3 * *'
+    # 매일 실행 (UTC 00:00, 한국시간 09:00)
+    - cron: '0 0 * * *'
   workflow_dispatch: # 수동 실행 가능
 
 jobs:
@@ -17,9 +17,9 @@ jobs:
         run: |
           echo "🔔 Triggering Supabase DB Activity via AI-Flow Vercel Cron..."
           set +e
-          # Vercel에 배포된 keep-alive API를 호출하여 실제 서비스 롤 키로 Supabase DB 조회를 일으킵니다.
+          # Vercel에 배포된 실제 URL(ai-flow-khaki)을 호출하여 실제 DB 조회를 일으킵니다.
           response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" --max-time 30 \
-            "https://ai-flow.vercel.app/api/cron/keep-alive")
+            "https://ai-flow-khaki.vercel.app/api/cron/keep-alive")
           curl_exit=$?
           set -e
           
@@ -33,7 +33,31 @@ jobs:
           if [ "$http_code" = "200" ]; then
             echo "✅ AI-Flow Keep-Alive Succeeded! DB traffic generated."
           else
-            echo "⚠️ AI-Flow Keep-Alive returned non-200. Checking backup..."
+            echo "⚠️ AI-Flow Keep-Alive returned non-200."
+          fi
+
+      - name: Ping AI-Root Vercel Keep-Alive Endpoint
+        shell: bash
+        run: |
+          echo "🔔 Triggering Supabase DB Activity via AI-Root Vercel Cron..."
+          set +e
+          # Vercel에 배포된 실제 URL(ai-root-sable)을 호출하여 실제 DB 조회를 일으킵니다.
+          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" --max-time 30 \
+            "https://ai-root-sable.vercel.app/api/cron/keep-alive")
+          curl_exit=$?
+          set -e
+          
+          http_code=$(echo "$response" | tr -d '\r' | grep "HTTP_STATUS:" | sed 's/HTTP_STATUS://')
+          body=$(echo "$response" | tr -d '\r' | grep -v "HTTP_STATUS:")
+          
+          echo "Curl Exit Code: $curl_exit"
+          echo "HTTP Response Code: $http_code"
+          echo "Response Body: $body"
+          
+          if [ "$http_code" = "200" ]; then
+            echo "✅ AI-Root Keep-Alive Succeeded! DB traffic generated."
+          else
+            echo "⚠️ AI-Root Keep-Alive returned non-200."
           fi
 
       - name: Log keep-alive completion
