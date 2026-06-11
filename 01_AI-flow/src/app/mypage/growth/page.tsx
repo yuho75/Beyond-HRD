@@ -132,7 +132,7 @@ export default function GrowthTracking() {
                     Today's Target
                   </h4>
                   <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col gap-3">
-                    <p className="text-xs text-gray-300 leading-relaxed">
+                    <p className="text-xs text-gray-700 leading-relaxed">
                       "다음 학점까지 <span className="text-[#f97316] font-bold">12pt</span> 남았어요! 이 아티클을 읽고 레벨업 하세요."
                     </p>
                     <a href="#" className="flex items-center justify-between text-[10px] font-bold text-[#f97316] hover:underline group">

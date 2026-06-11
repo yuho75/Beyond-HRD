@@ -207,8 +207,8 @@ export default function MyPage() {
 
                   <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 flex gap-4 items-start">
                     <Bell className="w-5 h-5 text-orange-400 shrink-0 mt-1" />
-                    <p className="text-xs text-orange-200/60 leading-relaxed">
-                      지난주보다 <span className="text-orange-400 font-bold">15% 더 많은</span> 학습량을 기록하고 있어요! 조금만 더 하면 레벨업!
+                    <p className="text-xs text-gray-700 leading-relaxed">
+                      지난주보다 <span className="text-[#f97316] font-bold">15% 더 많은</span> 학습량을 기록하고 있어요! 조금만 더 하면 레벨업!
                     </p>
                   </div>
                 </div>
