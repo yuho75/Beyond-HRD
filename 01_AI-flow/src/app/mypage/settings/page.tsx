@@ -63,7 +63,7 @@ export default function AccountSettings() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-10 bg-[#f8f9fa]">
-          <div className="max-w-4xl mx-auto flex flex-col gap-10">
+          <div className="max-w-5xl mx-auto flex flex-col gap-10">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">계정 및 구독 관리</h1>
               <p className="text-gray-500 text-sm">멤버십 상태를 확인하고 개인 설정을 변경할 수 있습니다.</p>
