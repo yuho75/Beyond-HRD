@@ -21,9 +21,6 @@ export default function Header() {
 
         {/* Center: Nav Menu */}
         <nav className="hidden md:flex flex-wrap items-center gap-4 lg:gap-6 text-[10px] lg:text-[11px] font-bold uppercase tracking-widest text-gray-400 flex-1 justify-center">
-          <Link href="/article" className={`transition-colors hover:text-gray-900 ${pathname === "/article" ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            Articles
-          </Link>
           <Link href="/category/commerce" className={`transition-colors hover:text-gray-900 ${pathname.includes("/commerce") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
             Commerce
           </Link>
@@ -39,13 +36,19 @@ export default function Header() {
           <Link href="/category/business" className={`transition-colors hover:text-gray-900 ${pathname.includes("/business") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
             Business
           </Link>
+
+          <div className="w-[1px] h-3 bg-gray-300"></div>
+
           <Link href="/category/insights" className={`transition-colors hover:text-gray-900 ${pathname.includes("/insights") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
             Insights
           </Link>
-          <Link href="/mypage" className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/mypage") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            MyPage
+
+          <div className="w-[1px] h-3 bg-gray-300"></div>
+
+          <Link href="/mypage" className={`transition-colors text-[#059669] hover:opacity-80 ${pathname.startsWith("/mypage") ? "border-b-2 border-[#059669] pb-1" : ""}`}>
+            My Page
           </Link>
-          <Link href="/admin" className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/admin") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
+          <Link href="/admin" className={`transition-colors text-[#059669] hover:opacity-80 ${pathname.startsWith("/admin") ? "border-b-2 border-[#059669] pb-1" : ""}`}>
             Admin
           </Link>
         </nav>
