@@ -19,9 +19,9 @@ import {
 
 export default function ContentPage() {
   return (
-    <div className="font-body-md text-gray-900 min-h-screen bg-[#131313] flex flex-col">
+    <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col">
       {/* Top Navigation */}
-      <header className="h-16 flex items-center justify-between px-container-padding-editorial max-w-7xl mx-auto w-full border-b border-gray-300 sticky top-0 bg-[#131313]/80 backdrop-blur-md z-50">
+      <header className="h-16 flex items-center justify-between px-container-padding-editorial max-w-7xl mx-auto w-full border-b border-gray-300 sticky top-0 bg-[#f8f9fa]/80 backdrop-blur-md z-50">
         <a href="/" className="flex-1 flex items-center gap-3 cursor-pointer group">
           <img src="/logo.png" alt="AI Root Logo" className="w-8 h-8 rounded group-hover:opacity-80 transition-opacity" />
           <span className="font-extrabold tracking-tight text-2xl text-emerald-tech" style={{ fontFamily: 'Inter, sans-serif' }}>AI-root</span>

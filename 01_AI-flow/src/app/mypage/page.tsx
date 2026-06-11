@@ -46,7 +46,7 @@ export default function MyPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-72 bg-[#131313] border-r border-gray-200 flex flex-col shrink-0">
+        <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
           <div className="p-8">
             <div className="flex items-center gap-4 mb-10 p-4 bg-gray-50 rounded-2xl border border-gray-200">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
@@ -100,7 +100,7 @@ export default function MyPage() {
               <div className="flex items-center gap-8 z-10">
                 <div className="relative">
                    <div className="w-24 h-24 rounded-full border-4 border-gray-300 flex items-center justify-center p-1">
-                     <div className="w-full h-full rounded-full bg-[#131313] flex items-center justify-center">
+                     <div className="w-full h-full rounded-full bg-gray-100 flex items-center justify-center">
                         <UserCircle className="w-12 h-12 text-gray-400" />
                      </div>
                    </div>

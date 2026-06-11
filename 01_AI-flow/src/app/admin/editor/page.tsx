@@ -77,7 +77,7 @@ export default function UnifiedEditor() {
   };
 
   return (
-    <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col text-gray-100">
+    <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col">
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar (Consistent with Admin Dashboard) */}
         <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
@@ -128,7 +128,7 @@ export default function UnifiedEditor() {
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Top Header */}
-          <header className="h-16 bg-[#111] border-b border-gray-200 flex items-center justify-between px-8 z-50">
+          <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-50">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Content Orchestration</span>
@@ -248,7 +248,7 @@ export default function UnifiedEditor() {
             </div>
 
             {/* Right Sidebar - Assets & Meta */}
-            <div className="w-[380px] bg-[#111] border-l border-gray-200 flex flex-col p-10 gap-10 overflow-y-auto">
+            <div className="w-[380px] bg-white border-l border-gray-200 flex flex-col p-10 gap-10 overflow-y-auto">
               {/* Featured Image Upload */}
               <div className="flex flex-col gap-4">
                 <h3 className="text-[11px] font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">

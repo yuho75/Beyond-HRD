@@ -22,7 +22,7 @@ export default function AccountSettings() {
   const [newsletterEnabled, setNewsletterEnabled] = useState(true);
 
   return (
-    <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col text-gray-100">
+    <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col">
       {/* Top Navigation */}
       <header className="h-16 flex items-center justify-between px-8 border-b border-gray-200 sticky top-0 bg-[#f8f9fa]/80 backdrop-blur-md z-50">
         <div className="flex-1 flex items-center gap-3">
@@ -44,7 +44,7 @@ export default function AccountSettings() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-72 bg-[#131313] border-r border-gray-200 flex flex-col shrink-0">
+        <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
           <div className="p-8">
             <div className="flex items-center gap-4 mb-10 p-4 bg-gray-50 rounded-2xl border border-gray-200">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c5b3f9] to-[#8a63f2] flex items-center justify-center">
