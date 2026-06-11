@@ -20,25 +20,32 @@ export default function Header() {
         </div>
 
         {/* Center: Nav Menu */}
-        <nav className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-gray-400 flex-1 justify-center">
-          <Link 
-            href="/article" 
-            className={`transition-colors hover:text-gray-900 ${pathname === "/article" ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}
-          >
+        <nav className="hidden md:flex flex-wrap items-center gap-4 lg:gap-6 text-[10px] lg:text-[11px] font-bold uppercase tracking-widest text-gray-400 flex-1 justify-center">
+          <Link href="/article" className={`transition-colors hover:text-gray-900 ${pathname === "/article" ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
             Articles
           </Link>
-          <a href="#" className="hover:text-gray-900 transition-colors">Podcast</a>
-          <a href="#" className="hover:text-gray-900 transition-colors">Newsletter</a>
-          <Link 
-            href="/mypage" 
-            className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/mypage") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}
-          >
+          <Link href="/category/commerce" className={`transition-colors hover:text-gray-900 ${pathname.includes("/commerce") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
+            Commerce
+          </Link>
+          <Link href="/category/education" className={`transition-colors hover:text-gray-900 ${pathname.includes("/education") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
+            Education
+          </Link>
+          <Link href="/category/media" className={`transition-colors hover:text-gray-900 ${pathname.includes("/media") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
+            Media
+          </Link>
+          <Link href="/category/lifestyle" className={`transition-colors hover:text-gray-900 ${pathname.includes("/lifestyle") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
+            Lifestyle
+          </Link>
+          <Link href="/category/business" className={`transition-colors hover:text-gray-900 ${pathname.includes("/business") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
+            Business
+          </Link>
+          <Link href="/category/insights" className={`transition-colors hover:text-gray-900 ${pathname.includes("/insights") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
+            Insights
+          </Link>
+          <Link href="/mypage" className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/mypage") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
             MyPage
           </Link>
-          <Link 
-            href="/admin" 
-            className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/admin") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}
-          >
+          <Link href="/admin" className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/admin") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
             Admin
           </Link>
         </nav>
