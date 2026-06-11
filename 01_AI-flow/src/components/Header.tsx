@@ -29,6 +29,18 @@ export default function Header() {
           </Link>
           <a href="#" className="hover:text-gray-900 transition-colors">Podcast</a>
           <a href="#" className="hover:text-gray-900 transition-colors">Newsletter</a>
+          <Link 
+            href="/mypage" 
+            className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/mypage") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}
+          >
+            MyPage
+          </Link>
+          <Link 
+            href="/admin" 
+            className={`transition-colors hover:text-gray-900 ${pathname.startsWith("/admin") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}
+          >
+            Admin
+          </Link>
         </nav>
 
         {/* Right: Actions */}
