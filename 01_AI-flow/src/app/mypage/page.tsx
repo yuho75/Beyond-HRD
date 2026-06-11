@@ -22,27 +22,7 @@ import {
 export default function MyPage() {
   return (
     <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col">
-      {/* Top Navigation */}
-      <header className="h-16 flex items-center justify-between px-8 border-b border-gray-200 sticky top-0 bg-[#f8f9fa]/80 backdrop-blur-md z-50">
-        <div className="flex-1 flex items-center gap-3">
-          <a href="/" className="flex items-center gap-3 cursor-pointer group">
-            <span className="font-extrabold tracking-tight text-xl text-gray-900">AI ROOT</span>
-          </a>
-        </div>
-        
-        <nav className="hidden lg:flex items-center gap-8">
-          <a className="font-technical-sm text-gray-500 hover:text-gray-900 transition-colors uppercase tracking-widest text-xs" href="#">AI-Flow</a>
-          <a className="font-technical-sm text-gray-500 hover:text-gray-900 transition-colors uppercase tracking-widest text-xs" href="#">AI-Root</a>
-          <a className="font-technical-sm text-gray-900 border-b-2 border-white pb-1 uppercase tracking-widest text-xs" href="#">My Page</a>
-        </nav>
-        
-        <div className="flex-1 flex items-center justify-end gap-6">
-          <span className="font-technical-sm text-gray-600 text-xs hidden sm:block">뉴스레터 무료 구독하기</span>
-          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border border-white/20 cursor-pointer">
-            <UserCircle className="w-6 h-6 text-gray-600" />
-          </div>
-        </div>
-      </header>
+
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
