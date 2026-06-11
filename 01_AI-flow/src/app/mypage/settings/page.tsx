@@ -27,16 +27,6 @@ export default function AccountSettings() {
         {/* Sidebar */}
         <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
           <div className="p-8">
-            <div className="flex items-center gap-4 mb-10 p-4 bg-gray-50 rounded-2xl border border-gray-200">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c5b3f9] to-[#8a63f2] flex items-center justify-center">
-                <Settings className="text-black w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 text-sm">A-Zip User</p>
-                <p className="text-[10px] text-purple-400 font-technical-sm uppercase tracking-widest">Account & Settings</p>
-              </div>
-            </div>
-
             <nav className="flex flex-col gap-2">
               {[
                 { name: '개인화 대시보드', icon: <Layout className="w-4 h-4" />, href: "/mypage" },
@@ -49,7 +39,7 @@ export default function AccountSettings() {
                   href={item.href} 
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl font-technical-sm text-sm transition-all cursor-pointer ${
                     item.active 
-                      ? 'bg-[#c5b3f9] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
+                      ? 'bg-[#f97316] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
                       : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
@@ -74,12 +64,12 @@ export default function AccountSettings() {
               <section className="bg-white border border-gray-200 rounded-3xl p-8 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-8">
-                    <CreditCard className="w-5 h-5 text-[#c5b3f9]" />
+                    <CreditCard className="w-5 h-5 text-[#f97316]" />
                     <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">Membership Plan</h3>
                   </div>
-                  <div className="bg-gray-50 border border-[#c5b3f9]/20 rounded-2xl p-6 mb-6">
+                  <div className="bg-gray-50 border border-[#f97316]/20 rounded-2xl p-6 mb-6">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-bold text-[#c5b3f9] uppercase tracking-widest bg-[#c5b3f9]/10 px-2 py-0.5 rounded">Standard</span>
+                      <span className="text-[10px] font-bold text-[#f97316] uppercase tracking-widest bg-[#f97316]/10 px-2 py-0.5 rounded">Standard</span>
                       <span className="text-xs text-gray-500">다음 결제일: 2024.12.15</span>
                     </div>
                     <p className="text-2xl font-bold text-gray-900">₩ 9,900 / <span className="text-sm text-gray-500">month</span></p>
@@ -94,7 +84,7 @@ export default function AccountSettings() {
               <section className="bg-white border border-gray-200 rounded-3xl p-8 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-8">
-                    <Mail className="w-5 h-5 text-[#c5b3f9]" />
+                    <Mail className="w-5 h-5 text-[#f97316]" />
                     <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">Newsletter (Stibee)</h3>
                   </div>
                   <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-2xl">
@@ -107,7 +97,7 @@ export default function AccountSettings() {
                       className="transition-colors"
                     >
                       {newsletterEnabled ? (
-                        <ToggleRight className="w-10 h-10 text-[#c5b3f9] cursor-pointer" />
+                        <ToggleRight className="w-10 h-10 text-[#f97316] cursor-pointer" />
                       ) : (
                         <ToggleLeft className="w-10 h-10 text-gray-700 cursor-pointer" />
                       )}
@@ -123,7 +113,7 @@ export default function AccountSettings() {
             {/* Account Settings */}
             <section className="bg-white border border-gray-200 rounded-3xl p-8">
               <div className="flex items-center gap-3 mb-10">
-                <ShieldCheck className="w-5 h-5 text-[#c5b3f9]" />
+                <ShieldCheck className="w-5 h-5 text-[#f97316]" />
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">General Account Settings</h3>
               </div>
               
@@ -135,7 +125,7 @@ export default function AccountSettings() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between p-5 hover:bg-gray-50 rounded-2xl transition-all cursor-pointer group border-b border-gray-200 last:border-0">
                     <div className="flex items-center gap-4">
-                      <div className="text-gray-600 group-hover:text-[#c5b3f9] transition-colors">{item.icon}</div>
+                      <div className="text-gray-600 group-hover:text-[#f97316] transition-colors">{item.icon}</div>
                       <div className="flex flex-col">
                         <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">{item.label}</span>
                         <span className="text-sm text-gray-900 font-medium">{item.value}</span>

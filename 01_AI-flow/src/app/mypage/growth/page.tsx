@@ -22,16 +22,6 @@ export default function GrowthTracking() {
         {/* Sidebar */}
         <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
           <div className="p-8">
-            <div className="flex items-center gap-4 mb-10 p-4 bg-gray-50 rounded-2xl border border-gray-200">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c5b3f9] to-[#8a63f2] flex items-center justify-center">
-                <TrendingUp className="text-black w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 text-sm">A-Zip User</p>
-                <p className="text-[10px] text-purple-400 font-technical-sm uppercase tracking-widest">Growth Tracking</p>
-              </div>
-            </div>
-
             <nav className="flex flex-col gap-2">
               {[
                 { name: '개인화 대시보드', icon: <Layout className="w-4 h-4" />, href: "/mypage" },
@@ -44,7 +34,7 @@ export default function GrowthTracking() {
                   href={item.href} 
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl font-technical-sm text-sm transition-all cursor-pointer ${
                     item.active 
-                      ? 'bg-[#c5b3f9] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
+                      ? 'bg-[#f97316] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
                       : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
@@ -69,7 +59,7 @@ export default function GrowthTracking() {
               <div className="lg:col-span-2 bg-white border border-gray-200 rounded-3xl p-8 flex flex-col">
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-3">
-                    <BarChart3 className="w-5 h-5 text-[#c5b3f9]" />
+                    <BarChart3 className="w-5 h-5 text-[#f97316]" />
                     <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">Weekly Learning Activity</h3>
                   </div>
                   <select className="bg-transparent text-[10px] text-gray-500 border border-gray-300 rounded-lg px-2 py-1 outline-none">
@@ -91,7 +81,7 @@ export default function GrowthTracking() {
                     <div key={i} className="flex-1 flex flex-col items-center gap-3 group">
                       <div className="w-full bg-gray-50 rounded-t-lg relative overflow-hidden h-full min-h-[150px]">
                          <div 
-                          className={`absolute bottom-0 left-0 right-0 rounded-t-lg transition-all duration-700 delay-${i*100} ${item.day === 'THU' ? 'bg-[#c5b3f9]' : 'bg-gray-100 group-hover:bg-white/20'}`}
+                          className={`absolute bottom-0 left-0 right-0 rounded-t-lg transition-all duration-700 delay-${i*100} ${item.day === 'THU' ? 'bg-[#f97316]' : 'bg-gray-100 group-hover:bg-white/20'}`}
                           style={{ height: `${item.val}%` }}
                          ></div>
                       </div>
@@ -111,7 +101,7 @@ export default function GrowthTracking() {
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-[10px] text-gray-500 uppercase tracking-tighter">Peak Day</span>
-                    <span className="text-xl font-bold text-[#c5b3f9]">Thursday</span>
+                    <span className="text-xl font-bold text-[#f97316]">Thursday</span>
                   </div>
                 </div>
               </div>
@@ -119,9 +109,9 @@ export default function GrowthTracking() {
               {/* Level & Goals */}
               <div className="flex flex-col gap-8">
                 <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-3xl p-8 flex flex-col items-center text-center">
-                  <div className="w-20 h-20 rounded-full border-4 border-[#c5b3f9]/20 flex items-center justify-center mb-6 relative">
-                    <Trophy className="w-10 h-10 text-[#c5b3f9]" />
-                    <div className="absolute -bottom-2 bg-white border border-[#c5b3f9] px-3 py-0.5 rounded-full text-[10px] font-bold text-[#c5b3f9]">LV. 12</div>
+                  <div className="w-20 h-20 rounded-full border-4 border-[#f97316]/20 flex items-center justify-center mb-6 relative">
+                    <Trophy className="w-10 h-10 text-[#f97316]" />
+                    <div className="absolute -bottom-2 bg-white border border-[#f97316] px-3 py-0.5 rounded-full text-[10px] font-bold text-[#f97316]">LV. 12</div>
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 mb-2">AI 기획자</h4>
                   <p className="text-xs text-gray-500 mb-6 uppercase tracking-widest font-technical-sm">Next Level: AI Master</p>
@@ -131,7 +121,7 @@ export default function GrowthTracking() {
                       <span>88%</span>
                     </div>
                     <div className="w-full h-2 bg-gray-50 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#c5b3f9] w-[88%] shadow-[0_0_10px_rgba(197,179,249,0.5)]"></div>
+                      <div className="h-full bg-[#f97316] w-[88%] shadow-[0_0_10px_rgba(197,179,249,0.5)]"></div>
                     </div>
                   </div>
                 </div>
@@ -143,9 +133,9 @@ export default function GrowthTracking() {
                   </h4>
                   <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col gap-3">
                     <p className="text-xs text-gray-300 leading-relaxed">
-                      "다음 학점까지 <span className="text-[#c5b3f9] font-bold">12pt</span> 남았어요! 이 아티클을 읽고 레벨업 하세요."
+                      "다음 학점까지 <span className="text-[#f97316] font-bold">12pt</span> 남았어요! 이 아티클을 읽고 레벨업 하세요."
                     </p>
-                    <a href="#" className="flex items-center justify-between text-[10px] font-bold text-[#c5b3f9] hover:underline group">
+                    <a href="#" className="flex items-center justify-between text-[10px] font-bold text-[#f97316] hover:underline group">
                       추천 콘텐츠 보기
                       <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </a>
@@ -156,7 +146,7 @@ export default function GrowthTracking() {
 
             {/* Completed Courses */}
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-8 border-l-4 border-[#c5b3f9] pl-4">이수 완료 과정 (Course Progress)</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-8 border-l-4 border-[#f97316] pl-4">이수 완료 과정 (Course Progress)</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
                   { title: 'AI 비즈니스 모델 입문', modules: '12/12', date: '2024.11.05', status: 'Completed' },
@@ -165,11 +155,11 @@ export default function GrowthTracking() {
                 ].map((item, i) => (
                   <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 flex items-center justify-between group hover:border-gray-300 transition-all">
                     <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${item.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-[#c5b3f9]/10 text-[#c5b3f9]'}`}>
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${item.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-[#f97316]/10 text-[#f97316]'}`}>
                         <CheckCircle2 className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-gray-900 group-hover:text-[#c5b3f9] transition-colors">{item.title}</h4>
+                        <h4 className="text-sm font-bold text-gray-900 group-hover:text-[#f97316] transition-colors">{item.title}</h4>
                         <p className="text-[10px] text-gray-500 font-technical-sm uppercase tracking-widest mt-1">Modules: {item.modules} | {item.date}</p>
                       </div>
                     </div>

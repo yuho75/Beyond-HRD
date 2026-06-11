@@ -28,16 +28,6 @@ export default function MyPage() {
         {/* Sidebar */}
         <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
           <div className="p-8">
-            <div className="flex items-center gap-4 mb-10 p-4 bg-gray-50 rounded-2xl border border-gray-200">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
-                <Trophy className="text-gray-900 w-6 h-6" />
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 text-sm">A-Zip Admin</p>
-                <p className="text-[10px] text-purple-400 font-technical-sm uppercase tracking-widest">Premium Dark</p>
-              </div>
-            </div>
-
             <nav className="flex flex-col gap-2">
               {[
                 { name: '개인화 대시보드', icon: <Layout className="w-4 h-4" />, href: "/mypage", active: true },
@@ -50,7 +40,7 @@ export default function MyPage() {
                   href={item.href} 
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl font-technical-sm text-sm transition-all cursor-pointer ${
                     item.active 
-                      ? 'bg-[#c5b3f9] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
+                      ? 'bg-[#f97316] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
                       : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
@@ -84,7 +74,7 @@ export default function MyPage() {
                         <UserCircle className="w-12 h-12 text-gray-400" />
                      </div>
                    </div>
-                   <div className="absolute -top-1 -right-1 bg-purple-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-full border-2 border-white">AI MASTER</div>
+                   <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-full border-2 border-white">AI MASTER</div>
                 </div>
                 
                 <div>
@@ -95,7 +85,7 @@ export default function MyPage() {
                       <span className="text-gray-900"><span className="text-xl font-bold text-gray-900">2,488</span> / 2,500</span>
                     </div>
                     <div className="w-80 h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 w-[99%]"></div>
+                      <div className="h-full bg-gradient-to-r from-orange-500 to-orange-500 w-[99%]"></div>
                     </div>
                     <p className="text-[10px] text-gray-400 font-technical-sm mt-1">12pt left until next level!</p>
                   </div>
@@ -103,7 +93,7 @@ export default function MyPage() {
               </div>
 
               <div className="bg-gray-50 border border-gray-300 rounded-2xl p-6 w-80 z-10 cursor-pointer hover:bg-gray-100 transition-all group">
-                <p className="text-[10px] text-purple-400 font-technical-sm uppercase tracking-widest mb-2">Recommended Content</p>
+                <p className="text-[10px] text-orange-400 font-technical-sm uppercase tracking-widest mb-2">Recommended Content</p>
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-bold text-gray-900">AI로 시작하는 자동화 부업</p>
                   <ChevronRight className="w-4 h-4 text-gray-500 group-hover:translate-x-1 transition-transform" />
@@ -118,7 +108,7 @@ export default function MyPage() {
                   <div className="flex items-center gap-8 border-b border-gray-200 mb-8">
                     {['Bookmarks', 'In Progress', 'Completed'].map((tab, i) => (
                       <button key={tab} className={`pb-4 text-xs font-technical-sm uppercase tracking-widest transition-all cursor-pointer ${
-                        i === 0 ? 'text-gray-900 border-b-2 border-[#c5b3f9]' : 'text-gray-400 hover:text-gray-600'
+                        i === 0 ? 'text-gray-900 border-b-2 border-[#f97316]' : 'text-gray-400 hover:text-gray-600'
                       }`}>
                         {tab}
                       </button>
@@ -137,9 +127,9 @@ export default function MyPage() {
                       <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-white/20 transition-all cursor-pointer group relative overflow-hidden">
                         <div className="flex items-center justify-between mb-8">
                           <span className="text-[10px] font-technical-sm text-gray-500 border border-gray-300 px-2 py-0.5 rounded">{card.brand}</span>
-                          <Bookmark className="w-4 h-4 text-[#c5b3f9] fill-[#c5b3f9]" />
+                          <Bookmark className="w-4 h-4 text-[#f97316] fill-[#f97316]" />
                         </div>
-                        <h4 className="text-base font-bold text-gray-900 mb-8 group-hover:text-[#c5b3f9] transition-colors leading-snug">
+                        <h4 className="text-base font-bold text-gray-900 mb-8 group-hover:text-[#f97316] transition-colors leading-snug">
                           {card.title}
                         </h4>
                         <div className="flex items-center gap-4 text-[10px] font-technical-sm text-gray-900/30 uppercase tracking-widest">
@@ -153,7 +143,7 @@ export default function MyPage() {
 
                 {/* Learning History Table */}
                 <section>
-                  <h2 className="text-xl font-bold text-gray-900 mb-8 border-l-4 border-[#c5b3f9] pl-4">Learning History</h2>
+                  <h2 className="text-xl font-bold text-gray-900 mb-8 border-l-4 border-[#f97316] pl-4">Learning History</h2>
                   <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                     <table className="w-full text-left">
                       <thead>
@@ -175,7 +165,7 @@ export default function MyPage() {
                             <td className="p-5">
                               <span className="text-[9px] font-technical-sm text-gray-500 border border-gray-300 px-2 py-0.5 rounded uppercase">{row.type}</span>
                             </td>
-                            <td className="p-5 text-sm font-bold text-purple-400">{row.credits}</td>
+                            <td className="p-5 text-sm font-bold text-orange-400">{row.credits}</td>
                             <td className="p-5 text-xs text-gray-400 font-technical-sm">{row.date}</td>
                           </tr>
                         ))}
@@ -198,7 +188,7 @@ export default function MyPage() {
                     {[30, 60, 45, 80, 50, 90, 70].map((h, i) => (
                       <div key={i} className="flex-1 bg-gray-50 rounded-t-sm relative group cursor-pointer">
                          <div 
-                           className={`absolute bottom-0 left-0 right-0 rounded-t-sm transition-all duration-500 ${i === 6 ? 'bg-purple-500' : 'bg-gray-100 group-hover:bg-white/20'}`} 
+                           className={`absolute bottom-0 left-0 right-0 rounded-t-sm transition-all duration-500 ${i === 6 ? 'bg-orange-500' : 'bg-gray-100 group-hover:bg-white/20'}`} 
                            style={{ height: `${h}%` }}
                          ></div>
                       </div>
@@ -215,10 +205,10 @@ export default function MyPage() {
                     </div>
                   </div>
 
-                  <div className="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-4 flex gap-4 items-start">
-                    <Bell className="w-5 h-5 text-purple-400 shrink-0 mt-1" />
-                    <p className="text-xs text-purple-200/60 leading-relaxed">
-                      지난주보다 <span className="text-purple-400 font-bold">15% 더 많은</span> 학습량을 기록하고 있어요! 조금만 더 하면 레벨업!
+                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 flex gap-4 items-start">
+                    <Bell className="w-5 h-5 text-orange-400 shrink-0 mt-1" />
+                    <p className="text-xs text-orange-200/60 leading-relaxed">
+                      지난주보다 <span className="text-orange-400 font-bold">15% 더 많은</span> 학습량을 기록하고 있어요! 조금만 더 하면 레벨업!
                     </p>
                   </div>
                 </div>
@@ -228,11 +218,11 @@ export default function MyPage() {
                   <div className="flex flex-col gap-6">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-600">Membership Plan</span>
-                      <span className="text-[10px] font-technical-sm text-purple-400 border border-purple-500/30 px-2 py-0.5 rounded-full uppercase tracking-tighter bg-purple-500/5">Premium Dark</span>
+                      <span className="text-[10px] font-technical-sm text-orange-400 border border-orange-500/30 px-2 py-0.5 rounded-full uppercase tracking-tighter bg-orange-500/5">Premium Dark</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-600">Newsletter (Stibee)</span>
-                      <div className="w-10 h-5 bg-[#c5b3f9] rounded-full relative cursor-pointer">
+                      <div className="w-10 h-5 bg-[#f97316] rounded-full relative cursor-pointer">
                         <div className="absolute right-1 top-1 w-3 h-3 bg-gray-900 rounded-full"></div>
                       </div>
                     </div>

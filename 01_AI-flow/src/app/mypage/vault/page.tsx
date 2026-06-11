@@ -29,16 +29,6 @@ export default function ContentVault() {
         {/* Sidebar */}
         <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
           <div className="p-8">
-            <div className="flex items-center gap-4 mb-10 p-4 bg-gray-50 rounded-2xl border border-gray-200">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c5b3f9] to-[#8a63f2] flex items-center justify-center">
-                <Bookmark className="text-black w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 text-sm">A-Zip User</p>
-                <p className="text-[10px] text-purple-400 font-technical-sm uppercase tracking-widest">Content Vault</p>
-              </div>
-            </div>
-
             <nav className="flex flex-col gap-2">
               {[
                 { name: '개인화 대시보드', icon: <Layout className="w-4 h-4" />, href: "/mypage" },
@@ -51,7 +41,7 @@ export default function ContentVault() {
                   href={item.href} 
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl font-technical-sm text-sm transition-all cursor-pointer ${
                     item.active 
-                      ? 'bg-[#c5b3f9] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
+                      ? 'bg-[#f97316] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
                       : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
@@ -74,13 +64,13 @@ export default function ContentVault() {
               <div className="flex bg-white rounded-xl p-1 border border-gray-200">
                 <button 
                   onClick={() => setActiveTab('bookmarks')}
-                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'bookmarks' ? "bg-[#c5b3f9] text-black shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
+                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'bookmarks' ? "bg-[#f97316] text-black shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
                 >
                   Bookmarks
                 </button>
                 <button 
                   onClick={() => setActiveTab('history')}
-                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'history' ? "bg-[#c5b3f9] text-black shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
+                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'history' ? "bg-[#f97316] text-black shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
                 >
                   History
                 </button>
@@ -110,17 +100,17 @@ export default function ContentVault() {
                   { site: 'AI-FLOW', title: '테슬라 FSD V12 핵심 분석 요약', category: 'Tech', date: '2024.11.12' },
                   { site: 'AI-ROOT', title: 'AI 기반 퍼스널 브랜딩 전략 코스', category: 'Design', date: '2024.11.10' },
                 ].filter(item => filter === 'All' || item.category === filter).map((item, i) => (
-                  <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-[#c5b3f9]/30 transition-all group flex flex-col justify-between">
+                  <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-[#f97316]/30 transition-all group flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${item.site === 'AI-ROOT' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-orange-500/10 text-orange-400'}`}>{item.site}</span>
-                        <Bookmark className="w-4 h-4 text-[#c5b3f9] fill-[#c5b3f9]" />
+                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${item.site === 'AI-ROOT' ? 'bg-orange-500/10 text-orange-400' : 'bg-orange-500/10 text-orange-400'}`}>{item.site}</span>
+                        <Bookmark className="w-4 h-4 text-[#f97316] fill-[#f97316]" />
                       </div>
-                      <h3 className="text-base font-bold text-gray-900 mb-4 group-hover:text-[#c5b3f9] transition-colors leading-tight">{item.title}</h3>
+                      <h3 className="text-base font-bold text-gray-900 mb-4 group-hover:text-[#f97316] transition-colors leading-tight">{item.title}</h3>
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                       <span className="text-[10px] text-gray-600 font-technical-sm">{item.date}</span>
-                      <button className="text-[10px] text-[#c5b3f9] font-bold flex items-center gap-1 hover:underline">
+                      <button className="text-[10px] text-[#f97316] font-bold flex items-center gap-1 hover:underline">
                         READ <ExternalLink className="w-3 h-3" />
                       </button>
                     </div>
@@ -148,13 +138,13 @@ export default function ContentVault() {
                     ].map((row, i) => (
                       <tr key={i} className="border-b border-gray-200 hover:bg-gray-50 transition-colors group cursor-pointer">
                         <td className="p-5">
-                          <p className="text-sm font-bold text-gray-900 group-hover:text-[#c5b3f9] transition-colors">{row.title}</p>
+                          <p className="text-sm font-bold text-gray-900 group-hover:text-[#f97316] transition-colors">{row.title}</p>
                         </td>
                         <td className="p-5">
                            <span className="text-[9px] font-bold text-gray-500 border border-gray-300 px-2 py-0.5 rounded">{row.source}</span>
                         </td>
                         <td className="p-5 text-right">
-                          <span className="text-sm font-bold text-[#c5b3f9]">{row.pt}</span>
+                          <span className="text-sm font-bold text-[#f97316]">{row.pt}</span>
                         </td>
                         <td className="p-5 text-right text-xs text-gray-600 font-technical-sm">
                           {row.date}
