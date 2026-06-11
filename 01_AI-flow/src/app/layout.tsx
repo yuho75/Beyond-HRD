@@ -10,7 +10,7 @@ const nanumMyeongjo = Nanum_Myeongjo({
 });
 
 export const metadata: Metadata = {
-  title: "AI Flow | Curated AI Insights",
+  title: "AIditor | Curated AI Insights",
   description: "Bi-weekly insights from top AI creators, summarized for you.",
 };
 

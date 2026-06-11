@@ -14,8 +14,8 @@ export default function Header() {
         {/* Left: Logo */}
         <div className="flex-1 flex items-center">
           <Link href="/" className="flex items-center gap-2 cursor-pointer group">
-            <img src="/logo.png" alt="AI-flow Logo" className="w-8 h-8 rounded group-hover:opacity-80 transition-opacity" />
-            <h1 className="font-extrabold tracking-tight text-2xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AI-flow</h1>
+            <img src="/logo.png" alt="AIditor Logo" className="w-8 h-8 rounded group-hover:opacity-80 transition-opacity" />
+            <h1 className="font-extrabold tracking-tight text-2xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AIditor</h1>
           </Link>
         </div>
 
