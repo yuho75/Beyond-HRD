@@ -75,7 +75,7 @@ export default function AccountSettings() {
                     <p className="text-2xl font-bold text-gray-900">₩ 9,900 / <span className="text-sm text-gray-500">month</span></p>
                   </div>
                 </div>
-                <button className="w-full py-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl text-xs font-bold transition-all">
+                <button className="w-full py-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl text-xs font-bold transition-all cursor-pointer">
                   멤버십 업그레이드 / 변경
                 </button>
               </section>
@@ -94,7 +94,7 @@ export default function AccountSettings() {
                     </div>
                     <button 
                       onClick={() => setNewsletterEnabled(!newsletterEnabled)}
-                      className="transition-colors"
+                      className="transition-colors cursor-pointer"
                     >
                       {newsletterEnabled ? (
                         <ToggleRight className="w-10 h-10 text-[#f97316] cursor-pointer" />
@@ -141,7 +141,7 @@ export default function AccountSettings() {
                   <p className="text-xs font-bold text-gray-900">서비스 탈퇴</p>
                   <p className="text-[10px] text-gray-600">계정을 삭제하면 모든 학습 이력과 학점이 소멸됩니다.</p>
                 </div>
-                <button className="flex items-center gap-2 text-xs font-bold text-red-500/60 hover:text-red-500 transition-colors">
+                <button className="flex items-center gap-2 text-xs font-bold text-red-500/60 hover:text-red-500 transition-colors cursor-pointer">
                   <Trash2 className="w-4 h-4" />
                   탈퇴하기
                 </button>
