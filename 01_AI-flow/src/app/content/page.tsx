@@ -140,7 +140,7 @@ export default function ContentPage() {
           </div>
 
           {/* Video Player Section */}
-          <div className="w-full aspect-video bg-black/40 rounded-2xl border border-gray-300 overflow-hidden relative group mb-12">
+          <div className="w-full aspect-video bg-gray-100 rounded-2xl border border-gray-300 overflow-hidden relative group mb-12">
             {/* Thumbnail / Gradient */}
             <div className="absolute inset-0 bg-gradient-to-tr from-emerald-tech/20 via-transparent to-blue-500/10 opacity-50"></div>
             

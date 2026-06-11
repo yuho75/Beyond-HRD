@@ -96,7 +96,7 @@ export default function AccountSettings() {
                     <CreditCard className="w-5 h-5 text-[#c5b3f9]" />
                     <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">Membership Plan</h3>
                   </div>
-                  <div className="bg-black/40 border border-[#c5b3f9]/20 rounded-2xl p-6 mb-6">
+                  <div className="bg-gray-50 border border-[#c5b3f9]/20 rounded-2xl p-6 mb-6">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-[10px] font-bold text-[#c5b3f9] uppercase tracking-widest bg-[#c5b3f9]/10 px-2 py-0.5 rounded">Standard</span>
                       <span className="text-xs text-gray-500">다음 결제일: 2024.12.15</span>
@@ -116,7 +116,7 @@ export default function AccountSettings() {
                     <Mail className="w-5 h-5 text-[#c5b3f9]" />
                     <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">Newsletter (Stibee)</h3>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-black/40 border border-gray-200 rounded-2xl">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-2xl">
                     <div className="flex flex-col gap-1">
                       <p className="text-sm font-bold text-gray-900">격주 뉴스레터 수신</p>
                       <p className="text-[10px] text-gray-500">A-Zip의 새로운 아이디어와 테크 리포트를 받아보세요.</p>

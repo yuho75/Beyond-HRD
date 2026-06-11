@@ -114,7 +114,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="relative">
                   <Bell className="w-5 h-5 text-gray-500 cursor-pointer hover:text-gray-900" />
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0d0d0d]"></div>
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></div>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center border border-gray-300 cursor-pointer">
                    <UserCircle className="w-5 h-5 text-gray-600" />
@@ -270,14 +270,14 @@ export default function AdminDashboard() {
                   <h3 className="font-bold text-gray-900 text-sm mb-4">글로벌 시스템 헬스</h3>
                   <p className="text-xs text-gray-500 mb-8 font-body-md">현재 모든 서브시스템이 정상 작동 중입니다. 특이사항 없음.</p>
                   <div className="grid grid-cols-2 gap-4">
-                     <div className="bg-black/40 border border-gray-200 rounded-2xl p-6 flex items-center justify-between">
+                     <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                            <Activity className="w-5 h-5 text-emerald-tech" />
                            <span className="text-[11px] font-bold text-gray-900 uppercase tracking-widest">API Status: Online</span>
                         </div>
                         <CheckCircle2 className="w-4 h-4 text-emerald-tech" />
                      </div>
-                     <div className="bg-black/40 border border-gray-200 rounded-2xl p-6 flex items-center justify-between">
+                     <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                            <Database className="w-5 h-5 text-purple-400" />
                            <span className="text-[11px] font-bold text-gray-900 uppercase tracking-widest">DB Sync: 100%</span>

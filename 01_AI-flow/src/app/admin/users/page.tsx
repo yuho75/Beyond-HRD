@@ -199,7 +199,7 @@ export default function UserManagement() {
                           <Trophy className="w-4 h-4 text-emerald-tech" />
                           학점(CREDIT) 제어
                         </h4>
-                        <div className="bg-black/40 border border-gray-200 rounded-2xl p-6 flex flex-col gap-6">
+                        <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 flex flex-col gap-6">
                           <div className="flex items-center justify-between">
                             <span className="text-xs text-gray-600">현재 보유 학점</span>
                             <span className="text-2xl font-bold text-gray-900">{selectedUser.credits.toLocaleString()} <span className="text-xs text-gray-400 uppercase">pt</span></span>
@@ -289,7 +289,7 @@ export default function UserManagement() {
                       AI-flow와 AI-root의 최신 콘텐츠를 기반으로 격주 뉴스레터 초안을 자동으로 생성합니다.
                     </p>
                     <div className="mt-auto flex flex-col gap-3">
-                      <div className="p-4 bg-black/40 border border-gray-200 rounded-2xl flex items-center justify-between">
+                      <div className="p-4 bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-between">
                          <span className="text-[10px] text-gray-600 font-bold">11월 4주차 초안</span>
                          <span className="text-[9px] font-bold px-2 py-0.5 bg-blue-500/10 text-blue-400 rounded uppercase">Ready</span>
                       </div>

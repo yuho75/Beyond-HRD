@@ -136,10 +136,10 @@ export default function GrowthTracking() {
 
               {/* Level & Goals */}
               <div className="flex flex-col gap-8">
-                <div className="bg-gradient-to-br from-[#1a1a1a] to-[#131313] border border-gray-200 rounded-3xl p-8 flex flex-col items-center text-center">
+                <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-3xl p-8 flex flex-col items-center text-center">
                   <div className="w-20 h-20 rounded-full border-4 border-[#c5b3f9]/20 flex items-center justify-center mb-6 relative">
                     <Trophy className="w-10 h-10 text-[#c5b3f9]" />
-                    <div className="absolute -bottom-2 bg-black border border-[#c5b3f9] px-3 py-0.5 rounded-full text-[10px] font-bold text-[#c5b3f9]">LV. 12</div>
+                    <div className="absolute -bottom-2 bg-white border border-[#c5b3f9] px-3 py-0.5 rounded-full text-[10px] font-bold text-[#c5b3f9]">LV. 12</div>
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 mb-2">AI 기획자</h4>
                   <p className="text-xs text-gray-500 mb-6 uppercase tracking-widest font-technical-sm">Next Level: AI Master</p>
@@ -159,7 +159,7 @@ export default function GrowthTracking() {
                     <Target className="w-4 h-4 text-orange-400" />
                     Today's Target
                   </h4>
-                  <div className="bg-black/40 border border-gray-200 rounded-2xl p-4 flex flex-col gap-3">
+                  <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col gap-3">
                     <p className="text-xs text-gray-300 leading-relaxed">
                       "다음 학점까지 <span className="text-[#c5b3f9] font-bold">12pt</span> 남았어요! 이 아티클을 읽고 레벨업 하세요."
                     </p>

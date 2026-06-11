@@ -196,7 +196,7 @@ export default function UnifiedEditor() {
                       <select 
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        className="bg-black/40 border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 focus:border-emerald-tech outline-none transition-colors appearance-none"
+                        className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 focus:border-emerald-tech outline-none transition-colors appearance-none"
                       >
                         <option value="">카테고리 선택</option>
                         <option value="tech">Technology</option>
@@ -209,7 +209,7 @@ export default function UnifiedEditor() {
                       <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">발행 일시</label>
                       <input 
                         type="datetime-local" 
-                        className="bg-black/40 border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 outline-none focus:border-emerald-tech"
+                        className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 outline-none focus:border-emerald-tech"
                       />
                     </div>
                   </div>
@@ -220,7 +220,7 @@ export default function UnifiedEditor() {
                       value={summary}
                       onChange={(e) => setSummary(e.target.value)}
                       placeholder="독자에게 노출될 짧은 요약 문구를 작성하세요..."
-                      className="bg-black/40 border border-gray-300 rounded-2xl px-4 py-4 text-sm text-gray-900 min-h-[100px] focus:border-emerald-tech outline-none transition-colors resize-none"
+                      className="bg-white border border-gray-300 rounded-2xl px-4 py-4 text-sm text-gray-900 min-h-[100px] focus:border-emerald-tech outline-none transition-colors resize-none"
                     />
                   </div>
                 </section>
@@ -309,7 +309,7 @@ export default function UnifiedEditor() {
               </div>
 
               {/* Preview Toggle */}
-              <div className="mt-auto bg-black/40 rounded-3xl p-8 border border-gray-200">
+              <div className="mt-auto bg-gray-50 rounded-3xl p-8 border border-gray-200">
                 <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 text-center">Preview Mode</h4>
                 <div className="grid grid-cols-3 gap-3">
                   <button className="aspect-square bg-white/2 rounded-2xl flex items-center justify-center hover:bg-emerald-tech/10 group transition-all border border-gray-200 hover:border-emerald-tech/30">

@@ -104,7 +104,7 @@ export default function MyPage() {
                         <UserCircle className="w-12 h-12 text-gray-400" />
                      </div>
                    </div>
-                   <div className="absolute -top-1 -right-1 bg-purple-500 text-gray-900 text-[8px] font-bold px-2 py-0.5 rounded-full border-2 border-[#1a1a1a]">AI MASTER</div>
+                   <div className="absolute -top-1 -right-1 bg-purple-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-full border-2 border-white">AI MASTER</div>
                 </div>
                 
                 <div>
@@ -253,7 +253,7 @@ export default function MyPage() {
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-600">Newsletter (Stibee)</span>
                       <div className="w-10 h-5 bg-[#c5b3f9] rounded-full relative cursor-pointer">
-                        <div className="absolute right-1 top-1 w-3 h-3 bg-black rounded-full"></div>
+                        <div className="absolute right-1 top-1 w-3 h-3 bg-gray-900 rounded-full"></div>
                       </div>
                     </div>
                     
