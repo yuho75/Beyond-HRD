@@ -41,7 +41,7 @@ export default function ContentVault() {
                   href={item.href} 
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl font-technical-sm text-sm transition-all cursor-pointer ${
                     item.active 
-                      ? 'bg-[#f97316] text-black font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
+                      ? 'bg-[#f97316] text-white font-bold shadow-[0_0_20px_rgba(197,179,249,0.2)]' 
                       : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
@@ -64,13 +64,13 @@ export default function ContentVault() {
               <div className="flex bg-white rounded-xl p-1 border border-gray-200">
                 <button 
                   onClick={() => setActiveTab('bookmarks')}
-                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${activeTab === 'bookmarks' ? "bg-[#f97316] text-black shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
+                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${activeTab === 'bookmarks' ? "bg-[#f97316] text-white shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
                 >
                   Bookmarks
                 </button>
                 <button 
                   onClick={() => setActiveTab('history')}
-                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${activeTab === 'history' ? "bg-[#f97316] text-black shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
+                  className={`px-6 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${activeTab === 'history' ? "bg-[#f97316] text-white shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
                 >
                   History
                 </button>
