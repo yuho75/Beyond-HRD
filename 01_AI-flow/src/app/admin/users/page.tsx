@@ -40,7 +40,7 @@ export default function UserManagement() {
   ];
 
   return (
-    <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col">
+    <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col w-full">
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar (Consistent with Admin Dashboard) */}
         <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">

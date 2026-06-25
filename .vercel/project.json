@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_2P9FDI2JP0lSGyLainWBh1RCZr0f",
+  "orgId": "team_lvaexQlh3v1cdev9pzehAMlY",
+  "projectName": "ai-flow",
+  "settings": {
+    "createdAt": 1778389386210,
+    "framework": null,
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": "01_AI-flow",
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
