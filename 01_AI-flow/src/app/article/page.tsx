@@ -37,13 +37,9 @@ export default function ArticleDetail() {
 
       {/* Zippy's Summary Box */}
       <section className="w-full bg-white border border-gray-100 rounded-3xl p-8 mb-16 shadow-sm relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-          <img src="/zippy.png" alt="Zippy" className="w-32 h-32 grayscale" />
-        </div>
+
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center border border-gray-100">
-             <img src="/zippy.png" alt="Zippy" className="w-6 h-6" />
-          </div>
+
           <h3 className="font-bold text-[#f97316] text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>Zippy's 3-Line Summary</h3>
         </div>
         <ul className="flex flex-col gap-4">

@@ -53,14 +53,9 @@ export default function Home() {
 
       {/* Zippy Subscription Banner */}
       <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
-        {/* Faint Zippy background icon */}
-        <div className="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
-          <img src="/zippy.png" alt="Zippy Face Background" className="w-[200px] h-[200px] object-contain opacity-20" />
-        </div>
+
         
-        <div className="w-16 h-16 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center z-10 overflow-hidden p-2">
-          <img src="/zippy.png" alt="Zippy Face" className="w-full h-full object-contain" />
-        </div>
+
         
         <div className="flex-1 z-10">
           <h3 className="text-xl font-bold text-gray-900 mb-1">Hello, I'm Zippy!</h3>
