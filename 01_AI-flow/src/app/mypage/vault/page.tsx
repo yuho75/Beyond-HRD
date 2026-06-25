@@ -94,16 +94,16 @@ export default function ContentVault() {
             {activeTab === 'bookmarks' ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                  { site: 'AI-ROOT', title: 'SaaS 비즈니스를 위한 AI 에이전트 설계안', category: 'Startup', date: '2024.11.20' },
-                  { site: 'AI-FLOW', title: '유튜브 요약: 2025 AI 반도체 전망', category: 'Tech', date: '2024.11.18' },
-                  { site: 'AI-ROOT', title: '노코드 툴과 AI를 결합한 업무 자동화', category: 'Planning', date: '2024.11.15' },
-                  { site: 'AI-FLOW', title: '테슬라 FSD V12 핵심 분석 요약', category: 'Tech', date: '2024.11.12' },
-                  { site: 'AI-ROOT', title: 'AI 기반 퍼스널 브랜딩 전략 코스', category: 'Design', date: '2024.11.10' },
+                  { site: 'AIditor', title: 'SaaS 비즈니스를 위한 AI 에이전트 설계안', category: 'Startup', date: '2024.11.20' },
+                  { site: 'AIditor', title: '유튜브 요약: 2025 AI 반도체 전망', category: 'Tech', date: '2024.11.18' },
+                  { site: 'AIditor', title: '노코드 툴과 AI를 결합한 업무 자동화', category: 'Planning', date: '2024.11.15' },
+                  { site: 'AIditor', title: '테슬라 FSD V12 핵심 분석 요약', category: 'Tech', date: '2024.11.12' },
+                  { site: 'AIditor', title: 'AI 기반 퍼스널 브랜딩 전략 코스', category: 'Design', date: '2024.11.10' },
                 ].filter(item => filter === 'All' || item.category === filter).map((item, i) => (
                   <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-[#f97316]/30 transition-all group flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${item.site === 'AI-ROOT' ? 'bg-orange-500/10 text-orange-400' : 'bg-orange-500/10 text-orange-400'}`}>{item.site}</span>
+                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${item.site === 'AIditor' ? 'bg-orange-500/10 text-orange-400' : 'bg-orange-500/10 text-orange-400'}`}>{item.site}</span>
                         <Bookmark className="w-4 h-4 text-[#f97316] fill-[#f97316]" />
                       </div>
                       <h3 className="text-base font-bold text-gray-900 mb-4 group-hover:text-[#f97316] transition-colors leading-tight">{item.title}</h3>
@@ -130,11 +130,11 @@ export default function ContentVault() {
                   </thead>
                   <tbody>
                     {[
-                      { title: 'Generative AI Overview', source: 'AI-ROOT', pt: '+50pt', date: '2024.11.20' },
-                      { title: 'Next.js 14 Architecture Summary', source: 'AI-FLOW', pt: '+20pt', date: '2024.11.19' },
-                      { title: 'AI Copywriting Bootcamp', source: 'AI-ROOT', pt: '+150pt', date: '2024.11.18' },
-                      { title: 'OpenAI DevDay Highlights', source: 'AI-FLOW', pt: '+20pt', date: '2024.11.17' },
-                      { title: 'Data Visualization with AI', source: 'AI-ROOT', pt: '+50pt', date: '2024.11.16' },
+                      { title: 'Generative AI Overview', source: 'AIditor', pt: '+50pt', date: '2024.11.20' },
+                      { title: 'Next.js 14 Architecture Summary', source: 'AIditor', pt: '+20pt', date: '2024.11.19' },
+                      { title: 'AI Copywriting Bootcamp', source: 'AIditor', pt: '+150pt', date: '2024.11.18' },
+                      { title: 'OpenAI DevDay Highlights', source: 'AIditor', pt: '+20pt', date: '2024.11.17' },
+                      { title: 'Data Visualization with AI', source: 'AIditor', pt: '+50pt', date: '2024.11.16' },
                     ].map((row, i) => (
                       <tr key={i} className="border-b border-gray-200 hover:bg-gray-50 transition-colors group cursor-pointer">
                         <td className="p-5">

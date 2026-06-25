@@ -102,8 +102,8 @@ export default function UnifiedEditor() {
 
               <div className="flex flex-col gap-1">
                 {[
-                  { name: 'AI-FLOW 관리', icon: <Share2 className="w-4 h-4" />, href: "#" },
-                  { name: 'AI-ROOT 관리', icon: <Database className="w-4 h-4" />, href: "#" },
+                  { name: '콘텐츠 피드 관리', icon: <Share2 className="w-4 h-4" />, href: "#" },
+                  { name: 'LMS 코스 관리', icon: <Database className="w-4 h-4" />, href: "#" },
                   { name: '통합 콘텐츠 에디터', icon: <FileEdit className="w-4 h-4" />, active: true, href: "/admin/editor" },
                   { name: '사용자 및 서비스 관리', icon: <Users className="w-4 h-4" />, href: "/admin/users" },
                 ].map((item, i) => (
@@ -142,13 +142,13 @@ export default function UnifiedEditor() {
                   onClick={() => setTargetSite("flow")}
                   className={`px-3 py-1.5 text-[10px] font-bold rounded-md transition-all ${targetSite === "flow" ? "bg-emerald-tech text-black shadow-lg" : "text-gray-500 hover:text-gray-900"}`}
                 >
-                  AI-flow
+                  AIditor
                 </button>
                 <button 
                   onClick={() => setTargetSite("root")}
                   className={`px-3 py-1.5 text-[10px] font-bold rounded-md transition-all ${targetSite === "root" ? "bg-emerald-tech text-black shadow-lg" : "text-gray-500 hover:text-gray-900"}`}
                 >
-                  AI-root
+                  AIditor
                 </button>
                 <button 
                   onClick={() => setTargetSite("both")}

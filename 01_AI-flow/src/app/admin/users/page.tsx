@@ -65,8 +65,8 @@ export default function UserManagement() {
 
               <div className="flex flex-col gap-1">
                 {[
-                  { name: 'AI-FLOW 관리', icon: <Share2 className="w-4 h-4" />, href: "#" },
-                  { name: 'AI-ROOT 관리', icon: <Database className="w-4 h-4" />, href: "#" },
+                  { name: '콘텐츠 피드 관리', icon: <Share2 className="w-4 h-4" />, href: "#" },
+                  { name: 'LMS 코스 관리', icon: <Database className="w-4 h-4" />, href: "#" },
                   { name: '통합 콘텐츠 에디터', icon: <FileEdit className="w-4 h-4" />, href: "/admin/editor" },
                   { name: '사용자 및 서비스 관리', icon: <Users className="w-4 h-4" />, active: true, href: "/admin/users" },
                 ].map((item, i) => (
@@ -286,7 +286,7 @@ export default function UserManagement() {
                       <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">Newsletter Automation</h3>
                     </div>
                     <p className="text-xs text-gray-500 leading-relaxed">
-                      AI-flow와 AI-root의 최신 콘텐츠를 기반으로 격주 뉴스레터 초안을 자동으로 생성합니다.
+                      최신 콘텐츠를 기반으로 격주 뉴스레터 초안을 자동으로 생성합니다.
                     </p>
                     <div className="mt-auto flex flex-col gap-3">
                       <div className="p-4 bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-between">
@@ -304,8 +304,8 @@ export default function UserManagement() {
                   <h3 className="text-sm font-bold text-gray-900 mb-8 border-l-4 border-emerald-tech pl-4">최근 뉴스레터 발송 이력</h3>
                   <div className="flex flex-col gap-4">
                      {[
-                       { title: '[AI-FLOW] 생성형 AI가 바꾸는 마케팅의 미래', date: '2024.11.06', openRate: '42.5%', clickRate: '12.8%' },
-                       { title: '[AI-ROOT] 10월 4주차 비즈니스 아이디어 리포트', date: '2024.10.23', openRate: '38.2%', clickRate: '9.4%' }
+                       { title: '생성형 AI가 바꾸는 마케팅의 미래', date: '2024.11.06', openRate: '42.5%', clickRate: '12.8%' },
+                       { title: '10월 4주차 비즈니스 아이디어 리포트', date: '2024.10.23', openRate: '38.2%', clickRate: '9.4%' }
                      ].map((item, i) => (
                        <div key={i} className="flex items-center justify-between p-6 bg-white/2 rounded-2xl border border-gray-200 group hover:border-gray-300 transition-all cursor-pointer">
                           <div className="flex flex-col gap-1">

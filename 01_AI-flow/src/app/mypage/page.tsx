@@ -121,8 +121,8 @@ export default function MyPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {[
-                      { brand: 'AI-FLOW', title: '2024년 생성형 AI 트렌드 리포트 요약', time: '12 MINS', tag: 'TECH' },
-                      { brand: 'AI-ROOT', title: '비즈니스 기획을 위한 프롬프트 엔지니어링', time: '45 MINS', tag: 'PLANNING' }
+                      { brand: 'AIditor', title: '2024년 생성형 AI 트렌드 리포트 요약', time: '12 MINS', tag: 'TECH' },
+                      { brand: 'AIditor', title: '비즈니스 기획을 위한 프롬프트 엔지니어링', time: '45 MINS', tag: 'PLANNING' }
                     ].map((card, i) => (
                       <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-white/20 transition-all cursor-pointer group relative overflow-hidden">
                         <div className="flex items-center justify-between mb-8">
@@ -156,9 +156,9 @@ export default function MyPage() {
                       </thead>
                       <tbody>
                         {[
-                          { title: 'LLM 기반 에이전트 구축 가이드', type: 'AI-ROOT', credits: '+50pt', date: '2024.11.20' },
-                          { title: '유튜브 쇼츠 자동화 전략', type: 'AI-FLOW', credits: '+20pt', date: '2024.11.18' },
-                          { title: '노션으로 만드는 AI 협업 툴', type: 'AI-ROOT', credits: '+50pt', date: '2024.11.15' }
+                          { title: 'LLM 기반 에이전트 구축 가이드', type: 'AIditor', credits: '+50pt', date: '2024.11.20' },
+                          { title: '유튜브 쇼츠 자동화 전략', type: 'AIditor', credits: '+20pt', date: '2024.11.18' },
+                          { title: '노션으로 만드는 AI 협업 툴', type: 'AIditor', credits: '+50pt', date: '2024.11.15' }
                         ].map((row, i) => (
                           <tr key={i} className="border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer">
                             <td className="p-5 text-sm font-bold text-gray-900">{row.title}</td>
