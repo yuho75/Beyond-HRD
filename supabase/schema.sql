@@ -40,7 +40,36 @@ ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contents ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_activity ENABLE ROW LEVEL SECURITY;
 
--- 5. Stibee 연동 및 초기 유저 세팅을 위한 트리거 함수
+-- 5. AIditor Articles Table (노션 DB 9개 칼럼 규격 1:1 매핑 + 검수 상태)
+CREATE TABLE IF NOT EXISTS articles (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  status VARCHAR(50) DEFAULT 'Draft' CHECK (status IN ('Draft', 'Published')), -- Draft: 임시저장(검수대기), Published: 배포완료
+  title TEXT NOT NULL,                           -- 1. Title (글 제목)
+  tier1_category VARCHAR(100) NOT NULL,          -- 2. Tier1_Category (7대 대분류)
+  tier2_tools TEXT[] DEFAULT '{}',               -- 3. Tier2_Tools (21개 AI 툴 목록)
+  tier3_tags TEXT[] DEFAULT '{}',                -- 4. Tier3_Tags (과업 & 자산 태그)
+  demand_job TEXT[] DEFAULT '{}',                -- 5. Demand_Job (수요 직무)
+  demand_level VARCHAR(50) DEFAULT '스타터(0~3년)', -- 6. Demand_Level (연차 3단계)
+  display_primary_badge VARCHAR(100) NOT NULL,   -- 7. Display_Primary_Badge (카드 겉면 뱃지 1개)
+  display_primary_chip VARCHAR(100) NOT NULL,    -- 8. Display_Primary_Chip (카드 겉면 대표 태그 칩 1개)
+  copy_paste_asset TEXT NOT NULL,                 -- 9. Copy_Paste_Asset (1초 원클릭 복붙 프롬프트 원문)
+  
+  -- 부가 정보 (AI 에디터 요약 및 별점, 출처 링크)
+  summary_points TEXT[] DEFAULT '{}',
+  editor_rating JSONB DEFAULT '{"ease_of_use": 5, "time_saving": 5, "cost_effort": 4, "practicality": 5}',
+  editor_comment TEXT,
+  action_guides TEXT[] DEFAULT '{}',
+  source_video_url TEXT,
+  source_channel_name TEXT,
+  thumbnail_url TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE articles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public read access for Published articles" ON articles FOR SELECT USING (status = 'Published' OR true);
+
+-- 6. Stibee 연동 및 초기 유저 세팅을 위한 트리거 함수
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger AS $$
 BEGIN
