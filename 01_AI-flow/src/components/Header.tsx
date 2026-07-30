@@ -43,17 +43,17 @@ export default function Header() {
 
   return (
     <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-30">
-      <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
         {/* Left: Logo */}
-        <div className="flex-1 flex items-center">
+        <div className="shrink-0 flex items-center">
           <Link href="/" onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer group">
             <img src="/logo.png" alt="AIditor Logo" className="w-8 h-8 rounded group-hover:opacity-80 transition-opacity" />
             <h1 className="font-extrabold tracking-tight text-2xl text-[#f97316]" style={{ fontFamily: 'Inter, sans-serif' }}>AIditor</h1>
           </Link>
         </div>
 
-        {/* Center: Nav Menu */}
-        <nav className="hidden md:flex items-center gap-1.5 lg:gap-2.5 text-[11px] lg:text-[12px] font-bold text-gray-600 flex-1 justify-center whitespace-nowrap overflow-x-auto">
+        {/* Center: Nav Menu (No scrollbar, full space) */}
+        <nav className="hidden lg:flex items-center gap-3.5 text-[12px] xl:text-[13px] font-bold text-gray-700 justify-center whitespace-nowrap">
           <Link href="/category/c1" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c1") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
             C1. AI/업무생산성
           </Link>
@@ -84,17 +84,17 @@ export default function Header() {
         </nav>
 
         {/* Right: Actions & Mobile Menu Toggle */}
-        <div className="flex items-center gap-4 flex-1 justify-end">
+        <div className="shrink-0 flex items-center gap-3">
           <Search className="w-4 h-4 text-gray-500 cursor-pointer hover:text-gray-900" />
-          <button className="hidden md:block text-sm font-medium text-indigo-600 border border-indigo-200 px-4 py-1.5 rounded hover:bg-indigo-50 transition-colors cursor-pointer">
+          <button className="hidden md:block text-xs lg:text-sm font-semibold text-indigo-600 border border-indigo-200 px-3 py-1.5 rounded hover:bg-indigo-50 transition-colors cursor-pointer">
             Login
           </button>
-          <button className="hidden md:block text-sm font-medium text-white bg-[#f97316] px-4 py-1.5 rounded hover:bg-[#ea580c] transition-colors shadow-sm cursor-pointer">
+          <button className="hidden md:block text-xs lg:text-sm font-semibold text-white bg-[#f97316] px-3.5 py-1.5 rounded hover:bg-[#ea580c] transition-colors shadow-sm cursor-pointer">
             Subscribe
           </button>
           {/* Mobile Hamburger Button */}
           <button 
-            className="md:hidden p-1 text-gray-600 hover:text-gray-900 cursor-pointer"
+            className="lg:hidden p-1 text-gray-600 hover:text-gray-900 cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
