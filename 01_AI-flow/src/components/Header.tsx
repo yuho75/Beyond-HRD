@@ -53,30 +53,30 @@ export default function Header() {
         </div>
 
         {/* Center: Nav Menu */}
-        <nav className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-6 text-[9px] lg:text-[10px] xl:text-[11px] font-bold uppercase tracking-widest text-gray-400 flex-1 justify-center whitespace-nowrap">
-          <Link href="/category/commerce" className={`transition-colors hover:text-gray-900 ${pathname.includes("/commerce") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            Commerce
+        <nav className="hidden md:flex items-center gap-1.5 lg:gap-2.5 text-[11px] lg:text-[12px] font-bold text-gray-600 flex-1 justify-center whitespace-nowrap overflow-x-auto">
+          <Link href="/category/c1" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c1") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
+            C1. AI/업무생산성
           </Link>
-          <Link href="/category/education" className={`transition-colors hover:text-gray-900 ${pathname.includes("/education") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            Education
+          <Link href="/category/c2" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c2") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
+            C2. 업무자동화
           </Link>
-          <Link href="/category/media" className={`transition-colors hover:text-gray-900 ${pathname.includes("/media") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            Media
+          <Link href="/category/c3" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c3") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
+            C3. AI에이전트
           </Link>
-          <Link href="/category/lifestyle" className={`transition-colors hover:text-gray-900 ${pathname.includes("/lifestyle") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            Lifestyle
+          <Link href="/category/c4" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c4") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
+            C4. 업무스킬
           </Link>
-          <Link href="/category/business" className={`transition-colors hover:text-gray-900 ${pathname.includes("/business") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            Business
+          <Link href="/category/c5" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c5") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
+            C5. AI CREATIVE
+          </Link>
+          <Link href="/category/c6" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c6") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
+            C6. AX전략
+          </Link>
+          <Link href="/category/c7" className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c7") ? "text-[#f97316] border-b-2 border-[#f97316] pb-1" : ""}`}>
+            C7. 비즈니스
           </Link>
 
-          <div className="w-[1px] h-3 bg-gray-300"></div>
-
-          <Link href="/category/insights" className={`transition-colors hover:text-gray-900 ${pathname.includes("/insights") ? "text-gray-900 border-b-2 border-[#f97316] pb-1" : ""}`}>
-            Insights
-          </Link>
-
-          <div className="w-[1px] h-3 bg-gray-300"></div>
+          <div className="w-[1px] h-3 bg-gray-300 mx-1"></div>
 
           <Link href="/mypage" className={`transition-colors text-[#059669] hover:opacity-80 ${pathname.startsWith("/mypage") ? "border-b-2 border-[#059669] pb-1" : ""}`}>
             My Page
@@ -105,14 +105,14 @@ export default function Header() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 top-16 bg-white z-40 flex flex-col p-6 overflow-y-auto">
-          <nav className="flex flex-col gap-6 text-sm font-bold uppercase tracking-widest text-gray-600 mb-10">
-            <Link href="/category/commerce" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/commerce") ? "text-[#f97316]" : ""}`}>Commerce</Link>
-            <Link href="/category/education" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/education") ? "text-[#f97316]" : ""}`}>Education</Link>
-            <Link href="/category/media" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/media") ? "text-[#f97316]" : ""}`}>Media</Link>
-            <Link href="/category/lifestyle" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/lifestyle") ? "text-[#f97316]" : ""}`}>Lifestyle</Link>
-            <Link href="/category/business" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/business") ? "text-[#f97316]" : ""}`}>Business</Link>
-            <div className="w-12 h-[1px] bg-gray-200"></div>
-            <Link href="/category/insights" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/insights") ? "text-[#f97316]" : ""}`}>Insights</Link>
+          <nav className="flex flex-col gap-5 text-sm font-bold text-gray-700 mb-8">
+            <Link href="/category/c1" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c1") ? "text-[#f97316]" : ""}`}>C1. AI/업무생산성</Link>
+            <Link href="/category/c2" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c2") ? "text-[#f97316]" : ""}`}>C2. 생성형 AI & 업무자동화</Link>
+            <Link href="/category/c3" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c3") ? "text-[#f97316]" : ""}`}>C3. AI 에이전트 & 바이브코딩</Link>
+            <Link href="/category/c4" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c4") ? "text-[#f97316]" : ""}`}>C4. 일잘러의 업무스킬 (오피스·문서)</Link>
+            <Link href="/category/c5" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c5") ? "text-[#f97316]" : ""}`}>C5. AI CREATIVE (이미지·영상)</Link>
+            <Link href="/category/c6" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c6") ? "text-[#f97316]" : ""}`}>C6. 리더십 & AX 전략</Link>
+            <Link href="/category/c7" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors hover:text-[#f97316] ${pathname.includes("/c7") ? "text-[#f97316]" : ""}`}>C7. 비즈니스 & 커리어 (수익화)</Link>
             <div className="w-12 h-[1px] bg-gray-200"></div>
             <Link href="/mypage" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors text-[#059669] hover:opacity-80 ${pathname.startsWith("/mypage") ? "text-[#059669]" : ""}`}>My Page</Link>
           </nav>

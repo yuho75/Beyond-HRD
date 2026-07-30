@@ -1,90 +1,120 @@
 "use client";
 
-import { UserCircle } from "lucide-react";
+import { useState } from "react";
+import { UserCircle, Copy, ExternalLink, Check, Sparkles } from "lucide-react";
 
 export default function Home() {
+  const [selectedJob, setSelectedJob] = useState("직무 공통");
+  const [copied, setCopied] = useState(false);
+
+  const jobs = ["직무 공통", "기획·PM", "마케터", "인사·HR", "재무·회계", "디자인·BX", "1인기업"];
+
+  const samplePrompt = `Act as a senior marketer. Please analyze [제품명] target audience and generate 5 punchy headline copy ideas for [마케팅 채널].`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(samplePrompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const latestDispatches = [
-    { tag: "Hardware", title: "The Silicon Squeeze: A Global Update", date: "Oct 23, 2024", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600" },
-    { tag: "Software", title: "Open Source AI: A New Paradigm", date: "Oct 22, 2024", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" },
-    { tag: "Robotics", title: "Boston Dynamics Drops New Model", date: "Oct 21, 2024", color: "bg-slate-100 text-slate-700", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" },
-    { tag: "Policy", title: "EU AI Act: What You Need to Know", date: "Oct 20, 2024", color: "bg-red-100 text-red-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" },
-    { tag: "Hardware", title: "TSMC Earnings Report Breakdown", date: "Oct 19, 2024", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600" },
-    { tag: "Software", title: "New Transformer Architecture Detailed", date: "Oct 18, 2024", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&q=80&w=600" },
-    { tag: "Robotics", title: "Agility Robotics Secures Series C", date: "Oct 17, 2024", color: "bg-slate-100 text-slate-700", image: "https://images.unsplash.com/photo-1531746790731-6c087fecd05a?auto=format&fit=crop&q=80&w=600" },
-    { tag: "Policy", title: "Copyright Claims in the GenAI Era", date: "Oct 16, 2024", color: "bg-red-100 text-red-700", image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=600" }
+    { tag: "#복붙용_프롬프트", badge: "C1. AI/업무생산성", title: "주 5시간 절약하는 챗GPT 마케팅 보고서 프롬프트 15선", date: "2026.07.30", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#자동화_시나리오", badge: "C2. 업무자동화", title: "n8n으로 이메일 수신 시 구글 시트 자동 기록 10초 완성", date: "2026.07.29", color: "bg-emerald-100 text-emerald-700", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#자연어_레시피", badge: "C3. AI에이전트", title: "코딩 없이 말로 만드는 나만의 카카오톡 AI 비서 에이전트", date: "2026.07.28", color: "bg-blue-100 text-blue-700", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#업무_템플릿", badge: "C4. 업무스킬", title: "엑셀 칼퇴 서식: AI 함수로 데이터 1초 만에 자동 정형화", date: "2026.07.27", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" }
   ];
 
   return (
     <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
 
-      {/* Hero Section */}
-      <a
-        href="/article"
-        className="relative z-10 block bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-10 items-center hover:border-[#f97316]/30 transition-all group cursor-pointer"
-        style={{ cursor: 'pointer', pointerEvents: 'auto' }}
-      >
-        <div className="w-full md:w-1/2 aspect-[4/3] rounded-xl overflow-hidden bg-gray-900 relative">
-          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" alt="Hero AI" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#f97316]/20 to-transparent mix-blend-overlay"></div>
-        </div>
+      {/* Sub Filter Bar (Demand 3-Axis) */}
+      <section className="flex flex-wrap items-center gap-2 pb-4 border-b border-gray-200">
+        <span className="text-xs font-bold text-gray-400 mr-2 uppercase tracking-wider">직무 선택:</span>
+        {jobs.map((job) => (
+          <button
+            key={job}
+            onClick={() => setSelectedJob(job)}
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              selectedJob === job
+                ? "bg-[#f97316] text-white shadow-sm"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
+          >
+            {job}
+          </button>
+        ))}
+      </section>
 
-        <div className="w-full md:w-1/2 flex flex-col justify-center py-6 pr-6">
-          <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider rounded-full self-start mb-4">
-            Featured Report
+      {/* Hero Section: 1초 원클릭 복붙 상자 */}
+      <section className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 md:p-8 shadow-xl border border-slate-700 relative overflow-hidden">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="px-3 py-1 bg-amber-400/20 text-amber-300 text-xs font-bold rounded-md flex items-center gap-1 border border-amber-400/30">
+            <Sparkles className="w-3.5 h-3.5" /> ⚡ 10초 칼퇴 원클릭 복붙 프롬프트
           </span>
-          <h2 className="font-display-xl text-4xl md:text-5xl font-bold leading-tight text-gray-900 mb-6 group-hover:text-[#f97316] transition-colors">
-            The Dawn of<br />Generative<br />Intelligence
-          </h2>
-          <p className="text-lg text-gray-600 mb-10 leading-relaxed max-w-md">
-            How new foundation models are reshaping the global economy and what it means for the future of work.
-          </p>
-
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-              <UserCircle className="w-6 h-6 text-gray-400" />
-            </div>
-            <div>
-              <p className="font-bold text-sm text-gray-900">Alex Mercer</p>
-              <p className="text-xs text-gray-500">Oct 24, 2024</p>
-            </div>
-          </div>
+          <span className="text-xs text-slate-400 font-medium">[추천 대상: {selectedJob}]</span>
         </div>
-      </a>
+
+        <h2 className="text-2xl md:text-3xl font-extrabold mb-4 leading-tight">
+          보고서·기획서 10분 만에 끝내는 실무 전용 AI 레시피
+        </h2>
+
+        {/* 복붙 상자 (Copy-Paste Asset Box) */}
+        <div className="bg-slate-950/80 border border-slate-700/80 rounded-xl p-5 mb-6 font-mono text-sm leading-relaxed text-slate-200 shadow-inner relative">
+          <p>
+            Act as a senior marketer. Analyze target audience for{" "}
+            <span className="bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded font-bold border border-amber-400/40">[제품명]</span>{" "}
+            and write 5 headline copy ideas for{" "}
+            <span className="bg-sky-400/20 text-sky-300 px-2 py-0.5 rounded font-bold border border-sky-400/40">[마케팅 채널]</span>.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={handleCopy}
+            className="flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-md cursor-pointer"
+          >
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? "복사되었습니다! 챗GPT에 붙여넣으세요" : "📋 1초 원클릭 복사하기"}
+          </button>
+          <a
+            href="https://chatgpt.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-lg font-bold text-sm transition-all shadow-md cursor-pointer"
+          >
+            <ExternalLink className="w-4 h-4" />
+            🚀 챗GPT 새탭에서 열기
+          </a>
+        </div>
+      </section>
 
       {/* Zippy Subscription Banner */}
       <section className="bg-[#ffedd5] rounded-2xl p-8 border border-orange-100 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-sm">
-
-        
-
-        
         <div className="flex-1 z-10">
-          <h3 className="text-xl font-bold text-gray-900 mb-1">Hello, I'm Zippy!</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-1">AIditor 뉴스레터 구독하기</h3>
           <p className="text-sm text-orange-900/80 max-w-lg">
-            Get the sharpest AI insights delivered directly to your inbox every morning. No fluff, just the signal.
+            55개 검증 채널의 매일 아침 최신 AI 꿀팁을 직장인 5분 요약으로 가장 먼저 받아보세요.
           </p>
         </div>
         
         <div className="flex w-full md:w-auto gap-2 z-10">
           <input 
             type="email" 
-            placeholder="Your email address" 
+            placeholder="이메일 주소를 입력하세요" 
             className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
           />
           <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
-            Subscribe
+            구독하기
           </button>
         </div>
       </section>
 
-
-
-
       {/* Latest Dispatches Grid */}
       <section className="mt-4">
         <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900">Latest Dispatches</h2>
+          <h2 className="text-2xl font-bold text-gray-900">최신 아티클 & 복붙 레시피</h2>
           <button className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors cursor-pointer">
-            View All
+            전체 보기
           </button>
         </div>
 
@@ -93,16 +123,22 @@ export default function Home() {
             <div key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
               <div className="h-40 bg-gray-900 relative">
                 <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className={`absolute top-3 left-3 ${article.color} text-[10px] px-2 py-0.5 font-bold uppercase rounded`}>
-                  {article.tag}
+                <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+                  <span className="bg-slate-900/90 text-white text-[10px] px-2 py-0.5 font-bold rounded">
+                    {article.badge}
+                  </span>
+                  <span className={`${article.color} text-[10px] px-2 py-0.5 font-bold rounded`}>
+                    {article.tag}
+                  </span>
                 </div>
               </div>
               <div className="p-4 flex flex-col flex-grow">
                 <h3 className="font-bold text-[15px] leading-tight text-gray-900 mb-6 group-hover:text-[#f97316] transition-colors">
                   {article.title}
                 </h3>
-                <div className="mt-auto">
+                <div className="mt-auto flex items-center justify-between">
                   <span className="text-xs text-gray-400 font-medium">{article.date}</span>
+                  <span className="text-xs text-emerald-600 font-bold">1초 복사 가능 📋</span>
                 </div>
               </div>
             </div>
@@ -113,3 +149,4 @@ export default function Home() {
     </main>
   );
 }
+
