@@ -19,9 +19,12 @@ export default function Home() {
 
   const latestDispatches = [
     { tag: "#복붙용_프롬프트", badge: "C1. AI/업무생산성", title: "주 5시간 절약하는 챗GPT 마케팅 보고서 프롬프트 15선", date: "2026.07.30", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600" },
-    { tag: "#자동화_시나리오", badge: "C2. 업무자동화", title: "n8n으로 이메일 수신 시 구글 시트 자동 기록 10초 완성", date: "2026.07.29", color: "bg-emerald-100 text-emerald-700", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" },
-    { tag: "#자연어_레시피", badge: "C3. AI에이전트", title: "코딩 없이 말로 만드는 나만의 카카오톡 AI 비서 에이전트", date: "2026.07.28", color: "bg-blue-100 text-blue-700", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" },
-    { tag: "#업무_템플릿", badge: "C4. 업무스킬", title: "엑셀 칼퇴 서식: AI 함수로 데이터 1초 만에 자동 정형화", date: "2026.07.27", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" }
+    { tag: "#자동화_시나리오", badge: "C2. 생성형 AI & 업무자동화", title: "n8n으로 이메일 수신 시 구글 시트 자동 기록 10초 완성", date: "2026.07.29", color: "bg-emerald-100 text-emerald-700", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#자연어_레시피", badge: "C3. AI 에이전트 & 바이브코딩", title: "코딩 없이 말로 만드는 나만의 카카오톡 AI 비서 에이전트", date: "2026.07.28", color: "bg-blue-100 text-blue-700", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#업무_템플릿", badge: "C4. 일잘러의 업무스킬", title: "엑셀 칼퇴 서식: AI 함수로 데이터 1초 만에 자동 정형화", date: "2026.07.27", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#자연어_레시피", badge: "C5. AI CREATIVE", title: "미드저니 & Sora로 5분 만에 사내 홍보 포스터·영상 제작", date: "2026.07.26", color: "bg-purple-100 text-purple-700", image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#보고서_작성법", badge: "C6. 리더십 & AX 전략", title: "2026년 기업 AI 전환(AX) 리더가 알아야 할 AGI 대응 전략", date: "2026.07.25", color: "bg-teal-100 text-teal-700", image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600" },
+    { tag: "#복붙용_프롬프트", badge: "C7. 비즈니스 & 커리어", title: "1인 기업인을 위한 AI 지식자산 수익화 파이프라인 구축", date: "2026.07.24", color: "bg-rose-100 text-rose-700", image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=600" }
   ];
 
   return (
