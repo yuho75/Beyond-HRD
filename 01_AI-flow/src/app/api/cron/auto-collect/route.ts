@@ -156,66 +156,68 @@ function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?:
 }
 
 async function handleAutoCollect() {
-  const selectedChannel = SOURCE_CHANNELS_30[Math.floor(Math.random() * SOURCE_CHANNELS_30.length)];
+  // Shuffle 30 channels and pick 10 unique channels for bulk instant collection
+  const shuffled = [...SOURCE_CHANNELS_30].sort(() => 0.5 - Math.random());
+  const selected10 = shuffled.slice(0, 10);
 
-  // Live fetch by exact YouTube channel ID / handle!
-  const ytData = await fetchYouTubeByHandle(selectedChannel.handle, selectedChannel.name);
-  const finalVideoId = ytData?.videoId || "c2q0F6f9LhA";
-  const videoUrl = `https://www.youtube.com/watch?v=${finalVideoId}`;
-  const rawThumb = ytData?.thumb || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800";
-  
-  // Use weserv.nl proxy for YouTube images to bypass browser CORS block
-  const thumbnail = rawThumb.includes("ytimg.com") || rawThumb.includes("ggpht.com")
-    ? `https://images.weserv.nl/?url=${encodeURIComponent(rawThumb)}`
-    : rawThumb;
+  const payloadList: any[] = [];
 
-  const defaultTitle = `${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`;
-  const rawTitle = ytData?.title || defaultTitle;
-  const finalTitle = rawTitle.replace(/^\[[^\]]+\]\s*/, "").trim();
+  for (const selectedChannel of selected10) {
+    const ytData = await fetchYouTubeByHandle(selectedChannel.handle, selectedChannel.name);
+    const finalVideoId = ytData?.videoId || "c2q0F6f9LhA";
+    const videoUrl = `https://www.youtube.com/watch?v=${finalVideoId}`;
+    const rawThumb = ytData?.thumb || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800";
+    
+    const thumbnail = rawThumb.includes("ytimg.com") || rawThumb.includes("ggpht.com")
+      ? `https://images.weserv.nl/?url=${encodeURIComponent(rawThumb)}`
+      : rawThumb;
 
-  // 1st Stage Inspection Scoring Matrix per D_final_strategy.md Section 8-5
-  const isPassChannel = !["안될공학", "편집자P", "디자인하는AI", "커리어해커 알렉스", "부코드", "페이퍼로지", "오은환의 하이라이트", "오빠두엑셀", "갓찌뇽의 초보여도 괜찮아"].includes(selectedChannel.name);
-  const channelTrustScore = isPassChannel ? 30 : 22;
-  const recencyScore = 28 + Math.floor(Math.random() * 3); // 28 ~ 30
-  const durationScore = 19 + Math.floor(Math.random() * 2); // 19 ~ 20
-  const actionabilityScore = 19 + Math.floor(Math.random() * 2); // 19 ~ 20
-  const totalFilterScore = channelTrustScore + recencyScore + durationScore + actionabilityScore; // 88 ~ 100
-  const starScore = (totalFilterScore / 20).toFixed(1); // e.g. 4.8 / 5.0
+    const defaultTitle = `${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`;
+    const rawTitle = ytData?.title || defaultTitle;
+    const finalTitle = rawTitle.replace(/^\[[^\]]+\]\s*/, "").trim();
 
-  const editorRating = {
-    ease_of_use: Math.min(5, Number((4.6 + Math.random() * 0.4).toFixed(1))),
-    time_saving: Math.min(5, Number((4.8 + Math.random() * 0.2).toFixed(1))),
-    cost_effort: Math.min(5, Number((4.7 + Math.random() * 0.3).toFixed(1))),
-    practicality: Math.min(5, Number((4.8 + Math.random() * 0.2).toFixed(1))),
-    total_score: totalFilterScore,
-    star_rating: starScore
-  };
+    // 1st Stage Inspection Scoring Matrix per D_final_strategy.md Section 8-5
+    const isPassChannel = !["안될공학", "편집자P", "디자인하는AI", "커리어해커 알렉스", "부코드", "페이퍼로지", "오은환의 하이라이트", "오빠두엑셀", "갓찌뇽의 초보여도 괜찮아"].includes(selectedChannel.name);
+    const channelTrustScore = isPassChannel ? 30 : 22;
+    const recencyScore = 28 + Math.floor(Math.random() * 3);
+    const durationScore = 19 + Math.floor(Math.random() * 2);
+    const actionabilityScore = 19 + Math.floor(Math.random() * 2);
+    const totalFilterScore = channelTrustScore + recencyScore + durationScore + actionabilityScore;
+    const starScore = (totalFilterScore / 20).toFixed(1);
 
-  const articleData: any = {
-    title: finalTitle,
-    tier1_category: selectedChannel.badge,
-    tier2_tools: ["ChatGPT", "Claude", "Make"],
-    tier3_tags: [selectedChannel.chip, "#수익자동화", "#칼퇴보장"],
-    demand_job: ["직무 공통", "마케터", "기획·PM"],
-    demand_level: "스타터 (0~3년 차)",
-    badge: selectedChannel.badge,
-    chip: selectedChannel.chip,
-    copy_paste_asset: `Act as an expert AI consultant for ${selectedChannel.name}.\nGoal: Create a step-by-step action guide for non-developer office workers on ${selectedChannel.topic}.\n\nOutput format:\n1. Prompt template\n2. 3-step execution guide\n3. Common mistakes to avoid`,
-    summary_points: [
-      `에디터 픽 1: ${selectedChannel.name}의 실무 핵심 프롬프트 템플릿`,
-      "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우 세팅법",
-      "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
-    ],
-    action_guides: [
-      `Step 01: [${selectedChannel.name}]의 노하우가 담긴 복붙 프롬프트를 챗GPT/Claude에 입력합니다.`,
-      `Step 02: ${selectedChannel.topic} 템플릿에 본인의 업무 데이터를 결합하여 결과를 자동 추출합니다.`,
-      `Step 03: 검수 후 사내 보고서나 실무 프로세스에 즉시 적용하여 업무 시간을 80% 단축합니다.`
-    ],
-    editor_rating: editorRating,
-    editor_comment: `1차 검수 점수: ${totalFilterScore}점 (별점 ${starScore} / 5.0) | [${selectedChannel.name}] (${selectedChannel.handle}) 공식 유튜브 채널의 최신 검증 영상 1차 필터링을 통과한 아티클입니다.`
-  };
+    const editorRating = {
+      ease_of_use: Math.min(5, Number((4.6 + Math.random() * 0.4).toFixed(1))),
+      time_saving: Math.min(5, Number((4.8 + Math.random() * 0.2).toFixed(1))),
+      cost_effort: Math.min(5, Number((4.7 + Math.random() * 0.3).toFixed(1))),
+      practicality: Math.min(5, Number((4.8 + Math.random() * 0.2).toFixed(1))),
+      total_score: totalFilterScore,
+      star_rating: starScore
+    };
 
-  try {
+    const articleData: any = {
+      title: finalTitle,
+      tier1_category: selectedChannel.badge,
+      tier2_tools: ["ChatGPT", "Claude", "Make"],
+      tier3_tags: [selectedChannel.chip, "#수익자동화", "#칼퇴보장"],
+      demand_job: ["직무 공통", "마케터", "기획·PM"],
+      demand_level: "스타터 (0~3년 차)",
+      badge: selectedChannel.badge,
+      chip: selectedChannel.chip,
+      copy_paste_asset: `Act as an expert AI consultant for ${selectedChannel.name}.\nGoal: Create a step-by-step action guide for non-developer office workers on ${selectedChannel.topic}.\n\nOutput format:\n1. Prompt template\n2. 3-step execution guide\n3. Common mistakes to avoid`,
+      summary_points: [
+        `에디터 픽 1: ${selectedChannel.name}의 실무 핵심 프롬프트 템플릿`,
+        "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우 세팅법",
+        "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
+      ],
+      action_guides: [
+        `Step 01: [${selectedChannel.name}]의 노하우가 담긴 복붙 프롬프트를 챗GPT/Claude에 입력합니다.`,
+        `Step 02: ${selectedChannel.topic} 템플릿에 본인의 업무 데이터를 결합하여 결과를 자동 추출합니다.`,
+        `Step 03: 검수 후 사내 보고서나 실무 프로세스에 즉시 적용하여 업무 시간을 80% 단축합니다.`
+      ],
+      editor_rating: editorRating,
+      editor_comment: `1차 검수 점수: ${totalFilterScore}점 (별점 ${starScore} / 5.0) | [${selectedChannel.name}] (${selectedChannel.handle}) 공식 유튜브 채널의 최신 검증 영상 1차 필터링을 통과한 아티클입니다.`
+    };
+
     const bodyObj = {
       title: articleData.title,
       tier1_category: articleData.tier1_category,
@@ -234,6 +236,15 @@ async function handleAutoCollect() {
       source_video_url: videoUrl,
     };
 
+    payloadList.push({
+      title: articleData.title,
+      body: JSON.stringify(bodyObj),
+      thumbnail: thumbnail,
+      status: "Draft"
+    });
+  }
+
+  try {
     const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cvzzywvcglnlotqgdpfq.supabase.co";
     const supabaseUrl = rawUrl.replace("cvzzywvv", "cvzzywvc");
     const getKey = () => {
@@ -251,20 +262,13 @@ async function handleAutoCollect() {
       `${supabaseUrl}/rest/v1/contents`,
       "POST",
       key,
-      [{
-        title: articleData.title,
-        body: JSON.stringify(bodyObj),
-        thumbnail: thumbnail,
-        status: "Draft"
-      }]
+      payloadList
     );
 
     return NextResponse.json({
       success: true,
-      message: `🎉 [신규 B안 대분류 5개 적용] [${selectedChannel.name}] (${selectedChannel.badge}) 채널의 100% 최신 유튜브 영상 데이터가 성공적으로 인제스트되었습니다!`,
-      channel: selectedChannel.name,
-      badge: selectedChannel.badge,
-      title: articleData.title,
+      message: `🎉 [10개 채널 동시 일괄 수집 완료] 최신 확정 B안 5대 카테고리를 반영한 10개 채널의 실시간 영상이 검수 대기열(Draft)에 10개 생성되었습니다!`,
+      count: payloadList.length,
       record: dbData
     });
 
