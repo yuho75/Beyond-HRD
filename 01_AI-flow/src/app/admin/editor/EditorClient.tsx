@@ -1,5 +1,5 @@
+// v2.1.0 - 24h auto-collect + instant test trigger
 "use client";
-// Force Vercel Deploy Trigger: 2026-08-13 16:30
 
 import { useState, useMemo, useEffect } from "react";
 import { 
