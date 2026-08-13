@@ -2,25 +2,26 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Play, Star, Sparkles, Check, Copy } from "lucide-react";
+import { Play, Star, Sparkles, Check, Copy, ExternalLink, RefreshCw } from "lucide-react";
 
 function extractYouTubeId(urlStr?: string): string | null {
   if (!urlStr) return null;
   const match = urlStr.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-  if (match) return match[1];
+  if (match && match[1].length === 11) return match[1];
   return null;
 }
 
-const CHANNEL_VIDEO_FALLBACKS: Record<string, string> = {
-  "알린 ALINN": "a7gC-G7pWlY",
-  "일잘러 장피엠": "8NlhX_4-LqA",
-  "감자나라ai": "k9tWvJ69Gns",
-  "AI 알려주는 남자 데브남": "Xq4L8_S8HlM",
-  "CONNECT AI LAB": "5hV9c39-e9Q",
-  "오빠두엑셀": "Z5QnKz8A1n8",
-  "시민개발자 구씨": "3LqN2J_2z8A",
-  "빌더 조쉬 Builder Josh": "b7nK342mKns",
-  "AI 겸임교수 이종범": "p8M6s972LmA"
+const CHANNEL_TOPIC_IMAGES: Record<string, string> = {
+  "일잘러 장피엠": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
+  "오빠두엑셀": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=1200",
+  "알린 ALINN": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
+  "평범한 사업가": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200",
+  "행글라이터": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=1200",
+  "진한별의 AI 연구소": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
+  "CONNECT AI LAB": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200",
+  "AI 알려주는 남자 데브남": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1200",
+  "시민개발자 구씨": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=1200",
+  "디자인하는AI": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=1200"
 };
 
 function ArticleContent() {
@@ -30,7 +31,7 @@ function ArticleContent() {
   const [article, setArticle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [embedMode, setEmbedMode] = useState(false);
 
   useEffect(() => {
     async function loadArticle() {
@@ -109,7 +110,8 @@ function ArticleContent() {
     );
   }
 
-  const ytVideoId = extractYouTubeId(article.video_url) || CHANNEL_VIDEO_FALLBACKS[article.channel_name] || "8NlhX_4-LqA";
+  const ytVideoId = extractYouTubeId(article.video_url) || "8NlhX_4-LqA";
+  const displayImage = CHANNEL_TOPIC_IMAGES[article.channel_name] || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200";
 
   return (
     <main className="max-w-[900px] w-full px-6 py-12 flex flex-col items-center mx-auto">
@@ -137,36 +139,57 @@ function ArticleContent() {
         </p>
       </div>
 
-      {/* Dynamic YouTube Video Embed Player */}
-      <div className="w-full aspect-video rounded-2xl overflow-hidden relative group mb-10 shadow-lg border border-gray-200 bg-black">
-        {isPlaying ? (
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${ytVideoId}?autoplay=1&rel=0`}
-            title={article.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full border-0"
-          />
-        ) : (
-          <div 
-            onClick={() => setIsPlaying(true)}
-            className="w-full h-full relative cursor-pointer group"
-          >
-            <img 
-              src={article.thumbnail || "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200"} 
-              alt={article.title} 
-              className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+      {/* Robust Player & Video External Link Container */}
+      <div className="w-full flex flex-col gap-3 mb-10">
+        <div className="w-full aspect-video rounded-2xl overflow-hidden relative group shadow-lg border border-gray-200 bg-black">
+          {embedMode ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&rel=0`}
+              title={article.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full border-0"
             />
-            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center flex-col gap-3 text-white">
-              <div className="w-16 h-16 bg-[#f97316] rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                <Play className="text-white fill-white w-7 h-7 ml-1" />
+          ) : (
+            <div 
+              onClick={() => window.open(article.video_url, "_blank")}
+              className="w-full h-full relative cursor-pointer group"
+            >
+              <img 
+                src={displayImage} 
+                alt={article.title} 
+                className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+              />
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center flex-col gap-3 text-white">
+                <div className="w-16 h-16 bg-[#f97316] rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                  <Play className="text-white fill-white w-7 h-7 ml-1" />
+                </div>
+                <span className="font-bold text-sm bg-black/70 px-4 py-2 rounded-full border border-white/20 flex items-center gap-2">
+                  <ExternalLink className="w-4 h-4" /> YouTube에서 [{article.channel_name}] 원본 영상 보기
+                </span>
               </div>
-              <span className="font-bold text-sm bg-black/60 px-4 py-1.5 rounded-full border border-white/20">
-                ▶ 클릭하여 영상 재생하기 ({article.channel_name})
-              </span>
             </div>
+          )}
+        </div>
+
+        {/* Dual Mode Switcher Bar */}
+        <div className="flex items-center justify-between text-xs text-gray-500 px-2">
+          <span>※ 영상 소유자의 퍼가기 설정에 따라 새 탭 재생 또는 내장 플레이어가 작동합니다.</span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => window.open(article.video_url, "_blank")}
+              className="font-bold text-[#f97316] hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <ExternalLink className="w-3.5 h-3.5" /> YouTube에서 크게 보기
+            </button>
+            <button
+              onClick={() => setEmbedMode(!embedMode)}
+              className="text-gray-400 hover:text-gray-700 flex items-center gap-1 cursor-pointer"
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> {embedMode ? "미분할 카드모드" : "내장 플레이어 전환"}
+            </button>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Editor Ratings Box */}

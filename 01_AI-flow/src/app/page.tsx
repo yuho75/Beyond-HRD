@@ -37,35 +37,27 @@ export default function Home() {
   ];
 
 const CHANNEL_THUMBNAILS: Record<string, string> = {
-  "알린 ALINN": "https://i.ytimg.com/vi/a7gC-G7pWlY/hqdefault.jpg",
-  "유튜브신쌤": "https://i.ytimg.com/vi/k9tWvJ69Gns/hqdefault.jpg",
-  "일잘러 장피엠": "https://i.ytimg.com/vi/8NlhX_4-LqA/hqdefault.jpg",
-  "감자나라ai": "https://i.ytimg.com/vi/3LqN2J_2z8A/hqdefault.jpg",
-  "AI 알려주는 남자 데브남": "https://i.ytimg.com/vi/Xq4L8_S8HlM/hqdefault.jpg",
-  "평범한 사업가": "https://i.ytimg.com/vi/dGw1s6m2NmA/hqdefault.jpg",
-  "시민개발자 구씨": "https://i.ytimg.com/vi/3LqN2J_2z8A/hqdefault.jpg",
-  "행글라이터": "https://i.ytimg.com/vi/p8M6s972LmA/hqdefault.jpg",
-  "길호의 실전 AI": "https://i.ytimg.com/vi/b7nK342mKns/hqdefault.jpg",
-  "빌더 조쉬 Builder Josh": "https://i.ytimg.com/vi/8NlhX_4-LqA/hqdefault.jpg",
-  "CONNECT AI LAB": "https://i.ytimg.com/vi/5hV9c39-e9Q/hqdefault.jpg",
-  "오빠두엑셀": "https://i.ytimg.com/vi/Z5QnKz8A1n8/hqdefault.jpg",
-  "디자인하는AI": "https://i.ytimg.com/vi/dGw1s6m2NmA/hqdefault.jpg",
-  "AI 겸임교수 이종범": "https://i.ytimg.com/vi/p8M6s972LmA/hqdefault.jpg",
-  "AI 콘텐츠 마스터 세인투": "https://i.ytimg.com/vi/k9tWvJ69Gns/hqdefault.jpg",
-  "오은환의 하이라이트": "https://i.ytimg.com/vi/a7gC-G7pWlY/hqdefault.jpg"
+  "일잘러 장피엠": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
+  "오빠두엑셀": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600",
+  "알린 ALINN": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
+  "평범한 사업가": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=600",
+  "행글라이터": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600",
+  "진한별의 AI 연구소": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600",
+  "CONNECT AI LAB": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
+  "AI 알려주는 남자 데브남": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
+  "시민개발자 구씨": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=600",
+  "디자인하는AI": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=600"
 };
 
 function resolveYouTubeThumbnail(item: any, bodyObj: any): string {
-  if (item.thumbnail && !item.thumbnail.includes("unsplash")) {
-    return item.thumbnail;
-  }
   const channelName = bodyObj.source_channel_name || "";
+  const title = item.title || "";
   for (const name in CHANNEL_THUMBNAILS) {
-    if (channelName.includes(name) || item.title.includes(name)) {
+    if (channelName.includes(name) || title.includes(name)) {
       return CHANNEL_THUMBNAILS[name];
     }
   }
-  return "https://i.ytimg.com/vi/8NlhX_4-LqA/hqdefault.jpg";
+  return "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
 }
 
   useEffect(() => {
