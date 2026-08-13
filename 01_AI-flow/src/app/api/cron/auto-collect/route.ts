@@ -154,8 +154,9 @@ async function handleAutoCollect() {
     ? `https://images.weserv.nl/?url=${encodeURIComponent(rawThumb)}`
     : rawThumb;
 
-  const defaultTitle = `[${selectedChannel.badge}] ${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`;
-  const finalTitle = ytData?.title ? `[${selectedChannel.badge}] ${ytData.title}` : defaultTitle;
+  const defaultTitle = `${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`;
+  const rawTitle = ytData?.title || defaultTitle;
+  const finalTitle = rawTitle.replace(/^\[[^\]]+\]\s*/, "").trim();
 
   const articleData: any = {
     title: finalTitle,

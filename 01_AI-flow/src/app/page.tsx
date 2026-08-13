@@ -70,11 +70,12 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
               try {
                 bodyObj = typeof item.body === "string" ? JSON.parse(item.body) : item.body;
               } catch(e) {}
+              const rawTitle = item.title || "";
+              const cleanTitle = rawTitle.replace(/^\[[^\]]+\]\s*/, "").trim();
               return {
-                title: item.title,
+                title: cleanTitle,
                 badge: bodyObj.badge || "AI 따라하기",
                 tag: bodyObj.chip || "#수익자동화",
-                color: "bg-emerald-100 text-emerald-700",
                 channel_name: bodyObj.source_channel_name || "AIditor 소스 풀",
                 image: resolveCardThumbnail(item, bodyObj),
                 href: `/article?id=${item.id}`
@@ -131,7 +132,7 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
         </div>
 
         <h2 className="text-2xl md:text-3xl font-extrabold mb-4 leading-tight">
-          [AI 따라하기] 구글 Lyria로 3분 만에 저작권 프리 음악 만들기
+          구글 Lyria로 3분 만에 저작권 프리 음악 만들기
         </h2>
 
         <div className="bg-slate-950/80 rounded-xl p-4 md:p-5 border border-slate-800 mb-6 font-mono text-xs text-slate-300 relative group">
@@ -209,11 +210,12 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
                     }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
-                  <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
-                    <span className="bg-slate-900/90 text-white text-[10px] px-2 py-0.5 font-bold rounded">
+                  {/* Top Badges / Hashtag Chips Restored */}
+                  <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap z-10">
+                    <span className="bg-slate-900/90 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 font-bold rounded shadow-sm">
                       {article.badge}
                     </span>
-                    <span className={`${article.color} text-[10px] px-2 py-0.5 font-bold rounded`}>
+                    <span className="bg-emerald-500/90 text-white backdrop-blur-sm text-[10px] px-2 py-0.5 font-bold rounded shadow-sm">
                       {article.tag}
                     </span>
                   </div>
