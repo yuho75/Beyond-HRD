@@ -101,6 +101,11 @@ async function handleAutoCollect() {
       "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우 세ting법",
       "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
     ],
+    action_guides: [
+      `Step 01: [${selectedChannel.name}]의 노하우가 담긴 복붙 프롬프트를 챗GPT/Claude에 입력합니다.`,
+      `Step 02: ${selectedChannel.topic} 템플릿에 본인의 업무 데이터를 결합하여 결과를 자동 추출합니다.`,
+      `Step 03: 검수 후 사내 보고서나 실무 프로세스에 즉시 적용하여 업무 시간을 80% 단축합니다.`
+    ],
     editor_rating: { ease_of_use: 5, time_saving: 5, cost_effort: 5, practicality: 5 },
     editor_comment: `별점 5.0 / [${selectedChannel.name}] 소스 풀의 최근 7일(1주일) 이내 신규 업로드 영상 노하우를 바탕으로 자동 인제스트된 24시간 수집 아티클입니다.`
   };
@@ -119,6 +124,7 @@ async function handleAutoCollect() {
       editor_rating: articleData.editor_rating,
       editor_comment: articleData.editor_comment,
       summary_points: articleData.summary_points,
+      action_guides: articleData.action_guides,
       source_channel_name: selectedChannel.name,
       source_video_url: selectedChannel.url,
     };

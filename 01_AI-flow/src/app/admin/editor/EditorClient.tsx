@@ -87,7 +87,42 @@ export default function UnifiedEditor() {
     setBadge(bodyObj.badge || "AI 따라하기");
     setChip(bodyObj.chip || "#복붙용_프롬프트");
     setPrompt(bodyObj.copy_paste_asset || bodyObj.prompt || "");
-    setContent(bodyObj.editor_comment || bodyObj.summary_points?.join("\n") || item.body || "");
+
+    // Format Full Rich AIditor Article Body matching D_final_strategy.md spec
+    const summaryList = bodyObj.summary_points?.map((p: string) => `<li style="margin-bottom: 6px;"><strong>${p}</strong></li>`).join("") 
+      || `<li><strong>에디터 픽 1: 실무 AI 프롬프트 템플릿 적용법</strong></li><li><strong>에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 세팅법</strong></li><li><strong>에디터 픽 3: 3분 칼퇴 보장 가이드</strong></li>`;
+
+    const comment = bodyObj.editor_comment || "별점 5.0 / 실무 적용 가이드입니다.";
+    const actionGuides = bodyObj.action_guides?.map((g: string, idx: number) => `<p style="margin-bottom: 8px;"><strong>Step 0${idx+1}:</strong> ${g.replace(/^Step \d+:\s*/, "")}</p>`).join("") 
+      || `<p><strong>Step 01:</strong> 상단 복붙 프롬프트를 챗GPT/Claude에 입력합니다.</p><p><strong>Step 02:</strong> 업무 서식과 결합하여 자동 요약을 수행합니다.</p><p><strong>Step 03:</strong> 사내 보고서 및 실무에 즉시 반영합니다.</p>`;
+
+    const channelName = bodyObj.source_channel_name || "AIditor 소스 풀";
+    const channelUrl = bodyObj.source_video_url || "https://youtube.com";
+
+    const richArticleHtml = `
+      <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">📌 에디터 픽 (핵심 3줄 요약)</h3>
+      <ul style="padding-left: 20px; color: #334155; margin-bottom: 16px;">
+        ${summaryList}
+      </ul>
+
+      <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">⭐ 에디터 팩트체크 & 총평</h3>
+      <div style="background-color: #f8fafc; border-left: 4px solid #f97316; padding: 12px 16px; border-radius: 4px; margin-bottom: 16px;">
+        <p style="color: #1e293b; margin: 0; font-weight: 600;">${comment}</p>
+      </div>
+
+      <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">🚀 비개발자 3단계 실천 액션 가이드</h3>
+      <div style="color: #334155; line-height: 1.6; margin-bottom: 16px;">
+        ${actionGuides}
+      </div>
+
+      <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">📺 소스 풀 원본 출처</h3>
+      <p style="color: #64748b; font-size: 0.875rem;">
+        출처 채널: <strong>${channelName}</strong> | 
+        <a href="${channelUrl}" target="_blank" rel="noopener noreferrer" style="color: #f97316; text-decoration: underline;">유튜브 원본 영상 보러가기 ↗</a>
+      </p>
+    `.trim();
+
+    setContent(richArticleHtml);
   };
 
   const handlePublish = async () => {
