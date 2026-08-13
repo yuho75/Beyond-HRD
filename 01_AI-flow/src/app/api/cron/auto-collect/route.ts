@@ -1,9 +1,4 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cvzzywvcglnlotqgdpfq.supabase.co";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2enp5d3ZjZ2xubG90cWdkcGZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNDcyODAsImV4cCI6MjA1NzYyMzI4MH0.fake_anon_key";
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 // 30 domestic sourcing channels from B_sourcing_channels.md
 const SOURCE_CHANNELS_30 = [
@@ -49,7 +44,7 @@ export async function POST(req: Request) {
 
 async function callGeminiWithTimeout(apiKey: string, prompt: string): Promise<string | null> {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 8000);
+  const timeoutId = setTimeout(() => controller.abort(), 6000);
 
   try {
     const response = await fetch(
@@ -81,7 +76,7 @@ async function handleAutoCollect() {
   const timeStampStr = new Date().toISOString().slice(0, 10);
 
   let articleData: any = {
-    title: `[AI 따라하기] ${selectedChannel.name} – ${selectedChannel.topic} 3분 완정 가이드`,
+    title: `[AI 따라하기] ${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`,
     tier1_category: "AI/업무생산성",
     tier2_tools: ["ChatGPT", "Claude", "Make"],
     tier3_tags: ["#수익자동화", "#복붙용_프롬프트", "#칼퇴보장"],
@@ -152,19 +147,31 @@ Strictly output ONLY a valid JSON matching this schema:
       source_video_url: selectedChannel.url,
     };
 
-    const { data: dbData, error: dbError } = await supabase
-      .from("contents")
-      .insert([{
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cvzzywvcglnlotqgdpfq.supabase.co";
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2enp5d3ZjZ2xubG90cWdkcGZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNDcyODAsImV4cCI6MjA1NzYyMzI4MH0.fake_anon_key";
+
+    const dbRes = await fetch(`${supabaseUrl}/rest/v1/contents`, {
+      method: "POST",
+      headers: {
+        "apikey": anonKey,
+        "Authorization": `Bearer ${anonKey}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify([{
         title: articleData.title,
         body: JSON.stringify(bodyObj),
         thumbnail: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&q=80&w=600",
         status: "Draft"
       }])
-      .select();
+    });
 
-    if (dbError) {
-      return NextResponse.json({ error: `Supabase DB 저장 실패: ${dbError.message}` }, { status: 500 });
+    if (!dbRes.ok) {
+      const errText = await dbRes.text();
+      return NextResponse.json({ error: `Supabase DB 저장 실패 (${dbRes.status}): ${errText}` }, { status: 500 });
     }
+
+    const dbData = await dbRes.json();
 
     return NextResponse.json({
       success: true,
