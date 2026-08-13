@@ -458,7 +458,7 @@ export default function UnifiedEditor() {
                     disabled={isSaving}
                     className="text-xs font-bold text-[#f97316] bg-orange-50 hover:bg-orange-100 border border-orange-200 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
                   >
-                    ⚡ 1초 즉시 수집 테스트
+                    ⚡ 즉시 수집
                   </button>
                 </div>
               </div>

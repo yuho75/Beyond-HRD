@@ -191,7 +191,7 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
             <Sparkles className="w-8 h-8 text-[#f97316]" />
             <h3 className="font-bold text-gray-900 text-base">🎉 DB 및 메인 페이지가 100% 클린하게 비워졌습니다!</h3>
             <p className="text-xs text-gray-500 max-w-md">
-              관리자 검수센터에서 [⚡ 1초 즉시 수집 테스트] 버튼을 누르시면, 발급받으신 정식 유튜브 API 기반 실시간 최신 콘텐츠가 생성됩니다.
+              관리자 검수센터에서 [⚡ 즉시 수집] 버튼을 누르시면, 발급받으신 정식 유튜브 API 기반 실시간 최신 콘텐츠가 생성됩니다.
             </p>
             <a href="/admin/editor" className="mt-2 inline-flex items-center gap-2 bg-[#f97316] text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-sm hover:bg-[#ea580c] transition-all">
               ⚡ 관리자 검수센터로 이동하여 새 콘텐츠 수집하기 ↗

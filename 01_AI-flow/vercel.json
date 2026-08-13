@@ -1,10 +1,4 @@
 {
   "framework": "nextjs",
-  "buildCommand": "next build",
-  "crons": [
-    {
-      "path": "/api/cron/auto-collect",
-      "schedule": "0 2 * * *"
-    }
-  ]
+  "buildCommand": "next build"
 }
