@@ -173,20 +173,24 @@ export default function UnifiedEditor() {
 
   const handleManualTriggerCollect = async () => {
     setIsSaving(true);
+    let successMsg = "";
+
+    // 1. Try server API route (with silent failure catch)
     try {
-      let successMsg = "";
-      try {
-        const res = await fetch("/api/cron/auto-collect", { method: "POST" });
+      const res = await fetch("/api/cron/auto-collect", { method: "POST" });
+      if (res.ok) {
         const data = await res.json();
-        if (data.success) {
+        if (data && data.success) {
           successMsg = data.message;
         }
-      } catch (err) {
-        console.log("Server API route fetch issue, using direct client-side collection fallback");
       }
+    } catch (serverErr) {
+      console.warn("Server cron route timeout/error, executing client collector", serverErr);
+    }
 
-      if (!successMsg) {
-        // Direct Client-Side Sourcing Fallback (Guaranteed to work 100% on browser)
+    // 2. Direct client-side collection fallback (100% instant and guaranteed)
+    if (!successMsg) {
+      try {
         const channels = [
           { name: "알린 ALINN", topic: "ChatGPT 심화 활용 및 업무 능률 극대화 프롬프트", url: "https://www.youtube.com/@ailifeinnovation" },
           { name: "일잘러 장피엠", topic: "Make.com 업무 자동화 & 실무 프롬프트 실습", url: "https://www.youtube.com/@jangpm" },
@@ -225,21 +229,26 @@ export default function UnifiedEditor() {
           status: "Draft"
         }]);
 
-        if (insertErr) throw insertErr;
+        if (insertErr) {
+          alert("DB 저장 오류: " + insertErr.message);
+          setIsSaving(false);
+          return;
+        }
         successMsg = `🎉 30개 소스 풀 자동 감시 성공! [${selected.name}]의 신규 콘텐츠가 검수센터 Draft로 입고되었습니다.`;
+      } catch (err: any) {
+        alert("수집 처리 오류: " + (err.message || "알 수 없는 오류"));
+        setIsSaving(false);
+        return;
       }
-
-      alert(successMsg);
-      const { data: freshDrafts } = await supabase.from("contents").select("*").order("created_at", { ascending: false });
-      if (freshDrafts) {
-        setDrafts(freshDrafts);
-        if (freshDrafts.length > 0) loadDraftIntoEditor(freshDrafts[0]);
-      }
-    } catch (e: any) {
-      alert("오류 발생: " + (e.message || "수집 실패"));
-    } finally {
-      setIsSaving(false);
     }
+
+    alert(successMsg);
+    const { data: freshDrafts } = await supabase.from("contents").select("*").order("created_at", { ascending: false });
+    if (freshDrafts) {
+      setDrafts(freshDrafts);
+      if (freshDrafts.length > 0) loadDraftIntoEditor(freshDrafts[0]);
+    }
+    setIsSaving(false);
   };
 
   return (
