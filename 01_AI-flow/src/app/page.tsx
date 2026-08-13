@@ -28,13 +28,7 @@ export default function Home() {
 
   const samplePrompt = `Act as a senior marketer. Please analyze [제품명] target audience and generate 5 punchy headline copy ideas for [마케팅 채널].`;
 
-  const defaultDispatches = [
-    { tag: "#수익자동화", badge: "AI 따라하기", title: "[AI 따라하기] 구글 Lyria로 3분 만에 저작권 프리 음악 만들기", date: "2026.08.13", color: "bg-emerald-100 text-emerald-700", image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600", href: "/article" },
-    { tag: "#복붙용_프롬프트", badge: "AI/업무생산성", title: "주 5시간 절약하는 챗GPT 마케팅 보고서 프롬프트 15선", date: "2026.07.30", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600", href: "/article" },
-    { tag: "#자동화_시나리오", badge: "생성형 AI & 업무자동화", title: "n8n으로 이메일 수신 시 구글 시트 자동 기록 10초 완성", date: "2026.07.29", color: "bg-emerald-100 text-emerald-700", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" },
-    { tag: "#자연어_레시피", badge: "AI 에이전트 & 바이브코딩", title: "코딩 없이 말로 만드는 나만의 카카오톡 AI 비서 에이전트", date: "2026.07.28", color: "bg-blue-100 text-blue-700", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" },
-    { tag: "#업무_템플릿", badge: "일잘러의 업무스킬", title: "엑셀 칼퇴 서식: AI 함수로 데이터 1초 만에 자동 정형화", date: "2026.07.27", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" }
-  ];
+  const defaultDispatches: any[] = [];
 
 const TOPIC_CARD_THUMBNAILS: Record<string, string> = {
   "일잘러 장피엠": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
@@ -86,13 +80,13 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
                 href: `/article?id=${item.id}`
               };
             });
-            setArticles([...parsed, ...defaultDispatches]);
+            setArticles(parsed);
           } else {
-            setArticles(defaultDispatches);
+            setArticles([]);
           }
         }
       } catch (e) {
-        setArticles(defaultDispatches);
+        setArticles([]);
       }
     }
     loadContents();
@@ -104,7 +98,7 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const displayList = articles.length > 0 ? articles : defaultDispatches;
+  const displayList = articles;
 
   return (
     <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
@@ -197,39 +191,52 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {displayList.map((article, i) => (
-            <a href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
-              <div className="h-40 bg-gray-900 relative">
-                <img 
-                  src={article.image} 
-                  alt={article.title} 
-                  onError={(e: any) => {
-                    e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
-                  }}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                />
-                <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
-                  <span className="bg-slate-900/90 text-white text-[10px] px-2 py-0.5 font-bold rounded">
-                    {article.badge}
-                  </span>
-                  <span className={`${article.color} text-[10px] px-2 py-0.5 font-bold rounded`}>
-                    {article.tag}
-                  </span>
-                </div>
-              </div>
-              <div className="p-4 flex flex-col flex-grow">
-                <h3 className="font-bold text-[15px] leading-tight text-gray-900 mb-6 group-hover:text-[#f97316] transition-colors">
-                  {article.title}
-                </h3>
-                <div className="mt-auto flex items-center justify-between">
-                  <span className="text-xs text-gray-400 font-medium">{article.date}</span>
-                  <span className="text-xs text-emerald-600 font-bold">1초 복사 가능 📋</span>
-                </div>
-              </div>
+        {displayList.length === 0 ? (
+          <div className="p-12 text-center border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50 flex flex-col items-center justify-center gap-3">
+            <Sparkles className="w-8 h-8 text-[#f97316]" />
+            <h3 className="font-bold text-gray-900 text-base">🎉 DB 및 메인 페이지가 100% 클린하게 비워졌습니다!</h3>
+            <p className="text-xs text-gray-500 max-w-md">
+              관리자 검수센터에서 [⚡ 1초 즉시 수집 테스트] 버튼을 누르시면, 발급받으신 정식 유튜브 API 기반 실시간 최신 콘텐츠가 생성됩니다.
+            </p>
+            <a href="/admin/editor" className="mt-2 inline-flex items-center gap-2 bg-[#f97316] text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-sm hover:bg-[#ea580c] transition-all">
+              ⚡ 관리자 검수센터로 이동하여 새 콘텐츠 수집하기 ↗
             </a>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {displayList.map((article, i) => (
+              <a href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
+                <div className="h-40 bg-gray-900 relative">
+                  <img 
+                    src={article.image} 
+                    alt={article.title} 
+                    onError={(e: any) => {
+                      e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
+                    }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+                    <span className="bg-slate-900/90 text-white text-[10px] px-2 py-0.5 font-bold rounded">
+                      {article.badge}
+                    </span>
+                    <span className={`${article.color} text-[10px] px-2 py-0.5 font-bold rounded`}>
+                      {article.tag}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-4 flex flex-col flex-grow">
+                  <h3 className="font-bold text-[15px] leading-tight text-gray-900 mb-6 group-hover:text-[#f97316] transition-colors">
+                    {article.title}
+                  </h3>
+                  <div className="mt-auto flex items-center justify-between">
+                    <span className="text-xs text-gray-400 font-medium">{article.date}</span>
+                    <span className="text-xs text-emerald-600 font-bold">1초 복사 가능 📋</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
       </section>
 
     </main>
