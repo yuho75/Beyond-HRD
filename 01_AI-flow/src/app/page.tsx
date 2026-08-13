@@ -36,36 +36,31 @@ export default function Home() {
     { tag: "#업무_템플릿", badge: "일잘러의 업무스킬", title: "엑셀 칼퇴 서식: AI 함수로 데이터 1초 만에 자동 정형화", date: "2026.07.27", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" }
   ];
 
-const CHANNEL_YT_VIDEOS: Record<string, string> = {
-  "알린 ALINN": "a7gC-G7pWlY",
-  "유튜브신쌤": "k9tWvJ69Gns",
-  "일잘러 장피엠": "8NlhX_4-LqA",
-  "감자나라ai": "3LqN2J_2z8A",
-  "AI 알려주는 남자 데브남": "Xq4L8_S8HlM",
-  "평범한 사업가": "dGw1s6m2NmA",
-  "시민개발자 구씨": "3LqN2J_2z8A",
-  "행글라이터": "p8M6s972LmA",
-  "길호의 실전 AI": "b7nK342mKns",
-  "빌더 조쉬 Builder Josh": "8NlhX_4-LqA",
-  "CONNECT AI LAB": "5hV9c39-e9Q",
-  "오빠두엑셀": "Z5QnKz8A1n8"
+const TOPIC_CARD_THUMBNAILS: Record<string, string> = {
+  "일잘러 장피엠": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
+  "오빠두엑셀": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600",
+  "알린 ALINN": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
+  "평범한 사업가": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=600",
+  "행글라이터": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600",
+  "진한별의 AI 연구소": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600",
+  "CONNECT AI LAB": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
+  "AI 알려주는 남자 데브남": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
+  "시민개발자 구씨": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=600",
+  "디자인하는AI": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=600"
 };
 
-function resolveYouTubeThumbnail(item: any, bodyObj: any): string {
-  if (item.thumbnail && item.thumbnail.includes("weserv.nl")) {
+function resolveCardThumbnail(item: any, bodyObj: any): string {
+  if (item.thumbnail && item.thumbnail.includes("unsplash.com")) {
     return item.thumbnail;
-  }
-  if (item.thumbnail && item.thumbnail.includes("i.ytimg.com")) {
-    return `https://images.weserv.nl/?url=${encodeURIComponent(item.thumbnail)}`;
   }
   const channelName = bodyObj.source_channel_name || "";
   const title = item.title || "";
-  for (const name in CHANNEL_YT_VIDEOS) {
+  for (const name in TOPIC_CARD_THUMBNAILS) {
     if (channelName.includes(name) || title.includes(name)) {
-      return `https://images.weserv.nl/?url=https://i.ytimg.com/vi/${CHANNEL_YT_VIDEOS[name]}/hqdefault.jpg`;
+      return TOPIC_CARD_THUMBNAILS[name];
     }
   }
-  return `https://images.weserv.nl/?url=https://i.ytimg.com/vi/8NlhX_4-LqA/hqdefault.jpg`;
+  return "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
 }
 
   useEffect(() => {
@@ -87,7 +82,7 @@ function resolveYouTubeThumbnail(item: any, bodyObj: any): string {
                 tag: bodyObj.chip || "#수익자동화",
                 date: new Date(item.created_at).toISOString().split("T")[0].replace(/-/g, "."),
                 color: "bg-emerald-100 text-emerald-700",
-                image: resolveYouTubeThumbnail(item, bodyObj),
+                image: resolveCardThumbnail(item, bodyObj),
                 href: `/article?id=${item.id}`
               };
             });
