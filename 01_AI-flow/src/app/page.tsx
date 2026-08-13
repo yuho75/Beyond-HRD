@@ -72,6 +72,9 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
               } catch(e) {}
               return {
                 title: item.title,
+                badge: bodyObj.badge || "AI 따라하기",
+                tag: bodyObj.chip || "#수익자동화",
+                color: "bg-emerald-100 text-emerald-700",
                 channel_name: bodyObj.source_channel_name || "AIditor 소스 풀",
                 image: resolveCardThumbnail(item, bodyObj),
                 href: `/article?id=${item.id}`
@@ -206,6 +209,14 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
                     }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
+                  <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+                    <span className="bg-slate-900/90 text-white text-[10px] px-2 py-0.5 font-bold rounded">
+                      {article.badge}
+                    </span>
+                    <span className={`${article.color} text-[10px] px-2 py-0.5 font-bold rounded`}>
+                      {article.tag}
+                    </span>
+                  </div>
                 </div>
                 <div className="p-4 flex flex-col flex-grow justify-between gap-3">
                   <h3 className="font-bold text-[15px] leading-snug text-gray-900 group-hover:text-[#f97316] transition-colors line-clamp-2">
