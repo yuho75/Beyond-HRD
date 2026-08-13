@@ -105,8 +105,9 @@ async function fetchYouTubeByHandle(handle: string, channelName: string): Promis
       const videoId = item.id?.videoId;
       const title = item.snippet?.title;
       const thumb = item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url;
+      const publishedAt = item.snippet?.publishedAt ? item.snippet.publishedAt.split('T')[0] : new Date().toISOString().split('T')[0];
       if (videoId) {
-        return { videoId, title, thumb };
+        return { videoId, title, thumb, publishedAt };
       }
     }
   } catch (e) {
@@ -234,6 +235,7 @@ async function handleAutoCollect() {
       action_guides: articleData.action_guides,
       source_channel_name: selectedChannel.name,
       source_video_url: videoUrl,
+      published_at: ytData?.publishedAt || new Date().toISOString().split('T')[0],
     };
 
     payloadList.push({

@@ -454,6 +454,18 @@ export default function UnifiedEditor() {
                     const itemIdStr = String(item.id);
                     const isChecked = selectedIds.includes(itemIdStr);
                     const isSelected = String(selectedDraftId) === itemIdStr;
+                    
+                    let bodyObj: any = {};
+                    try {
+                      bodyObj = typeof item.body === "string" ? JSON.parse(item.body) : (item.body || {});
+                    } catch (e) {
+                      bodyObj = {};
+                    }
+
+                    const channelName = bodyObj.source_channel_name || "유튜브 소스 풀";
+                    const rawDate = bodyObj.published_at || (item.created_at ? item.created_at.substring(0, 10) : "");
+                    const formattedDate = rawDate ? rawDate.replace(/-/g, ". ") : "최신";
+
                     return (
                       <div 
                         key={item.id}
@@ -474,7 +486,10 @@ export default function UnifiedEditor() {
                               {item.status === 'Published' ? '🟢 노출중 (OK)' : '🟡 검수대기 (Draft)'}
                             </span>
                           </div>
-                          <span className="text-[11px] text-gray-400">생성일: {new Date(item.created_at).toLocaleString('ko-KR')}</span>
+                          <div className="flex items-center justify-between text-[11px] text-gray-500 font-medium pt-1 border-t border-gray-100/80">
+                            <span className="truncate">출처: <strong className="text-gray-700">{channelName}</strong></span>
+                            <span className="text-gray-400 shrink-0">업로드일: {formattedDate}</span>
+                          </div>
                         </div>
                       </div>
                     );
