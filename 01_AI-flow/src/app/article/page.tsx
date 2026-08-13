@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function ArticleDetail() {
   const [copied, setCopied] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const samplePrompt = `# 파트 1: 영상 분석 & 팩트체크
 소규모 매장을 운영하거나 유튜브 채널을 시작할 때 가장 큰 걸림돌 중 하나가 바로 '음악 저작권'입니다. 이번 영상에서는 구글의 최신 음악 생성 AI인 Lyria...
@@ -49,26 +50,36 @@ export default function ArticleDetail() {
         </p>
       </div>
 
-      {/* Featured YouTube Video Box */}
-      <div className="w-full aspect-video rounded-2xl overflow-hidden relative group mb-10 shadow-lg border border-gray-200">
-        <img 
-          src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200" 
-          alt="Google Lyria Music AI" 
-          className="w-full h-full object-cover"
-        />
-        <a 
-          href="https://youtu.be/X5DMl8kT5gk" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center flex-col gap-3 text-white"
-        >
-          <div className="w-16 h-16 bg-[#f97316] rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-            <Play className="text-white fill-white w-7 h-7 ml-1" />
+      {/* Featured YouTube Video Box - Inline Player */}
+      <div className="w-full aspect-video rounded-2xl overflow-hidden relative group mb-10 shadow-lg border border-gray-200 bg-black">
+        {isPlaying ? (
+          <iframe
+            src="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&rel=0"
+            title="Google Lyria Music AI Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full border-0"
+          />
+        ) : (
+          <div 
+            onClick={() => setIsPlaying(true)}
+            className="w-full h-full relative cursor-pointer group"
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200" 
+              alt="Google Lyria Music AI" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center flex-col gap-3 text-white">
+              <div className="w-16 h-16 bg-[#f97316] rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                <Play className="text-white fill-white w-7 h-7 ml-1" />
+              </div>
+              <span className="font-bold text-sm bg-black/60 px-4 py-1.5 rounded-full border border-white/20">
+                ▶ 클릭하여 현재 페이지에서 바로 영상 재생하기 (CONNECT AI LAB)
+              </span>
+            </div>
           </div>
-          <span className="font-bold text-sm bg-black/60 px-4 py-1.5 rounded-full border border-white/20">
-            ▶ 유튜브 원본 영상 보기 (CONNECT AI LAB)
-          </span>
-        </a>
+        )}
       </div>
 
       {/* Editor Ratings Box */}
