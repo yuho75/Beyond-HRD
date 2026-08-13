@@ -58,9 +58,9 @@ export async function POST(req: Request) {
   return handleAutoCollect();
 }
 
-function fetchYouTubeData(query: string): Promise<{ videoId?: string; title?: string; thumb?: string } | null> {
+function fetchYouTubeData(channelName: string, topic: string): Promise<{ videoId?: string; title?: string; thumb?: string } | null> {
   return new Promise((resolve) => {
-    const urlStr = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&order=date&type=video&q=${encodeURIComponent(query)}&key=${YOUTUBE_API_KEY}`;
+    const urlStr = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&order=date&type=video&q=${encodeURIComponent(channelName)}&key=${YOUTUBE_API_KEY}`;
     const parsed = new URL(urlStr);
     const req = https.request({
       hostname: parsed.hostname,
@@ -75,10 +75,15 @@ function fetchYouTubeData(query: string): Promise<{ videoId?: string; title?: st
         try {
           const json = JSON.parse(body);
           if (json.items && json.items.length > 0) {
-            const item = json.items[0];
-            const videoId = item.id?.videoId;
-            const title = item.snippet?.title;
-            const thumb = item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url;
+            const reqName = channelName.toLowerCase().split(" ")[0];
+            const matched = json.items.find((it: any) => {
+              const cTitle = (it.snippet?.channelTitle || "").toLowerCase();
+              return cTitle.includes(reqName) || cTitle.includes(channelName.toLowerCase());
+            }) || json.items[0];
+
+            const videoId = matched.id?.videoId;
+            const title = matched.snippet?.title;
+            const thumb = matched.snippet?.thumbnails?.high?.url || matched.snippet?.thumbnails?.medium?.url;
             if (videoId) {
               resolve({ videoId, title, thumb });
               return;
@@ -137,7 +142,7 @@ async function handleAutoCollect() {
   const selectedChannel = SOURCE_CHANNELS_30[Math.floor(Math.random() * SOURCE_CHANNELS_30.length)];
 
   // Live fetch from YouTube Data API v3 using user's API Key!
-  const ytData = await fetchYouTubeData(`${selectedChannel.name} ${selectedChannel.topic}`);
+  const ytData = await fetchYouTubeData(selectedChannel.name, selectedChannel.topic);
   const finalVideoId = ytData?.videoId || selectedChannel.videoId || "c2q0F6f9LhA";
   const videoUrl = `https://www.youtube.com/watch?v=${finalVideoId}`;
   const thumbnail = ytData?.thumb || TOPIC_THUMBNAILS[selectedChannel.name] || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800";
