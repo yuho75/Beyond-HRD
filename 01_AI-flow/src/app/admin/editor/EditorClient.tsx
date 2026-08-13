@@ -20,9 +20,7 @@ import {
   Sparkles,
   Check,
   Eye,
-  Trash2,
-  ClipboardPaste,
-  Zap
+  Trash2
 } from "lucide-react";
 import nextDynamic from "next/dynamic";
 import { createClient } from "@supabase/supabase-js";
@@ -57,10 +55,6 @@ export default function UnifiedEditor() {
   const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [loadingDrafts, setLoadingDrafts] = useState(true);
-
-  // Quick Paste & Ingest State
-  const [quickPaste, setQuickPaste] = useState("");
-  const [isQuickIngesting, setIsQuickIngesting] = useState(false);
 
   // Fetch all Drafts from Supabase
   useEffect(() => {
@@ -100,65 +94,6 @@ export default function UnifiedEditor() {
     setChip(bodyObj.chip || "#복붙용_프롬프트");
     setPrompt(bodyObj.copy_paste_asset || bodyObj.prompt || "");
     setContent(bodyObj.editor_comment || bodyObj.summary_points?.join("\n") || item.body || "");
-  };
-
-  const handleQuickIngest = async () => {
-    if (!quickPaste.trim()) {
-      alert("Opal 결과물 JSON이나 마크다운 텍스트를 먼저 붙여넣어 주세요.");
-      return;
-    }
-    setIsQuickIngesting(true);
-    try {
-      let parsed: any = {};
-      try {
-        parsed = JSON.parse(quickPaste);
-      } catch (e) {
-        parsed = { title: "Opal 생성 아티클", body: quickPaste };
-      }
-
-      const itemTitle = parsed.title || "[AI 따라하기] Opal 생성 아티클";
-      const bodyObj = {
-        title: itemTitle,
-        tier1_category: parsed.tier1_category || "AI/업무생산성",
-        tier2_tools: parsed.tier2_tools || ["Opal"],
-        tier3_tags: parsed.tier3_tags || ["#복붙용_프롬프트"],
-        demand_job: parsed.demand_job || ["직무 공통"],
-        demand_level: parsed.demand_level || "스타터(0~3년)",
-        badge: parsed.display_primary_badge || "AI 따라하기",
-        chip: parsed.display_primary_chip || "#복붙용_프롬프트",
-        copy_paste_asset: parsed.copy_paste_asset || "Act as a senior AI editor...",
-        editor_rating: parsed.editor_rating || { ease_of_use: 5, time_saving: 5, cost_effort: 4, practicality: 5 },
-        editor_comment: parsed.editor_comment || "Opal 자동 생성 아티클입니다.",
-        summary_points: parsed.summary_points || ["Opal 핵심 포인트 1", "Opal 핵심 포인트 2"]
-      };
-
-      const payload = {
-        title: itemTitle,
-        body: JSON.stringify(bodyObj),
-        thumbnail: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
-        status: "Draft"
-      };
-
-      const { data, error } = await supabase
-        .from("contents")
-        .insert([payload])
-        .select();
-
-      if (error) {
-        alert("입고 중 오류 발생: " + error.message);
-      } else {
-        alert("⚡ 1초 자동 입고 완료! 검수 대기 목록에 바로 추가되었습니다.");
-        setQuickPaste("");
-        if (data && data.length > 0) {
-          setDrafts(prev => [data[0], ...prev]);
-          loadDraftIntoEditor(data[0]);
-        }
-      }
-    } catch (e: any) {
-      alert("오류 발생: " + e.message);
-    } finally {
-      setIsQuickIngesting(false);
-    }
   };
 
   const handlePublish = async () => {
@@ -283,7 +218,7 @@ export default function UnifiedEditor() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">AI 생성 아티클 검수센터</h1>
-                <p className="text-xs text-gray-500 mt-1">Opal 또는 AI가 생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
+                <p className="text-xs text-gray-500 mt-1">AI가 자동 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
               </div>
               <div className="flex items-center gap-3">
                 <button 
@@ -301,34 +236,6 @@ export default function UnifiedEditor() {
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 노출)"}
-                </button>
-              </div>
-            </div>
-
-            {/* Quick Ingest Box for Opal */}
-            <div className="bg-slate-900 text-white rounded-2xl p-6 border border-slate-700 shadow-md flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-bold text-amber-300 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-amber-400" />
-                  Opal / AI 생성 결과 1초 원클릭 자동 입고
-                </h2>
-                <span className="text-xs text-slate-400">Opal 화면의 결과를 복사해서 붙여넣으시면 1초 만에 검수 대기목록으로 입고됩니다.</span>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <textarea 
-                  rows={2}
-                  value={quickPaste}
-                  onChange={(e) => setQuickPaste(e.target.value)}
-                  placeholder="Opal 우측 상단 복사 아이콘을 눌러 생성 결과를 여기에 붙여넣으세요 (Ctrl+V)..."
-                  className="flex-1 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#f97316]"
-                />
-                <button 
-                  onClick={handleQuickIngest}
-                  disabled={isQuickIngesting}
-                  className="flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white px-5 py-3 rounded-xl font-bold text-xs transition-all shrink-0 cursor-pointer shadow-sm disabled:opacity-50"
-                >
-                  <ClipboardPaste className="w-4 h-4" />
-                  {isQuickIngesting ? "입고 중..." : "⚡ 1초 자동 입고하기"}
                 </button>
               </div>
             </div>
