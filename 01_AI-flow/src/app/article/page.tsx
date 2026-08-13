@@ -139,51 +139,39 @@ function ArticleContent() {
         </p>
       </div>
 
-      {/* Interactive Video Player Container with Poster Preview Fallback */}
-      <div className="w-full flex flex-col gap-3 mb-10">
-        <div className="w-full aspect-video rounded-2xl overflow-hidden relative shadow-lg border border-gray-200 bg-black">
-          {isPlaying ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&rel=0`}
-              title={article.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full border-0"
+      {/* Interactive Video Player Container */}
+      <div className="w-full aspect-video rounded-2xl overflow-hidden relative shadow-lg border border-gray-200 bg-black mb-10">
+        {isPlaying ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&rel=0`}
+            title={article.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full border-0"
+          />
+        ) : (
+          <div 
+            onClick={() => setIsPlaying(true)}
+            className="w-full h-full relative cursor-pointer group"
+          >
+            <img 
+              src={article.thumbnail && article.thumbnail.startsWith("http") ? article.thumbnail : displayImage} 
+              alt={article.title} 
+              className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105"
             />
-          ) : (
-            <div 
-              onClick={() => setIsPlaying(true)}
-              className="w-full h-full relative cursor-pointer group"
-            >
-              <img 
-                src={article.thumbnail && article.thumbnail.startsWith("http") ? article.thumbnail : displayImage} 
-                alt={article.title} 
-                className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 flex flex-col items-center justify-center gap-4 text-white p-6 text-center">
-                <div className="w-20 h-20 bg-[#f97316] rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                  <Play className="text-white fill-white w-9 h-9 ml-1" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-base md:text-lg text-white mb-1 shadow-sm line-clamp-1">{article.title}</h3>
-                  <span className="text-xs text-orange-200 font-medium bg-black/60 px-3 py-1 rounded-full border border-white/20">
-                    ▶ 클릭하시면 [{article.channel_name}] 영상이 플레이어에서 바로 재생됩니다
-                  </span>
-                </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 flex flex-col items-center justify-center gap-4 text-white p-6 text-center">
+              <div className="w-20 h-20 bg-[#f97316] rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                <Play className="text-white fill-white w-9 h-9 ml-1" />
+              </div>
+              <div>
+                <h3 className="font-bold text-base md:text-lg text-white mb-1 shadow-sm line-clamp-1">{article.title}</h3>
+                <span className="text-xs text-orange-200 font-medium bg-black/60 px-3 py-1 rounded-full border border-white/20">
+                  ▶ 클릭하시면 [{article.channel_name}] 영상이 플레이어에서 바로 재생됩니다
+                </span>
               </div>
             </div>
-          )}
-        </div>
-
-        <div className="flex items-center justify-between text-xs text-gray-500 px-2 flex-wrap gap-2">
-          <span>※ 채널 소유자의 유튜브 퍼가기 제한 시 아래 주황색 원본 링크로 1초 재생이 가능합니다.</span>
-          <button
-            onClick={() => window.open(article.video_url, "_blank")}
-            className="font-bold text-[#f97316] hover:underline flex items-center gap-1 cursor-pointer bg-orange-50 px-3.5 py-1.5 rounded-lg border border-orange-200 shadow-2xs"
-          >
-            <ExternalLink className="w-4 h-4" /> YouTube에서 [{article.channel_name}] 원본 영상 1초 재생 ↗
-          </button>
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Editor Ratings Box */}
