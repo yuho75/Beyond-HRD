@@ -141,7 +141,7 @@ function ArticleContent() {
       <div className="w-full aspect-video rounded-2xl overflow-hidden relative group mb-10 shadow-lg border border-gray-200 bg-black">
         {isPlaying ? (
           <iframe
-            src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&rel=0`}
+            src={`https://www.youtube-nocookie.com/embed/${ytVideoId}?autoplay=1&rel=0`}
             title={article.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
