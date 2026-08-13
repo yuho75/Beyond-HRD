@@ -86,7 +86,7 @@ function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?:
 async function handleAutoCollect() {
   const selectedChannel = SOURCE_CHANNELS_30[Math.floor(Math.random() * SOURCE_CHANNELS_30.length)];
   const videoUrl = `https://www.youtube.com/watch?v=${selectedChannel.videoId}`;
-  const ytThumbnail = `https://i.ytimg.com/vi/${selectedChannel.videoId}/hqdefault.jpg`;
+  const ytThumbnail = `https://images.weserv.nl/?url=https://i.ytimg.com/vi/${selectedChannel.videoId}/hqdefault.jpg`;
 
   const articleData: any = {
     title: `[${selectedChannel.badge}] ${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`,
