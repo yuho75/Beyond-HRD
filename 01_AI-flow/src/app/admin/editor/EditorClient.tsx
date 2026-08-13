@@ -44,6 +44,7 @@ const ReactQuill = nextDynamic(async () => {
 
 export default function UnifiedEditor() {
   const [drafts, setDrafts] = useState<any[]>([]);
+  const [filterStatus, setFilterStatus] = useState<"Draft" | "Published" | "All">("Draft");
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [badge, setBadge] = useState("AI 따라하기");
@@ -52,6 +53,17 @@ export default function UnifiedEditor() {
   const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [loadingDrafts, setLoadingDrafts] = useState(true);
+
+  // Filtered drafts by active tab
+  const filteredDrafts = useMemo(() => {
+    if (filterStatus === "Draft") {
+      return drafts.filter(d => d.status === "Draft" || !d.status);
+    }
+    if (filterStatus === "Published") {
+      return drafts.filter(d => d.status === "Published");
+    }
+    return drafts;
+  }, [drafts, filterStatus]);
 
   // Fetch all Drafts from Supabase via server API
   useEffect(() => {
@@ -62,7 +74,10 @@ export default function UnifiedEditor() {
         const json = await res.json();
         if (json.success && json.data) {
           setDrafts(json.data);
-          if (json.data.length > 0) {
+          const initialPending = json.data.filter((d: any) => d.status === "Draft" || !d.status);
+          if (initialPending.length > 0) {
+            loadDraftIntoEditor(initialPending[0]);
+          } else if (json.data.length > 0) {
             loadDraftIntoEditor(json.data[0]);
           }
         }
@@ -290,34 +305,52 @@ export default function UnifiedEditor() {
               </div>
             </div>
 
-            {/* Draft Selector List */}
+            {/* Status Filter Tabs & Selector List */}
             <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 pb-3">
+                <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#f97316]" />
-                  검수 대기중인 아티클 목록 ({drafts.length}건)
-                </h2>
+                  <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
+                    <button
+                      onClick={() => setFilterStatus("Draft")}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === "Draft" ? "bg-amber-500 text-white shadow-2xs" : "text-gray-600 hover:text-gray-900"}`}
+                    >
+                      🟡 검수 대기중 ({drafts.filter(d => d.status === "Draft" || !d.status).length})
+                    </button>
+                    <button
+                      onClick={() => setFilterStatus("Published")}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === "Published" ? "bg-emerald-600 text-white shadow-2xs" : "text-gray-600 hover:text-gray-900"}`}
+                    >
+                      🟢 승인/발행 완료 ({drafts.filter(d => d.status === "Published").length})
+                    </button>
+                    <button
+                      onClick={() => setFilterStatus("All")}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === "All" ? "bg-slate-800 text-white shadow-2xs" : "text-gray-600 hover:text-gray-900"}`}
+                    >
+                      📋 전체 ({drafts.length})
+                    </button>
+                  </div>
+                </div>
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={handleManualTriggerCollect}
                     disabled={isSaving}
-                    className="text-xs font-bold text-[#f97316] bg-orange-50 hover:bg-orange-100 border border-orange-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                    className="text-xs font-bold text-[#f97316] bg-orange-50 hover:bg-orange-100 border border-orange-200 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
                   >
                     ⚡ 지금 1초 즉시 수집 테스트
                   </button>
-                  <span className="text-xs text-gray-400">클릭하여 선택 후 수정, 승인 또는 삭제할 수 있습니다.</span>
                 </div>
               </div>
 
               {loadingDrafts ? (
                 <div className="text-xs text-gray-400 p-4">아티클 목록을 불러오는 중...</div>
-              ) : drafts.length === 0 ? (
-                <div className="text-xs text-gray-400 p-4 border border-dashed border-gray-200 rounded-xl text-center">
-                  현재 검수 대기 중인 아티클이 없습니다.
+              ) : filteredDrafts.length === 0 ? (
+                <div className="text-xs text-gray-400 p-6 border border-dashed border-gray-200 rounded-xl text-center">
+                  {filterStatus === "Draft" ? "🎉 현재 검수 대기 중인 아티클이 없습니다! 모든 아티클이 승인되었습니다." : "해당 항목의 아티클이 없습니다."}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {drafts.map((item) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[360px] overflow-y-auto pr-1">
+                  {filteredDrafts.map((item) => (
                     <div 
                       key={item.id}
                       onClick={() => loadDraftIntoEditor(item)}
