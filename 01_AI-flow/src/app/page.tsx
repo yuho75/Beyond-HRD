@@ -36,6 +36,38 @@ export default function Home() {
     { tag: "#업무_템플릿", badge: "일잘러의 업무스킬", title: "엑셀 칼퇴 서식: AI 함수로 데이터 1초 만에 자동 정형화", date: "2026.07.27", color: "bg-indigo-100 text-indigo-700", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600" }
   ];
 
+const CHANNEL_THUMBNAILS: Record<string, string> = {
+  "알린 ALINN": "https://i.ytimg.com/vi/a7gC-G7pWlY/hqdefault.jpg",
+  "유튜브신쌤": "https://i.ytimg.com/vi/k9tWvJ69Gns/hqdefault.jpg",
+  "일잘러 장피엠": "https://i.ytimg.com/vi/8NlhX_4-LqA/hqdefault.jpg",
+  "감자나라ai": "https://i.ytimg.com/vi/3LqN2J_2z8A/hqdefault.jpg",
+  "AI 알려주는 남자 데브남": "https://i.ytimg.com/vi/Xq4L8_S8HlM/hqdefault.jpg",
+  "평범한 사업가": "https://i.ytimg.com/vi/dGw1s6m2NmA/hqdefault.jpg",
+  "시민개발자 구씨": "https://i.ytimg.com/vi/3LqN2J_2z8A/hqdefault.jpg",
+  "행글라이터": "https://i.ytimg.com/vi/p8M6s972LmA/hqdefault.jpg",
+  "길호의 실전 AI": "https://i.ytimg.com/vi/b7nK342mKns/hqdefault.jpg",
+  "빌더 조쉬 Builder Josh": "https://i.ytimg.com/vi/8NlhX_4-LqA/hqdefault.jpg",
+  "CONNECT AI LAB": "https://i.ytimg.com/vi/5hV9c39-e9Q/hqdefault.jpg",
+  "오빠두엑셀": "https://i.ytimg.com/vi/Z5QnKz8A1n8/hqdefault.jpg",
+  "디자인하는AI": "https://i.ytimg.com/vi/dGw1s6m2NmA/hqdefault.jpg",
+  "AI 겸임교수 이종범": "https://i.ytimg.com/vi/p8M6s972LmA/hqdefault.jpg",
+  "AI 콘텐츠 마스터 세인투": "https://i.ytimg.com/vi/k9tWvJ69Gns/hqdefault.jpg",
+  "오은환의 하이라이트": "https://i.ytimg.com/vi/a7gC-G7pWlY/hqdefault.jpg"
+};
+
+function resolveYouTubeThumbnail(item: any, bodyObj: any): string {
+  if (item.thumbnail && !item.thumbnail.includes("unsplash")) {
+    return item.thumbnail;
+  }
+  const channelName = bodyObj.source_channel_name || "";
+  for (const name in CHANNEL_THUMBNAILS) {
+    if (channelName.includes(name) || item.title.includes(name)) {
+      return CHANNEL_THUMBNAILS[name];
+    }
+  }
+  return "https://i.ytimg.com/vi/8NlhX_4-LqA/hqdefault.jpg";
+}
+
   useEffect(() => {
     async function loadContents() {
       try {
@@ -55,7 +87,7 @@ export default function Home() {
                 tag: bodyObj.chip || "#수익자동화",
                 date: new Date(item.created_at).toISOString().split("T")[0].replace(/-/g, "."),
                 color: "bg-emerald-100 text-emerald-700",
-                image: item.thumbnail || "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
+                image: resolveYouTubeThumbnail(item, bodyObj),
                 href: `/article?id=${item.id}`
               };
             });
