@@ -1,4 +1,4 @@
-// v2.1.0 - 24h auto-collect + instant test trigger
+// v2.2.0 - Clean production build
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
