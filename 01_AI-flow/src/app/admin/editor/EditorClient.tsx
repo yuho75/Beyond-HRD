@@ -77,12 +77,9 @@ export default function UnifiedEditor() {
         const json = await res.json();
         if (json.success && json.data) {
           setDrafts(json.data);
-          const initialPending = json.data.filter((d: any) => d.status === "Draft" || !d.status);
-          if (initialPending.length > 0) {
-            loadDraftIntoEditor(initialPending[0]);
-          } else if (json.data.length > 0) {
-            loadDraftIntoEditor(json.data[0]);
-          }
+          // Do NOT pre-fill editor automatically! Default initial state remains clean and empty.
+          setSelectedDraftId(null);
+          setTitle(""); setBadge(""); setChip(""); setPrompt(""); setContent("");
         }
       } catch (e) {
         console.error("Failed to fetch drafts", e);
@@ -163,7 +160,7 @@ export default function UnifiedEditor() {
 
   const handlePublish = async () => {
     if (!selectedDraftId) {
-      alert("발행할 아티클을 먼저 선택해 주세요.");
+      alert("발행할 아티클을 목록에서 먼저 클릭하여 선택해 주세요.");
       return;
     }
     setIsSaving(true);
@@ -366,31 +363,13 @@ export default function UnifiedEditor() {
                 <p className="text-xs text-gray-500 mt-1">Opal 및 AI가 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
               </div>
               <div className="flex items-center gap-3">
-                {selectedIds.length > 0 && (
-                  <button 
-                    onClick={handleBulkDelete}
-                    disabled={isSaving}
-                    className="flex items-center gap-1.5 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer shadow-sm animate-pulse"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    선택한 {selectedIds.length}개 일괄 삭제
-                  </button>
-                )}
-                <button 
-                  onClick={handleDeleteSingle}
-                  disabled={isSaving || !selectedDraftId}
-                  className="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-4 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer disabled:opacity-50"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  단일 삭제
-                </button>
                 <button 
                   onClick={handlePublish}
                   disabled={isSaving || !selectedDraftId}
                   className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 노출)"}
+                  {isSaving ? "승인 및 발행 중..." : "🚀 선택 아티클 승인 (라이브 노출)"}
                 </button>
               </div>
             </div>
@@ -505,63 +484,85 @@ export default function UnifiedEditor() {
             </div>
 
             {/* Editor Workspace */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col gap-6">
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">아티클 제목</label>
-                <input 
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="제목을 입력하세요..."
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-bold text-lg text-gray-900 bg-gray-50/50"
-                />
+            {!selectedDraftId ? (
+              <div className="bg-white rounded-2xl p-12 border border-dashed border-gray-200 shadow-sm text-center flex flex-col items-center justify-center gap-3">
+                <FileEdit className="w-10 h-10 text-gray-300" />
+                <h3 className="font-bold text-gray-700 text-base">선택된 아티클이 없습니다 (에디터 폼 비어있음)</h3>
+                <p className="text-xs text-gray-400">
+                  상단 목록에서 검수할 아티클 카드를 클릭하시거나 [⚡ 즉시 수집] 버튼을 눌러주시면 여기에 편집 화면이 나타납니다.
+                </p>
               </div>
+            ) : (
+              <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col gap-6">
+                <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">현재 선택된 아티클 수정 중</span>
+                  <button
+                    onClick={handleDeleteSingle}
+                    disabled={isSaving}
+                    className="text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    이 아티클 삭제
+                  </button>
+                </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">뱃지 카테고리</label>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">아티클 제목</label>
                   <input 
                     type="text"
-                    value={badge}
-                    onChange={(e) => setBadge(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-gray-50/50"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="제목을 입력하세요..."
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-bold text-lg text-gray-900 bg-gray-50/50"
                   />
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">뱃지 카테고리</label>
+                    <input 
+                      type="text"
+                      value={badge}
+                      onChange={(e) => setBadge(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-gray-50/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">해시태그 칩</label>
+                    <input 
+                      type="text"
+                      value={chip}
+                      onChange={(e) => setChip(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-gray-50/50"
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">해시태그 칩</label>
-                  <input 
-                    type="text"
-                    value={chip}
-                    onChange={(e) => setChip(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-gray-50/50"
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">📋 원클릭 복붙 프롬프트 레시피</label>
+                  <textarea 
+                    rows={4}
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder="프롬프트 레시피 내용..."
+                    className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-mono text-xs text-slate-100 bg-gray-900"
                   />
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">📋 원클릭 복붙 프롬프트 레시피</label>
-                <textarea 
-                  rows={4}
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="프롬프트 레시피 내용..."
-                  className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-mono text-xs text-gray-800 bg-gray-900 text-slate-100"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">본문 세부 구성 리포트 (WYSIWYG 에디터)</label>
-                <div className="rounded-xl border border-gray-200 overflow-hidden">
-                  <ReactQuill 
-                    theme="snow"
-                    value={content}
-                    onChange={setContent}
-                    modules={modules}
-                    className="min-h-[300px]"
-                  />
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">본문 세부 구성 리포트 (WYSIWYG 에디터)</label>
+                  <div className="rounded-xl border border-gray-200 overflow-hidden">
+                    <ReactQuill 
+                      theme="snow"
+                      value={content}
+                      onChange={setContent}
+                      modules={modules}
+                      className="min-h-[300px]"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </main>
       </div>

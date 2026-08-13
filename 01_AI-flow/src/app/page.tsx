@@ -23,6 +23,7 @@ export default function Home() {
   const [selectedJob, setSelectedJob] = useState("직무 공통");
   const [copied, setCopied] = useState(false);
   const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const jobs = ["직무 공통", "기획·PM", "마케터", "인사·HR", "재무·회계", "디자인·BX", "1인기업"];
 
@@ -59,6 +60,7 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
 
   useEffect(() => {
     async function loadContents() {
+      setLoading(true);
       try {
         const res = await fetch("/api/ingest");
         const json = await res.json();
@@ -88,6 +90,8 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
         }
       } catch (e) {
         setArticles([]);
+      } finally {
+        setLoading(false);
       }
     }
     loadContents();
@@ -171,7 +175,7 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
             placeholder="이메일 주소를 입력하세요" 
             className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
           />
-          <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
+          <button className="px-6 py-2.5 bg-[#f97316] text-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
             구독하기
           </button>
         </div>
@@ -186,10 +190,16 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
           </button>
         </div>
 
-        {displayList.length === 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((n) => (
+              <div key={n} className="h-64 rounded-xl bg-gray-100 animate-pulse border border-gray-200" />
+            ))}
+          </div>
+        ) : displayList.length === 0 ? (
           <div className="p-12 text-center border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50 flex flex-col items-center justify-center gap-3">
             <Sparkles className="w-8 h-8 text-[#f97316]" />
-            <h3 className="font-bold text-gray-900 text-base">🎉 DB 및 메인 페이지가 100% 클린하게 비워졌습니다!</h3>
+            <h3 className="font-bold text-gray-900 text-base">🎉 현재 등록된 실시간 콘텐츠가 없습니다!</h3>
             <p className="text-xs text-gray-500 max-w-md">
               관리자 검수센터에서 [⚡ 즉시 수집] 버튼을 누르시면, 발급받으신 정식 유튜브 API 기반 실시간 최신 콘텐츠가 생성됩니다.
             </p>
