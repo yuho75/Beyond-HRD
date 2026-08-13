@@ -4,6 +4,10 @@
     {
       "path": "/api/cron/keep-alive",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/auto-collect",
+      "schedule": "0 */6 * * *"
     }
   ]
 }
