@@ -54,7 +54,7 @@ export default function ArticleDetail() {
       <div className="w-full aspect-video rounded-2xl overflow-hidden relative group mb-10 shadow-lg border border-gray-200 bg-black">
         {isPlaying ? (
           <iframe
-            src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&rel=0"
+            src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&rel=0"
             title="Google Lyria Music AI Video"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
