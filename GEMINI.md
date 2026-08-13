@@ -13,3 +13,8 @@ Whenever initiating any new task, feature request, architectural modification, o
    - Deployment URL: `https://ai-flow-khaki.vercel.app/`
    - Core Tech Stack: Next.js + Vercel + Supabase + Cloudinary
    - Ensure the latest design specs, requirements, and business logic from the Google Drive planning folder are reflected in the codebase.
+
+3. **Strict Enforcement of Latest Versions Only (최신 확정 스펙만 엄격 적용)**:
+   - Always inspect `01_현행버전/` for the newest version timestamp (e.g., `D_final_strategy.md` v8, `AIDITOR_포털구조_논의.md` v3).
+   - Enforce Confirmed 5 B-Plan Categories strictly: **`AI 도구 활용`**, **`업무 자동화`**, **`콘텐츠·문서 제작`**, **`AI 에이전트`**, **`AI 트렌드`**.
+   - NEVER generate or use deprecated/legacy A-Plan category names (`AI 따라하기`, `AI로 벌기`, `AI로 준비하기`, `AI 흐름 읽기`).
