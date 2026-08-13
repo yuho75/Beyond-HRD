@@ -19,7 +19,8 @@ import {
   Users,
   Sparkles,
   Check,
-  Eye
+  Eye,
+  Trash2
 } from "lucide-react";
 import nextDynamic from "next/dynamic";
 import { createClient } from "@supabase/supabase-js";
@@ -111,8 +112,46 @@ export default function UnifiedEditor() {
         alert("발행 중 오류 발생: " + error.message);
       } else {
         alert("🎉 검수 완료! 실시간 라이브 사이트에 성공적으로 발행(노출)되었습니다!");
-        // Refresh local status
         setDrafts(prev => prev.map(d => d.id === selectedDraftId ? { ...d, status: "Published" } : d));
+      }
+    } catch (e: any) {
+      alert("오류 발생: " + e.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!selectedDraftId) {
+      alert("삭제할 아티클을 먼저 선택해 주세요.");
+      return;
+    }
+    if (!confirm("정말 이 아티클을 Supabase DB에서 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.")) {
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from("contents")
+        .delete()
+        .eq("id", selectedDraftId);
+
+      if (error) {
+        alert("삭제 중 오류 발생: " + error.message);
+      } else {
+        alert("🗑️ 해당 아티클이 Supabase DB에서 깔끔하게 삭제되었습니다!");
+        const updated = drafts.filter(d => d.id !== selectedDraftId);
+        setDrafts(updated);
+        if (updated.length > 0) {
+          loadDraftIntoEditor(updated[0]);
+        } else {
+          setSelectedDraftId(null);
+          setTitle("");
+          setBadge("");
+          setChip("");
+          setPrompt("");
+          setContent("");
+        }
       }
     } catch (e: any) {
       alert("오류 발생: " + e.message);
@@ -179,16 +218,26 @@ export default function UnifiedEditor() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">AI 생성 아티클 검수센터</h1>
-                <p className="text-xs text-gray-500 mt-1">AI가 1차 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
+                <p className="text-xs text-gray-500 mt-1">AI가 1차 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출되며, 필요없다면 즉시 삭제할 수 있습니다.</p>
               </div>
-              <button 
-                onClick={handlePublish}
-                disabled={isSaving || !selectedDraftId}
-                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 사이트 노출)"}
-              </button>
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={handleDelete}
+                  disabled={isSaving || !selectedDraftId}
+                  className="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-4 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer disabled:opacity-50"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  삭제하기
+                </button>
+                <button 
+                  onClick={handlePublish}
+                  disabled={isSaving || !selectedDraftId}
+                  className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 노출)"}
+                </button>
+              </div>
             </div>
 
             {/* Draft Selector List */}
@@ -198,7 +247,7 @@ export default function UnifiedEditor() {
                   <Sparkles className="w-4 h-4 text-[#f97316]" />
                   검수 대기중인 아티클 목록 ({drafts.length}건)
                 </h2>
-                <span className="text-xs text-gray-400">클릭하여 선택 후 수정/승인할 수 있습니다.</span>
+                <span className="text-xs text-gray-400">클릭하여 선택 후 수정, 승인 또는 삭제할 수 있습니다.</span>
               </div>
 
               {loadingDrafts ? (
@@ -289,14 +338,24 @@ export default function UnifiedEditor() {
                 <a href="/article" target="_blank" className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors">
                   <Eye className="w-4 h-4" /> 미리보기 화면 새창으로 열기
                 </a>
-                <button 
-                  onClick={handlePublish}
-                  disabled={isSaving || !selectedDraftId}
-                  className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 사이트 노출)"}
-                </button>
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={handleDelete}
+                    disabled={isSaving || !selectedDraftId}
+                    className="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-4 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer disabled:opacity-50"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    삭제하기
+                  </button>
+                  <button 
+                    onClick={handlePublish}
+                    disabled={isSaving || !selectedDraftId}
+                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 노출)"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
