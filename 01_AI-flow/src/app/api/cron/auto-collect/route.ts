@@ -154,6 +154,28 @@ function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?:
     if (data) req.write(data);
     req.end();
   });
+function curateHeadline(rawTitle: string, channelName: string, topic: string): string {
+  if (!rawTitle) return `${channelName} | ${topic} 3분 실전 가이드`;
+
+  // Step 1: Strip clickbait brackets like [역대급], [속보], [단독], [필독], [충격], [시즌 3], [무료], (필수)
+  let clean = rawTitle.replace(/\[[^\]]+\]/g, "").replace(/\([^\)]+\)/g, "").trim();
+
+  // Step 2: Remove excessive exclamation/question marks
+  clean = clean.replace(/[!]{2,}/g, "!").replace(/[?]{2,}/g, "?");
+
+  // Step 3: Remove channel name from title if already present
+  const escapedChannel = channelName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  clean = clean.replace(new RegExp(`[-|\\/]?\\s*${escapedChannel}`, 'gi'), "").trim();
+
+  // Step 4: Fallback if title became too short
+  if (clean.length < 5) {
+    return `${channelName} | ${topic} 실전 가이드`;
+  }
+
+  // Trim trailing separators
+  clean = clean.replace(/[-|\\/:\s]+$/, "").trim();
+
+  return clean;
 }
 
 async function handleAutoCollect() {
@@ -175,7 +197,9 @@ async function handleAutoCollect() {
 
     const defaultTitle = `${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`;
     const rawTitle = ytData?.title || defaultTitle;
-    const finalTitle = rawTitle.replace(/^\[[^\]]+\]\s*/, "").trim();
+    
+    // Curate headline per D_final_strategy.md & NEWNEEK benchmarking spec (strip clickbait brackets, noise, duplicated channel names)
+    const finalTitle = curateHeadline(rawTitle, selectedChannel.name, selectedChannel.topic);
 
     // 1st Stage Inspection Scoring Matrix per D_final_strategy.md Section 8-5
     const isPassChannel = !["안될공학", "편집자P", "디자인하는AI", "커리어해커 알렉스", "부코드", "페이퍼로지", "오은환의 하이라이트", "오빠두엑셀", "갓찌뇽의 초보여도 괜찮아"].includes(selectedChannel.name);
