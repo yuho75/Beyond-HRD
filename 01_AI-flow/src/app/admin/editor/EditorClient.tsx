@@ -27,66 +27,6 @@ import nextDynamic from "next/dynamic";
 import { createClient } from "@supabase/supabase-js";
 import "react-quill-new/dist/quill.snow.css";
 
-const getSupabaseSecretKey = () => {
-  try {
-    return typeof window !== "undefined"
-      ? window.atob("c2Jfc2VjcmV0X1lDdGdLUnQzWWdWUnhCQVh1TnR0dmdfdXdyZ1FkNlM=")
-      : Buffer.from("c2Jfc2VjcmV0X1lDdGdLUnQzWWdWUnhCQVh1TnR0dmdfdXdyZ1FkNlM=", "base64").toString("utf-8");
-  } catch (e) {
-    return "";
-  }
-};
-
-const supabaseDb = {
-  selectContents: async () => {
-    const key = getSupabaseSecretKey();
-    const res = await fetch("https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents?select=*&order=created_at.desc", {
-      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return await res.json();
-  },
-  insertContents: async (records: any[]) => {
-    const key = getSupabaseSecretKey();
-    const res = await fetch("https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents", {
-      method: "POST",
-      headers: {
-        "apikey": key,
-        "Authorization": `Bearer ${key}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
-      },
-      body: JSON.stringify(records)
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return await res.json();
-  },
-  updateStatus: async (id: string, status: string) => {
-    const key = getSupabaseSecretKey();
-    const res = await fetch(`https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents?id=eq.${id}`, {
-      method: "PATCH",
-      headers: {
-        "apikey": key,
-        "Authorization": `Bearer ${key}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
-      },
-      body: JSON.stringify({ status })
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return await res.json();
-  },
-  deleteContent: async (id: string) => {
-    const key = getSupabaseSecretKey();
-    const res = await fetch(`https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents?id=eq.${id}`, {
-      method: "DELETE",
-      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return true;
-  }
-};
-
 const ReactQuill = nextDynamic(async () => {
   const { default: RQ } = await import("react-quill-new");
   if (typeof window !== 'undefined') {
@@ -113,15 +53,18 @@ export default function UnifiedEditor() {
   const [isSaving, setIsSaving] = useState(false);
   const [loadingDrafts, setLoadingDrafts] = useState(true);
 
-  // Fetch all Drafts from Supabase
+  // Fetch all Drafts from Supabase via server API
   useEffect(() => {
     async function fetchDrafts() {
       setLoadingDrafts(true);
       try {
-        const data = await supabaseDb.selectContents();
-        if (data && data.length > 0) {
-          setDrafts(data);
-          loadDraftIntoEditor(data[0]);
+        const res = await fetch("/api/ingest");
+        const json = await res.json();
+        if (json.success && json.data) {
+          setDrafts(json.data);
+          if (json.data.length > 0) {
+            loadDraftIntoEditor(json.data[0]);
+          }
         }
       } catch (e) {
         console.error("Failed to fetch drafts", e);
@@ -154,9 +97,18 @@ export default function UnifiedEditor() {
     }
     setIsSaving(true);
     try {
-      await supabaseDb.updateStatus(selectedDraftId, "Published");
-      alert("🎉 검수 완료! 실시간 라이브 사이트에 성공적으로 발행(노출)되었습니다!");
-      setDrafts(prev => prev.map(d => d.id === selectedDraftId ? { ...d, status: "Published" } : d));
+      const res = await fetch("/api/ingest", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: selectedDraftId, status: "Published" })
+      });
+      const json = await res.json();
+      if (json.success) {
+        alert("🎉 검수 완료! 실시간 라이브 사이트에 성공적으로 발행(노출)되었습니다!");
+        setDrafts(prev => prev.map(d => d.id === selectedDraftId ? { ...d, status: "Published" } : d));
+      } else {
+        alert("발행 오류: " + (json.error || "알 수 없는 오류"));
+      }
     } catch (e: any) {
       alert("오류 발생: " + e.message);
     } finally {
@@ -174,19 +126,24 @@ export default function UnifiedEditor() {
     }
     setIsSaving(true);
     try {
-      await supabaseDb.deleteContent(selectedDraftId);
-      alert("🗑️ 해당 아티클이 Supabase DB에서 깔끔하게 삭제되었습니다!");
-      const updated = drafts.filter(d => d.id !== selectedDraftId);
-      setDrafts(updated);
-      if (updated.length > 0) {
-        loadDraftIntoEditor(updated[0]);
+      const res = await fetch("/api/ingest", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: selectedDraftId })
+      });
+      const json = await res.json();
+      if (json.success) {
+        alert("🗑️ 해당 아티클이 Supabase DB에서 깔끔하게 삭제되었습니다!");
+        const updated = drafts.filter(d => d.id !== selectedDraftId);
+        setDrafts(updated);
+        if (updated.length > 0) {
+          loadDraftIntoEditor(updated[0]);
+        } else {
+          setSelectedDraftId(null);
+          setTitle(""); setBadge(""); setChip(""); setPrompt(""); setContent("");
+        }
       } else {
-        setSelectedDraftId(null);
-        setTitle("");
-        setBadge("");
-        setChip("");
-        setPrompt("");
-        setContent("");
+        alert("삭제 오류: " + (json.error || "알 수 없는 오류"));
       }
     } catch (e: any) {
       alert("오류 발생: " + e.message);
@@ -207,79 +164,25 @@ export default function UnifiedEditor() {
 
   const handleManualTriggerCollect = async () => {
     setIsSaving(true);
-    let successMsg = "";
-
-    // 1. Try server API route (with silent failure catch)
     try {
       const res = await fetch("/api/cron/auto-collect", { method: "POST" });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.success) {
-          successMsg = data.message;
+      const data = await res.json();
+      if (data && data.success) {
+        alert(data.message);
+        const refreshRes = await fetch("/api/ingest");
+        const refreshJson = await refreshRes.json();
+        if (refreshJson.success && refreshJson.data) {
+          setDrafts(refreshJson.data);
+          if (refreshJson.data.length > 0) loadDraftIntoEditor(refreshJson.data[0]);
         }
+      } else {
+        alert("수집 실패: " + (data?.error || "알 수 없는 오류"));
       }
-    } catch (serverErr) {
-      console.warn("Server cron route timeout/error, executing client collector", serverErr);
+    } catch (e: any) {
+      alert("수집 오류: " + (e.message || "서버 통신 오류"));
+    } finally {
+      setIsSaving(false);
     }
-
-    // 2. Direct client-side collection fallback (100% instant and guaranteed)
-    if (!successMsg) {
-      try {
-        const channels = [
-          { name: "알린 ALINN", topic: "ChatGPT 심화 활용 및 업무 능률 극대화 프롬프트", url: "https://www.youtube.com/@ailifeinnovation" },
-          { name: "일잘러 장피엠", topic: "Make.com 업무 자동화 & 실무 프롬프트 실습", url: "https://www.youtube.com/@jangpm" },
-          { name: "감자나라ai", topic: "직장인 관점 ChatGPT 프롬프트 & 업무 꿀팁", url: "https://www.youtube.com/@감자나라ai" },
-          { name: "AI 알려주는 남자 데브남", topic: "AI 에이전트 구축 & n8n/Make 업무 자동화", url: "https://www.youtube.com/@AI알려주는남자-데브남" },
-          { name: "CONNECT AI LAB", topic: "17년 경력 전문가의 AI 1인 기업 자동화", url: "https://www.youtube.com/@CONNECT-AI-LAB" },
-          { name: "조팀장의 AI 공략집", topic: "왕초보 직장인 AI 꿀팁 & 실무 자동화", url: "https://www.youtube.com/@조팀장의AI공략집" },
-          { name: "페이퍼로지", topic: "기획자·마케터를 위한 PPT/보고서 AI 작성법", url: "https://www.youtube.com/@페이퍼로지" }
-        ];
-        const selected = channels[Math.floor(Math.random() * channels.length)];
-        const bodyObj = {
-          title: `[AI 따라하기] ${selected.name} – ${selected.topic} 3분 실전 가이드`,
-          tier1_category: "AI/업무생산성",
-          tier2_tools: ["ChatGPT", "Make", "Claude"],
-          tier3_tags: ["#수익자동화", "#복붙용_프롬프트", "#칼퇴보장"],
-          demand_job: ["직무 공통", "마케터", "기획·PM"],
-          demand_level: "스타터 (0~3년 차)",
-          badge: "AI 따라하기",
-          chip: "#수익자동화",
-          copy_paste_asset: `Act as an expert AI consultant for ${selected.name}.\nGoal: Create a 3-step action checklist for non-developer office workers on ${selected.topic}.\n\nOutput format:\n1. Prompt template\n2. Execution guide\n3. Checklist`,
-          editor_rating: { ease_of_use: 5, time_saving: 5, cost_effort: 5, practicality: 5 },
-          editor_comment: `별점 5.0 / [${selected.name}] 소스 풀의 ${selected.topic} 노하우를 바탕으로 생성된 검수 대기 아티클입니다.`,
-          summary_points: [
-            `에디터 픽 1: ${selected.name}의 ${selected.topic} 실무 프롬프트`,
-            "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우",
-            "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
-          ],
-          source_channel_name: selected.name,
-          source_video_url: selected.url,
-        };
-
-        await supabaseDb.insertContents([{
-          title: bodyObj.title,
-          body: JSON.stringify(bodyObj),
-          thumbnail: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&q=80&w=600",
-          status: "Draft"
-        }]);
-
-        successMsg = `🎉 30개 소스 풀 자동 감시 성공! [${selected.name}]의 신규 콘텐츠가 검수센터 Draft로 입고되었습니다.`;
-      } catch (err: any) {
-        alert("수집 처리 오류: " + (err.message || "알 수 없는 오류"));
-        setIsSaving(false);
-        return;
-      }
-    }
-
-    alert(successMsg);
-    try {
-      const freshDrafts = await supabaseDb.selectContents();
-      if (freshDrafts) {
-        setDrafts(freshDrafts);
-        if (freshDrafts.length > 0) loadDraftIntoEditor(freshDrafts[0]);
-      }
-    } catch (e) {}
-    setIsSaving(false);
   };
 
   return (

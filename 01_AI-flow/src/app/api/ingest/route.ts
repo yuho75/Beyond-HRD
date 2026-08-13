@@ -1,25 +1,35 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://cvzzywvcglnlotqgdpfq.supabase.co';
-const getWorkingKey = () => {
-  if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const getKey = () => {
   if (process.env.SUPABASE_SERVICE_ROLE_KEY) return process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   try {
     return Buffer.from('c2Jfc2VjcmV0X1lDdGdLUnQzWWdWUnhCQVh1TnR0dmdfdXdyZ1FkNlM=', 'base64').toString('utf-8');
   } catch (e) {
     return '';
   }
 };
-const supabaseKey = getWorkingKey();
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+// GET: fetch all contents
+export async function GET() {
+  try {
+    const key = getKey();
+    const res = await fetch(`${supabaseUrl}/rest/v1/contents?select=*&order=created_at.desc`, {
+      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    return NextResponse.json({ success: true, data });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
 
-// 외부 자동화(Google Opal 등)에서 호출 시 Supabase contents 테이블에 Draft(검수대기)로 자동 입고되는 API
+// POST: ingest draft
 export async function POST(request: Request) {
   try {
     const payload = await request.json();
-
     const title = payload.title || payload.name || "AI 자동 생성 아티클";
     const badge = payload.display_primary_badge || payload.badge || "AI 따라하기";
     const chip = payload.display_primary_chip || payload.chip || "#복붙용_프롬프트";
@@ -41,23 +51,25 @@ export async function POST(request: Request) {
       source_channel_name: payload.source_channel_name || "Opal"
     };
 
-    // 1. Insert into contents table (used by main site & admin)
-    const { data: contentsData, error: contentsError } = await supabase
-      .from('contents')
-      .insert([
-        {
-          title,
-          body: JSON.stringify(bodyObj),
-          thumbnail: payload.thumbnail_url || payload.thumbnail || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
-          status: 'Draft' // 검수 대기 (임시저장)
-        }
-      ])
-      .select();
+    const key = getKey();
+    const res = await fetch(`${supabaseUrl}/rest/v1/contents`, {
+      method: 'POST',
+      headers: {
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify([{
+        title,
+        body: JSON.stringify(bodyObj),
+        thumbnail: payload.thumbnail_url || payload.thumbnail || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
+        status: 'Draft'
+      }])
+    });
 
-    if (contentsError) {
-      console.error('Supabase Contents Insert Error:', contentsError);
-      return NextResponse.json({ error: 'Failed to ingest draft to contents table', details: contentsError.message }, { status: 500 });
-    }
+    if (!res.ok) throw new Error(await res.text());
+    const contentsData = await res.json();
 
     return NextResponse.json({ 
       success: true, 
@@ -65,7 +77,45 @@ export async function POST(request: Request) {
       data: contentsData 
     });
   } catch (error: any) {
-    console.error('Ingest API Error:', error);
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+  }
+}
+
+// PATCH: update status (e.g. Published)
+export async function PATCH(request: Request) {
+  try {
+    const { id, status } = await request.json();
+    const key = getKey();
+    const res = await fetch(`${supabaseUrl}/rest/v1/contents?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify({ status })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    return NextResponse.json({ success: true, data });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
+
+// DELETE: delete by id
+export async function DELETE(request: Request) {
+  try {
+    const { id } = await request.json();
+    const key = getKey();
+    const res = await fetch(`${supabaseUrl}/rest/v1/contents?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return NextResponse.json({ success: true });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
