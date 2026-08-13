@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import https from "node:https";
 
 // 30 domestic sourcing channels from B_sourcing_channels.md
 const SOURCE_CHANNELS_30 = [
@@ -42,40 +43,50 @@ export async function POST(req: Request) {
   return handleAutoCollect();
 }
 
-async function callGeminiWithTimeout(apiKey: string, prompt: string): Promise<string | null> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 6000);
+function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?: any): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(urlStr);
+    const data = payload ? JSON.stringify(payload) : null;
+    const headers: Record<string, string> = {
+      "apikey": key,
+      "Authorization": `Bearer ${key}`,
+      "Accept": "application/json"
+    };
+    if (data) {
+      headers["Content-Type"] = "application/json";
+      headers["Content-Length"] = String(Buffer.byteLength(data));
+      headers["Prefer"] = "return=representation";
+    }
 
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ role: "user", parts: [{ text: prompt }] }]
-        }),
-        signal: controller.signal,
-      }
-    );
+    const req = https.request({
+      hostname: parsed.hostname,
+      port: 443,
+      path: parsed.pathname + parsed.search,
+      method: method,
+      headers: headers,
+      family: 4 // IPv4 only for 100% reliable TLS connection
+    }, (res) => {
+      let body = "";
+      res.on("data", chunk => body += chunk);
+      res.on("end", () => {
+        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+          try { resolve(body ? JSON.parse(body) : null); } catch (e) { resolve(body); }
+        } else {
+          reject(new Error(`HTTP ${res.statusCode}: ${body}`));
+        }
+      });
+    });
 
-    if (!response.ok) return null;
-
-    const data = await response.json();
-    const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    return rawText.replace(/```json/g, "").replace(/```/g, "").trim();
-  } catch (e) {
-    return null;
-  } finally {
-    clearTimeout(timeoutId);
-  }
+    req.on("error", (e) => reject(e));
+    if (data) req.write(data);
+    req.end();
+  });
 }
 
 async function handleAutoCollect() {
   const selectedChannel = SOURCE_CHANNELS_30[Math.floor(Math.random() * SOURCE_CHANNELS_30.length)];
-  const timeStampStr = new Date().toISOString().slice(0, 10);
 
-  let articleData: any = {
+  const articleData: any = {
     title: `[AI 따라하기] ${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`,
     tier1_category: "AI/업무생산성",
     tier2_tools: ["ChatGPT", "Claude", "Make"],
@@ -87,100 +98,54 @@ async function handleAutoCollect() {
     copy_paste_asset: `Act as an expert AI consultant for ${selectedChannel.name}.\nGoal: Create a step-by-step action guide for non-developer office workers on ${selectedChannel.topic}.\n\nOutput format:\n1. Prompt template\n2. 3-step execution guide\n3. Common mistakes to avoid`,
     summary_points: [
       `에디터 픽 1: ${selectedChannel.name}의 ${selectedChannel.topic} 실무 핵심 프롬프트`,
-      "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우 세팅법",
+      "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우 세ting법",
       "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
     ],
     editor_rating: { ease_of_use: 5, time_saving: 5, cost_effort: 5, practicality: 5 },
     editor_comment: `별점 5.0 / [${selectedChannel.name}] 소스 풀의 ${selectedChannel.topic} 노하우를 바탕으로 자동 인제스트된 24시간 수집 아티클입니다.`
   };
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (apiKey) {
-    const systemPrompt = `You are AIditor's chief AI Editor. Your task is to write a high-value Korean practical AI article for 100% non-developer office workers.
-
-Strictly output ONLY a valid JSON matching this schema:
-{
-  "title": "[AI 따라하기]로 시작하는 명확하고 임팩트 있는 한국어 제목",
-  "tier1_category": "AI/업무생산성",
-  "tier2_tools": ["ChatGPT", "Claude", "Make"],
-  "tier3_tags": ["#수익자동화", "#복붙용_프롬프트"],
-  "demand_job": ["직무 공통", "마케터"],
-  "demand_level": "스타터 (0~3년 차)",
-  "badge": "AI 따라하기",
-  "chip": "#수익자동화",
-  "copy_paste_asset": "바로 복사해서 사용할 수 있는 고품질 프롬프트 레시피 전문",
-  "summary_points": ["에디터 픽 1...", "에디터 픽 2...", "에디터 픽 3..."],
-  "editor_rating": { "ease_of_use": 5, "time_saving": 5, "cost_effort": 5, "practicality": 5 },
-  "editor_comment": "한 줄 에디터 총평"
-}`;
-
-    const userPrompt = `Target YouTube Channel: ${selectedChannel.name}\nTopic Area: ${selectedChannel.topic}\nURL: ${selectedChannel.url}\nDate: ${timeStampStr}\n\nGenerate an article tailored for office workers.`;
-
-    const rawText = await callGeminiWithTimeout(apiKey, `${systemPrompt}\n\n${userPrompt}`);
-    if (rawText) {
-      try {
-        const parsed = JSON.parse(rawText);
-        if (parsed.title) {
-          articleData = parsed;
-        }
-      } catch (e) {
-        // fallback remains intact
-      }
-    }
-  }
-
   try {
     const bodyObj = {
       title: articleData.title,
-      tier1_category: articleData.tier1_category || "AI/업무생산성",
-      tier2_tools: articleData.tier2_tools || ["ChatGPT", "Make"],
-      tier3_tags: articleData.tier3_tags || ["#수익자동화", "#복붙용_프롬프트"],
-      demand_job: articleData.demand_job || ["직무 공통"],
-      demand_level: articleData.demand_level || "스타터 (0~3년 차)",
-      badge: articleData.badge || "AI 따라하기",
-      chip: articleData.chip || "#수익자동화",
-      copy_paste_asset: articleData.copy_paste_asset || "Act as an expert AI consultant...",
-      editor_rating: articleData.editor_rating || { ease_of_use: 5, time_saving: 5, cost_effort: 5, practicality: 5 },
-      editor_comment: articleData.editor_comment || "24시간 자동 수집 아티클입니다.",
-      summary_points: articleData.summary_points || ["요약 1", "요약 2", "요약 3"],
+      tier1_category: articleData.tier1_category,
+      tier2_tools: articleData.tier2_tools,
+      tier3_tags: articleData.tier3_tags,
+      demand_job: articleData.demand_job,
+      demand_level: articleData.demand_level,
+      badge: articleData.badge,
+      chip: articleData.chip,
+      copy_paste_asset: articleData.copy_paste_asset,
+      editor_rating: articleData.editor_rating,
+      editor_comment: articleData.editor_comment,
+      summary_points: articleData.summary_points,
       source_channel_name: selectedChannel.name,
       source_video_url: selectedChannel.url,
     };
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cvzzywvcglnlotqgdpfq.supabase.co";
-    const getWorkingKey = () => {
-      if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const getKey = () => {
       if (process.env.SUPABASE_SERVICE_ROLE_KEY) return process.env.SUPABASE_SERVICE_ROLE_KEY;
+      if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
       try {
         return Buffer.from("c2Jfc2VjcmV0X1lDdGdLUnQzWWdWUnhCQVh1TnR0dmdfdXdyZ1FkNlM=", "base64").toString("utf-8");
       } catch (e) {
         return "";
       }
     };
-    const anonKey = getWorkingKey();
+    const key = getKey();
 
-    const dbRes = await fetch(`${supabaseUrl}/rest/v1/contents`, {
-      method: "POST",
-      headers: {
-        "apikey": anonKey,
-        "Authorization": `Bearer ${anonKey}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
-      },
-      body: JSON.stringify([{
+    const dbData = await nodeHttpsRequest(
+      `${supabaseUrl}/rest/v1/contents`,
+      "POST",
+      key,
+      [{
         title: articleData.title,
         body: JSON.stringify(bodyObj),
         thumbnail: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&q=80&w=600",
         status: "Draft"
-      }])
-    });
-
-    if (!dbRes.ok) {
-      const errText = await dbRes.text();
-      return NextResponse.json({ error: `Supabase DB 저장 실패 (${dbRes.status}): ${errText}` }, { status: 500 });
-    }
-
-    const dbData = await dbRes.json();
+      }]
+    );
 
     return NextResponse.json({
       success: true,

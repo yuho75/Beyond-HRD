@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import https from 'node:https';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://cvzzywvcglnlotqgdpfq.supabase.co';
 const getKey = () => {
@@ -11,15 +12,51 @@ const getKey = () => {
   }
 };
 
+function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?: any): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(urlStr);
+    const data = payload ? JSON.stringify(payload) : null;
+    const headers: Record<string, string> = {
+      "apikey": key,
+      "Authorization": `Bearer ${key}`,
+      "Accept": "application/json"
+    };
+    if (data) {
+      headers["Content-Type"] = "application/json";
+      headers["Content-Length"] = String(Buffer.byteLength(data));
+      headers["Prefer"] = "return=representation";
+    }
+
+    const req = https.request({
+      hostname: parsed.hostname,
+      port: 443,
+      path: parsed.pathname + parsed.search,
+      method: method,
+      headers: headers,
+      family: 4 // IPv4 only
+    }, (res) => {
+      let body = "";
+      res.on("data", chunk => body += chunk);
+      res.on("end", () => {
+        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+          try { resolve(body ? JSON.parse(body) : null); } catch (e) { resolve(body); }
+        } else {
+          reject(new Error(`HTTP ${res.statusCode}: ${body}`));
+        }
+      });
+    });
+
+    req.on("error", (e) => reject(e));
+    if (data) req.write(data);
+    req.end();
+  });
+}
+
 // GET: fetch all contents
 export async function GET() {
   try {
     const key = getKey();
-    const res = await fetch(`${supabaseUrl}/rest/v1/contents?select=*&order=created_at.desc`, {
-      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
-    });
-    if (!res.ok) throw new Error(await res.text());
-    const data = await res.json();
+    const data = await nodeHttpsRequest(`${supabaseUrl}/rest/v1/contents?select=*&order=created_at.desc`, 'GET', key);
     return NextResponse.json({ success: true, data });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
@@ -52,24 +89,17 @@ export async function POST(request: Request) {
     };
 
     const key = getKey();
-    const res = await fetch(`${supabaseUrl}/rest/v1/contents`, {
-      method: 'POST',
-      headers: {
-        "apikey": key,
-        "Authorization": `Bearer ${key}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
-      },
-      body: JSON.stringify([{
+    const contentsData = await nodeHttpsRequest(
+      `${supabaseUrl}/rest/v1/contents`,
+      'POST',
+      key,
+      [{
         title,
         body: JSON.stringify(bodyObj),
         thumbnail: payload.thumbnail_url || payload.thumbnail || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
         status: 'Draft'
-      }])
-    });
-
-    if (!res.ok) throw new Error(await res.text());
-    const contentsData = await res.json();
+      }]
+    );
 
     return NextResponse.json({ 
       success: true, 
@@ -86,18 +116,7 @@ export async function PATCH(request: Request) {
   try {
     const { id, status } = await request.json();
     const key = getKey();
-    const res = await fetch(`${supabaseUrl}/rest/v1/contents?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: {
-        "apikey": key,
-        "Authorization": `Bearer ${key}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
-      },
-      body: JSON.stringify({ status })
-    });
-    if (!res.ok) throw new Error(await res.text());
-    const data = await res.json();
+    const data = await nodeHttpsRequest(`${supabaseUrl}/rest/v1/contents?id=eq.${id}`, 'PATCH', key, { status });
     return NextResponse.json({ success: true, data });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
@@ -109,11 +128,7 @@ export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
     const key = getKey();
-    const res = await fetch(`${supabaseUrl}/rest/v1/contents?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
-    });
-    if (!res.ok) throw new Error(await res.text());
+    await nodeHttpsRequest(`${supabaseUrl}/rest/v1/contents?id=eq.${id}`, 'DELETE', key);
     return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
