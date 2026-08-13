@@ -170,6 +170,28 @@ export default function UnifiedEditor() {
     ],
   }), []);
 
+  const handleManualTriggerCollect = async () => {
+    setIsSaving(true);
+    try {
+      const res = await fetch("/api/cron/auto-collect", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        alert(`🎉 [24시간 백그라운드 수집 테스트 성공!]\n${data.message}`);
+        const { data: freshDrafts } = await supabase.from("contents").select("*").order("created_at", { ascending: false });
+        if (freshDrafts) {
+          setDrafts(freshDrafts);
+          if (freshDrafts.length > 0) loadDraftIntoEditor(freshDrafts[0]);
+        }
+      } else {
+        alert("수집 실패: " + (data.error || "알 수 없는 오류"));
+      }
+    } catch (e: any) {
+      alert("오류 발생: " + e.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col w-full">
       <div className="flex flex-1 overflow-hidden">
@@ -247,7 +269,16 @@ export default function UnifiedEditor() {
                   <Sparkles className="w-4 h-4 text-[#f97316]" />
                   검수 대기중인 아티클 목록 ({drafts.length}건)
                 </h2>
-                <span className="text-xs text-gray-400">클릭하여 선택 후 수정, 승인 또는 삭제할 수 있습니다.</span>
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={handleManualTriggerCollect}
+                    disabled={isSaving}
+                    className="text-xs font-bold text-[#f97316] bg-orange-50 hover:bg-orange-100 border border-orange-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                  >
+                    ⚡ 지금 1초 즉시 수집 테스트
+                  </button>
+                  <span className="text-xs text-gray-400">클릭하여 선택 후 수정, 승인 또는 삭제할 수 있습니다.</span>
+                </div>
               </div>
 
               {loadingDrafts ? (
