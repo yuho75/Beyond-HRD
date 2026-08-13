@@ -139,57 +139,15 @@ function ArticleContent() {
         </p>
       </div>
 
-      {/* Robust Player & Video External Link Container */}
-      <div className="w-full flex flex-col gap-3 mb-10">
-        <div className="w-full aspect-video rounded-2xl overflow-hidden relative group shadow-lg border border-gray-200 bg-black">
-          {embedMode ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&rel=0`}
-              title={article.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full border-0"
-            />
-          ) : (
-            <div 
-              onClick={() => window.open(article.video_url, "_blank")}
-              className="w-full h-full relative cursor-pointer group"
-            >
-              <img 
-                src={displayImage} 
-                alt={article.title} 
-                className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-              />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center flex-col gap-3 text-white">
-                <div className="w-16 h-16 bg-[#f97316] rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                  <Play className="text-white fill-white w-7 h-7 ml-1" />
-                </div>
-                <span className="font-bold text-sm bg-black/70 px-4 py-2 rounded-full border border-white/20 flex items-center gap-2">
-                  <ExternalLink className="w-4 h-4" /> YouTube에서 [{article.channel_name}] 원본 영상 보기
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Dual Mode Switcher Bar */}
-        <div className="flex items-center justify-between text-xs text-gray-500 px-2">
-          <span>※ 영상 소유자의 퍼가기 설정에 따라 새 탭 재생 또는 내장 플레이어가 작동합니다.</span>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => window.open(article.video_url, "_blank")}
-              className="font-bold text-[#f97316] hover:underline flex items-center gap-1 cursor-pointer"
-            >
-              <ExternalLink className="w-3.5 h-3.5" /> YouTube에서 크게 보기
-            </button>
-            <button
-              onClick={() => setEmbedMode(!embedMode)}
-              className="text-gray-400 hover:text-gray-700 flex items-center gap-1 cursor-pointer"
-            >
-              <RefreshCw className="w-3.5 h-3.5" /> {embedMode ? "미분할 카드모드" : "내장 플레이어 전환"}
-            </button>
-          </div>
-        </div>
+      {/* Direct Inline YouTube Video Player */}
+      <div className="w-full aspect-video rounded-2xl overflow-hidden relative shadow-lg border border-gray-200 bg-black mb-10">
+        <iframe
+          src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=0&rel=0`}
+          title={article.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full border-0"
+        />
       </div>
 
       {/* Editor Ratings Box */}
