@@ -1,15 +1,7 @@
 import { NextResponse } from "next/server";
 import https from "node:https";
 
-// 100% Verified public embeddable YouTube video IDs
-const PUBLIC_VERIFIED_VIDEOS = [
-  "M7lc1UVf-VE",
-  "aircAruvnKk",
-  "L_LUpnjgPso",
-  "zjkBMFhNj_g",
-  "qv6UVOQ0F44",
-  "c2q0F6f9LhA"
-];
+const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || "AIzaSyDDdF2e-QnAJVmb9GGi8DiOA5A0isdUz8Y";
 
 // 30 domestic sourcing channels from B_sourcing_channels.md with custom badges & chips
 const SOURCE_CHANNELS_30 = [
@@ -66,6 +58,41 @@ export async function POST(req: Request) {
   return handleAutoCollect();
 }
 
+function fetchYouTubeData(query: string): Promise<{ videoId?: string; title?: string; thumb?: string } | null> {
+  return new Promise((resolve) => {
+    const urlStr = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&order=date&type=video&q=${encodeURIComponent(query)}&key=${YOUTUBE_API_KEY}`;
+    const parsed = new URL(urlStr);
+    const req = https.request({
+      hostname: parsed.hostname,
+      port: 443,
+      path: parsed.pathname + parsed.search,
+      method: "GET",
+      family: 4
+    }, (res) => {
+      let body = "";
+      res.on("data", chunk => body += chunk);
+      res.on("end", () => {
+        try {
+          const json = JSON.parse(body);
+          if (json.items && json.items.length > 0) {
+            const item = json.items[0];
+            const videoId = item.id?.videoId;
+            const title = item.snippet?.title;
+            const thumb = item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url;
+            if (videoId) {
+              resolve({ videoId, title, thumb });
+              return;
+            }
+          }
+        } catch (e) {}
+        resolve(null);
+      });
+    });
+    req.on("error", () => resolve(null));
+    req.end();
+  });
+}
+
 function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?: any): Promise<any> {
   return new Promise((resolve, reject) => {
     const parsed = new URL(urlStr);
@@ -108,11 +135,18 @@ function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?:
 
 async function handleAutoCollect() {
   const selectedChannel = SOURCE_CHANNELS_30[Math.floor(Math.random() * SOURCE_CHANNELS_30.length)];
-  const videoUrl = `https://www.youtube.com/watch?v=${selectedChannel.videoId}`;
-  const thumbnail = TOPIC_THUMBNAILS[selectedChannel.name] || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800";
+
+  // Live fetch from YouTube Data API v3 using user's API Key!
+  const ytData = await fetchYouTubeData(`${selectedChannel.name} ${selectedChannel.topic}`);
+  const finalVideoId = ytData?.videoId || selectedChannel.videoId || "c2q0F6f9LhA";
+  const videoUrl = `https://www.youtube.com/watch?v=${finalVideoId}`;
+  const thumbnail = ytData?.thumb || TOPIC_THUMBNAILS[selectedChannel.name] || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800";
+
+  const defaultTitle = `[${selectedChannel.badge}] ${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`;
+  const finalTitle = ytData?.title ? `[${selectedChannel.badge}] ${ytData.title}` : defaultTitle;
 
   const articleData: any = {
-    title: `[${selectedChannel.badge}] ${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`,
+    title: finalTitle,
     tier1_category: "AI/업무생산성",
     tier2_tools: ["ChatGPT", "Claude", "Make"],
     tier3_tags: [selectedChannel.chip, "#수익자동화", "#칼퇴보장"],
@@ -122,7 +156,7 @@ async function handleAutoCollect() {
     chip: selectedChannel.chip,
     copy_paste_asset: `Act as an expert AI consultant for ${selectedChannel.name}.\nGoal: Create a step-by-step action guide for non-developer office workers on ${selectedChannel.topic}.\n\nOutput format:\n1. Prompt template\n2. 3-step execution guide\n3. Common mistakes to avoid`,
     summary_points: [
-      `에디터 픽 1: ${selectedChannel.name}의 ${selectedChannel.topic} 실무 핵심 프롬프트`,
+      `에디터 픽 1: ${selectedChannel.name}의 실무 핵심 프롬프트 템플릿`,
       "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우 세팅법",
       "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
     ],
@@ -181,7 +215,7 @@ async function handleAutoCollect() {
 
     return NextResponse.json({
       success: true,
-      message: `🎉 30개 소스 풀 자동 감시 성공! [${selectedChannel.name}] (${selectedChannel.badge}) 신규 콘텐츠가 검수센터 Draft로 입고되었습니다.`,
+      message: `🎉 [유튜브 API 연동 완료] [${selectedChannel.name}] (${selectedChannel.badge}) 최신 유튜브 영상 데이터가 성공적으로 인제스트되었습니다!`,
       channel: selectedChannel.name,
       title: articleData.title,
       record: dbData

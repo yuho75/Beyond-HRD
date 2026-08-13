@@ -50,7 +50,7 @@ const TOPIC_CARD_THUMBNAILS: Record<string, string> = {
 };
 
 function resolveCardThumbnail(item: any, bodyObj: any): string {
-  if (item.thumbnail && item.thumbnail.includes("unsplash.com")) {
+  if (item.thumbnail && typeof item.thumbnail === "string" && item.thumbnail.startsWith("http")) {
     return item.thumbnail;
   }
   const channelName = bodyObj.source_channel_name || "";
