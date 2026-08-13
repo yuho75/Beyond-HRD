@@ -124,7 +124,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {latestDispatches.map((article, i) => (
-            <div key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
+            <a href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
               <div className="h-40 bg-gray-900 relative">
                 <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
@@ -145,7 +145,7 @@ export default function Home() {
                   <span className="text-xs text-emerald-600 font-bold">1초 복사 가능 📋</span>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
