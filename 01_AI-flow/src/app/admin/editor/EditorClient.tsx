@@ -20,7 +20,9 @@ import {
   Sparkles,
   Check,
   Eye,
-  Trash2
+  Trash2,
+  Play,
+  Zap
 } from "lucide-react";
 import nextDynamic from "next/dynamic";
 import { createClient } from "@supabase/supabase-js";
@@ -55,6 +57,10 @@ export default function UnifiedEditor() {
   const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [loadingDrafts, setLoadingDrafts] = useState(true);
+
+  // Test Auto Ingest State
+  const [testVideoUrl, setTestVideoUrl] = useState("");
+  const [isTestingAuto, setIsTestingAuto] = useState(false);
 
   // Fetch all Drafts from Supabase
   useEffect(() => {
@@ -94,6 +100,37 @@ export default function UnifiedEditor() {
     setChip(bodyObj.chip || "#복붙용_프롬프트");
     setPrompt(bodyObj.copy_paste_asset || bodyObj.prompt || "");
     setContent(bodyObj.editor_comment || bodyObj.summary_points?.join("\n") || item.body || "");
+  };
+
+  const handleTestAutoIngest = async () => {
+    if (!testVideoUrl.trim()) {
+      alert("테스트할 유튜브 영상 URL을 입력해 주세요.");
+      return;
+    }
+    setIsTestingAuto(true);
+    try {
+      const res = await fetch("/api/generate-article", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ videoUrl: testVideoUrl, title: "유튜브 테스트 실무 가이드" })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("🎉 [무인 자동화 시뮬레이션 성공!]\nAI가 영상을 분석하여 '🟡 검수대기 (Draft)' 목록으로 자동 입고시켰습니다!");
+        setTestVideoUrl("");
+        const { data: freshDrafts } = await supabase.from("contents").select("*").order("created_at", { ascending: false });
+        if (freshDrafts) {
+          setDrafts(freshDrafts);
+          if (freshDrafts.length > 0) loadDraftIntoEditor(freshDrafts[0]);
+        }
+      } else {
+        alert("테스트 중 오류 발생: " + (data.error || "실패"));
+      }
+    } catch (e: any) {
+      alert("오류 발생: " + e.message);
+    } finally {
+      setIsTestingAuto(false);
+    }
   };
 
   const handlePublish = async () => {
@@ -218,7 +255,7 @@ export default function UnifiedEditor() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">AI 생성 아티클 검수센터</h1>
-                <p className="text-xs text-gray-500 mt-1">AI가 자동 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
+                <p className="text-xs text-gray-500 mt-1">24시간 백그라운드 AI가 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
               </div>
               <div className="flex items-center gap-3">
                 <button 
@@ -236,6 +273,34 @@ export default function UnifiedEditor() {
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 노출)"}
+                </button>
+              </div>
+            </div>
+
+            {/* Test Auto-Ingest Box */}
+            <div className="bg-slate-900 text-white rounded-2xl p-6 border border-slate-700 shadow-md flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-bold text-amber-300 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-amber-400" />
+                  🧪 무인 자동화 시뮬레이션 테스트
+                </h2>
+                <span className="text-xs text-slate-400">유튜브 URL만 넣으시면 AI가 자동 분석하여 '🟡 검수대기' 목록으로 입고시키는 전체 과정을 테스트해 볼 수 있습니다.</span>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input 
+                  type="text"
+                  value={testVideoUrl}
+                  onChange={(e) => setTestVideoUrl(e.target.value)}
+                  placeholder="테스트할 유튜브 영상 URL을 입력하세요 (예: https://www.youtube.com/watch?v=...)"
+                  className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#f97316]"
+                />
+                <button 
+                  onClick={handleTestAutoIngest}
+                  disabled={isTestingAuto}
+                  className="flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white px-5 py-3 rounded-xl font-bold text-xs transition-all shrink-0 cursor-pointer shadow-sm disabled:opacity-50"
+                >
+                  <Play className="w-4 h-4" />
+                  {isTestingAuto ? "AI 영상 분석 중..." : "⚡ 무인 자동 입고 실행"}
                 </button>
               </div>
             </div>
