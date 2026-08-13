@@ -109,7 +109,7 @@ function ArticleContent() {
     );
   }
 
-  const ytVideoId = extractYouTubeId(article.video_url) || CHANNEL_VIDEO_FALLBACKS[article.channel_name] || "5hV9c39-e9Q";
+  const ytVideoId = extractYouTubeId(article.video_url) || CHANNEL_VIDEO_FALLBACKS[article.channel_name] || "8NlhX_4-LqA";
 
   return (
     <main className="max-w-[900px] w-full px-6 py-12 flex flex-col items-center mx-auto">
