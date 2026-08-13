@@ -39,29 +39,30 @@ export default function Home() {
   useEffect(() => {
     async function loadContents() {
       try {
-        const { data, error } = await supabase
-          .from("contents")
-          .select("*")
-          .eq("status", "Published")
-          .order("created_at", { ascending: false });
-
-        if (data && data.length > 0) {
-          const parsed = data.map((item) => {
-            let bodyObj: any = {};
-            try { bodyObj = JSON.parse(item.body); } catch(e) {}
-            return {
-              title: item.title,
-              badge: bodyObj.badge || "AI 따라하기",
-              tag: bodyObj.chip || "#수익자동화",
-              date: new Date(item.created_at).toISOString().split("T")[0].replace(/-/g, "."),
-              color: "bg-emerald-100 text-emerald-700",
-              image: item.thumbnail || "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
-              href: "/article"
-            };
-          });
-          setArticles([...parsed, ...defaultDispatches]);
-        } else {
-          setArticles(defaultDispatches);
+        const res = await fetch("/api/ingest");
+        const json = await res.json();
+        if (json.success && json.data) {
+          const publishedOnly = json.data.filter((item: any) => item.status === "Published");
+          if (publishedOnly.length > 0) {
+            const parsed = publishedOnly.map((item: any) => {
+              let bodyObj: any = {};
+              try {
+                bodyObj = typeof item.body === "string" ? JSON.parse(item.body) : item.body;
+              } catch(e) {}
+              return {
+                title: item.title,
+                badge: bodyObj.badge || "AI 따라하기",
+                tag: bodyObj.chip || "#수익자동화",
+                date: new Date(item.created_at).toISOString().split("T")[0].replace(/-/g, "."),
+                color: "bg-emerald-100 text-emerald-700",
+                image: item.thumbnail || "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
+                href: "/article"
+              };
+            });
+            setArticles([...parsed, ...defaultDispatches]);
+          } else {
+            setArticles(defaultDispatches);
+          }
         }
       } catch (e) {
         setArticles(defaultDispatches);
