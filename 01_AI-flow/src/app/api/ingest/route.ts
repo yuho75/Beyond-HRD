@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import https from 'node:https';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://cvzzywvcglnlotqgdpfq.supabase.co';
+const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://cvzzywvcglnlotqgdpfq.supabase.co';
+const supabaseUrl = rawUrl.replace("cvzzywvv", "cvzzywvc");
 const getKey = () => {
   if (process.env.SUPABASE_SERVICE_ROLE_KEY) return process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
