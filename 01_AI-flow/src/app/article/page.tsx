@@ -1,6 +1,6 @@
 "use client";
 
-import { Play, Share2, Bookmark, Check, Star, Sparkles, ExternalLink } from "lucide-react";
+import { Play, Share2, Bookmark, Check, Star, Sparkles, ExternalLink, Copy } from "lucide-react";
 import { useState } from "react";
 
 export default function ArticleDetail() {
