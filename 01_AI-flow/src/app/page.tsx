@@ -18,6 +18,7 @@ export default function Home() {
   };
 
   const latestDispatches = [
+    { tag: "#수익자동화", badge: "AI 따라하기", title: "[AI 따라하기] 구글 Lyria로 3분 만에 저작권 프리 음악 만들기", date: "2026.08.13", color: "bg-emerald-100 text-emerald-700", image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600", href: "/article" },
     { tag: "#복붙용_프롬프트", badge: "AI/업무생산성", title: "주 5시간 절약하는 챗GPT 마케팅 보고서 프롬프트 15선", date: "2026.07.30", color: "bg-orange-100 text-orange-700", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600" },
     { tag: "#자동화_시나리오", badge: "생성형 AI & 업무자동화", title: "n8n으로 이메일 수신 시 구글 시트 자동 기록 10초 완성", date: "2026.07.29", color: "bg-emerald-100 text-emerald-700", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" },
     { tag: "#자연어_레시피", badge: "AI 에이전트 & 바이브코딩", title: "코딩 없이 말로 만드는 나만의 카카오톡 AI 비서 에이전트", date: "2026.07.28", color: "bg-blue-100 text-blue-700", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" },
