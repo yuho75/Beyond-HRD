@@ -79,12 +79,26 @@ async function fetchYouTubeByHandle(handle: string, channelName: string): Promis
       channelId = chData2?.items?.[0]?.id?.channelId;
     }
 
-    // Step 2: Search recent videos strictly from this exact channel ID
-    const searchUrl = channelId 
-      ? `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=5&key=${YOUTUBE_API_KEY}`
-      : `https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=5&q=${encodeURIComponent(handle + " " + channelName)}&key=${YOUTUBE_API_KEY}`;
+    // Planning Rule Filter 1: 90 days recency limit
+    const ninetyDaysAgo = new Date();
+    ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+    const publishedAfterISO = ninetyDaysAgo.toISOString();
 
-    const vData = await nodeGetJson(searchUrl);
+    // Planning Rule Filter 2 & 3: Filter medium duration (non-shorts) & recent videos
+    let searchUrl = channelId 
+      ? `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&videoDuration=medium&publishedAfter=${publishedAfterISO}&maxResults=10&key=${YOUTUBE_API_KEY}`
+      : `https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&videoDuration=medium&publishedAfter=${publishedAfterISO}&maxResults=10&q=${encodeURIComponent(handle + " " + channelName)}&key=${YOUTUBE_API_KEY}`;
+
+    let vData = await nodeGetJson(searchUrl);
+
+    // Fallback if 90-day filter yields empty for less frequent uploaders
+    if (!vData?.items || vData.items.length === 0) {
+      searchUrl = channelId 
+        ? `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&videoDuration=medium&maxResults=5&key=${YOUTUBE_API_KEY}`
+        : `https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=5&q=${encodeURIComponent(handle + " " + channelName)}&key=${YOUTUBE_API_KEY}`;
+      vData = await nodeGetJson(searchUrl);
+    }
+
     if (vData?.items && vData.items.length > 0) {
       const item = vData.items.find((it: any) => it.id?.videoId) || vData.items[0];
       const videoId = item.id?.videoId;
