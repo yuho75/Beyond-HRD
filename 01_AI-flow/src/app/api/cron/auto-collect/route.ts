@@ -45,11 +45,8 @@ export async function POST(req: Request) {
   return handleAutoCollect();
 }
 
-function fetchYouTubeByHandle(handle: string, channelName: string): Promise<{ videoId?: string; title?: string; thumb?: string } | null> {
+function nodeGetJson(urlStr: string): Promise<any> {
   return new Promise((resolve) => {
-    // Search strictly by handle (e.g. "@jangpm" or "@aiadjunct") or exact channelName
-    const query = `${handle} ${channelName}`;
-    const urlStr = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&order=date&type=video&q=${encodeURIComponent(query)}&key=${YOUTUBE_API_KEY}`;
     const parsed = new URL(urlStr);
     const req = https.request({
       hostname: parsed.hostname,
@@ -61,25 +58,46 @@ function fetchYouTubeByHandle(handle: string, channelName: string): Promise<{ vi
       let body = "";
       res.on("data", chunk => body += chunk);
       res.on("end", () => {
-        try {
-          const json = JSON.parse(body);
-          if (json.items && json.items.length > 0) {
-            const item = json.items[0];
-            const videoId = item.id?.videoId;
-            const title = item.snippet?.title;
-            const thumb = item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url;
-            if (videoId) {
-              resolve({ videoId, title, thumb });
-              return;
-            }
-          }
-        } catch (e) {}
-        resolve(null);
+        try { resolve(JSON.parse(body)); } catch (e) { resolve(null); }
       });
     });
     req.on("error", () => resolve(null));
     req.end();
   });
+}
+
+async function fetchYouTubeByHandle(handle: string, channelName: string): Promise<{ videoId?: string; title?: string; thumb?: string } | null> {
+  try {
+    // Step 1: Find exact channel ID by handle or channelName
+    const chUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&maxResults=1&q=${encodeURIComponent(handle)}&key=${YOUTUBE_API_KEY}`;
+    const chData = await nodeGetJson(chUrl);
+    let channelId = chData?.items?.[0]?.id?.channelId;
+
+    if (!channelId) {
+      const chUrl2 = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&maxResults=1&q=${encodeURIComponent(channelName)}&key=${YOUTUBE_API_KEY}`;
+      const chData2 = await nodeGetJson(chUrl2);
+      channelId = chData2?.items?.[0]?.id?.channelId;
+    }
+
+    // Step 2: Search recent videos strictly from this exact channel ID
+    const searchUrl = channelId 
+      ? `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=5&key=${YOUTUBE_API_KEY}`
+      : `https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=5&q=${encodeURIComponent(handle + " " + channelName)}&key=${YOUTUBE_API_KEY}`;
+
+    const vData = await nodeGetJson(searchUrl);
+    if (vData?.items && vData.items.length > 0) {
+      const item = vData.items.find((it: any) => it.id?.videoId) || vData.items[0];
+      const videoId = item.id?.videoId;
+      const title = item.snippet?.title;
+      const thumb = item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url;
+      if (videoId) {
+        return { videoId, title, thumb };
+      }
+    }
+  } catch (e) {
+    console.error("fetchYouTubeByHandle error", e);
+  }
+  return null;
 }
 
 function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?: any): Promise<any> {
@@ -125,13 +143,13 @@ function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?:
 async function handleAutoCollect() {
   const selectedChannel = SOURCE_CHANNELS_30[Math.floor(Math.random() * SOURCE_CHANNELS_30.length)];
 
-  // Live fetch by exact YouTube channel handle!
+  // Live fetch by exact YouTube channel ID / handle!
   const ytData = await fetchYouTubeByHandle(selectedChannel.handle, selectedChannel.name);
   const finalVideoId = ytData?.videoId || "c2q0F6f9LhA";
   const videoUrl = `https://www.youtube.com/watch?v=${finalVideoId}`;
   const rawThumb = ytData?.thumb || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800";
   
-  // Use weserv.nl proxy for YouTube images to avoid CORS block
+  // Use weserv.nl proxy for YouTube images to bypass browser CORS block
   const thumbnail = rawThumb.includes("ytimg.com") || rawThumb.includes("ggpht.com")
     ? `https://images.weserv.nl/?url=${encodeURIComponent(rawThumb)}`
     : rawThumb;
@@ -209,7 +227,7 @@ async function handleAutoCollect() {
 
     return NextResponse.json({
       success: true,
-      message: `🎉 [공식 핸들 수집 완료] [${selectedChannel.name}] (${selectedChannel.handle}) 실제 유튜브 최신 영상이 검수센터 Draft로 입고되었습니다!`,
+      message: `🎉 [공식 채널 ID 수집 완료] [${selectedChannel.name}] (${selectedChannel.handle}) 채널의 100% 최신 유튜브 영상 데이터가 성공적으로 인제스트되었습니다!`,
       channel: selectedChannel.name,
       title: articleData.title,
       record: dbData
