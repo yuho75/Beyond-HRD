@@ -16,10 +16,18 @@ import {
   Share2,
   Database,
   FileEdit,
-  Users
+  Users,
+  Sparkles,
+  Check,
+  Eye
 } from "lucide-react";
 import nextDynamic from "next/dynamic";
+import { createClient } from "@supabase/supabase-js";
 import "react-quill-new/dist/quill.snow.css";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cvzzywvcglnlotqgdpfq.supabase.co";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2enp5d3ZjZ2xubG90cWdkcGZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNDcyODAsImV4cCI6MjA1NzYyMzI4MH0.fake_anon_key";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const ReactQuill = nextDynamic(async () => {
   const { default: RQ } = await import("react-quill-new");
@@ -37,13 +45,81 @@ const ReactQuill = nextDynamic(async () => {
 }, { ssr: false });
 
 export default function UnifiedEditor() {
-  const [targetSite, setTargetSite] = useState<"flow" | "root" | "both">("flow");
-  const [content, setContent] = useState("");
+  const [drafts, setDrafts] = useState<any[]>([]);
+  const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
-  const [summary, setSummary] = useState("");
-  const [category, setCategory] = useState("");
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [badge, setBadge] = useState("AI 따라하기");
+  const [chip, setChip] = useState("#수익자동화");
+  const [prompt, setPrompt] = useState("");
+  const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [loadingDrafts, setLoadingDrafts] = useState(true);
+
+  // Fetch all Drafts from Supabase
+  useEffect(() => {
+    async function fetchDrafts() {
+      setLoadingDrafts(true);
+      try {
+        const { data, error } = await supabase
+          .from("contents")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (data) {
+          setDrafts(data);
+          if (data.length > 0) {
+            loadDraftIntoEditor(data[0]);
+          }
+        }
+      } catch (e) {
+        console.error("Failed to fetch drafts", e);
+      } finally {
+        setLoadingDrafts(false);
+      }
+    }
+    fetchDrafts();
+  }, []);
+
+  const loadDraftIntoEditor = (item: any) => {
+    setSelectedDraftId(item.id);
+    setTitle(item.title || "");
+    let bodyObj: any = {};
+    try {
+      bodyObj = typeof item.body === "string" ? JSON.parse(item.body) : item.body;
+    } catch (e) {
+      bodyObj = { raw: item.body };
+    }
+    setBadge(bodyObj.badge || "AI 따라하기");
+    setChip(bodyObj.chip || "#복붙용_프롬프트");
+    setPrompt(bodyObj.copy_paste_asset || bodyObj.prompt || "");
+    setContent(bodyObj.editor_comment || bodyObj.summary_points?.join("\n") || item.body || "");
+  };
+
+  const handlePublish = async () => {
+    if (!selectedDraftId) {
+      alert("발행할 아티클을 먼저 선택해 주세요.");
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from("contents")
+        .update({ status: "Published" })
+        .eq("id", selectedDraftId);
+
+      if (error) {
+        alert("발행 중 오류 발생: " + error.message);
+      } else {
+        alert("🎉 검수 완료! 실시간 라이브 사이트에 성공적으로 발행(노출)되었습니다!");
+        // Refresh local status
+        setDrafts(prev => prev.map(d => d.id === selectedDraftId ? { ...d, status: "Published" } : d));
+      }
+    } catch (e: any) {
+      alert("오류 발생: " + e.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const modules = useMemo(() => ({
     toolbar: [
@@ -53,29 +129,7 @@ export default function UnifiedEditor() {
       [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }],
       ['link', 'image', 'video', 'clean'],
     ],
-    imageResize: {
-      parament: 'root',
-      modules: ['Resize', 'DisplaySize']
-    }
   }), []);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSave = async () => {
-    setIsSaving(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSaving(false);
-    alert("콘텐츠가 성공적으로 저장되었습니다.");
-  };
 
   return (
     <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col w-full">
@@ -84,12 +138,12 @@ export default function UnifiedEditor() {
         <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shrink-0">
           <div className="p-8">
             <a href="/" className="flex items-center gap-4 mb-12 group cursor-pointer">
-              <div className="w-10 h-10 rounded-lg bg-emerald-tech flex items-center justify-center group-hover:scale-105 transition-transform">
-                <Terminal className="text-black w-6 h-6" />
+              <div className="w-10 h-10 rounded-lg bg-[#f97316] flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Terminal className="text-white w-6 h-6" />
               </div>
               <div>
-                <h2 className="font-bold text-gray-900 text-sm">A-Zip Admin</h2>
-                <p className="text-[10px] text-gray-500 font-technical-sm uppercase tracking-widest">통합 관리 시스템 V3.0</p>
+                <h2 className="font-bold text-gray-900 text-sm">AIditor Admin</h2>
+                <p className="text-[10px] text-gray-500 uppercase tracking-widest">검수 & 발행 콘솔 V1.0</p>
               </div>
             </a>
 
@@ -102,21 +156,18 @@ export default function UnifiedEditor() {
               </div>
 
               <div className="flex flex-col gap-1">
-                {[
-                  { name: '콘텐츠 피드 관리', icon: <Share2 className="w-4 h-4" />, sub: ["요약 피드 관리", "Zippy's Pick 설정"], href: "#" },
-                  { name: 'LMS 코스 관리', icon: <Database className="w-4 h-4" />, sub: ["LMS 코스 설정", "과제 및 평가 모니터링"], href: "#" },
-                  { name: '통합 콘텐츠 에디터', icon: <FileEdit className="w-4 h-4" />, href: "/admin/editor" },
-                  { name: '사용자 및 서비스 관리', icon: <Users className="w-4 h-4" />, sub: ["학점(Credit) 제어", "구독 플랜 관리"], href: "/admin/users" },
-                ].map((item, i) => (
-                  <div key={i} className="flex flex-col">
-                    <a href={item.href} className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all text-sm cursor-pointer group ${item.href === '/admin/editor' ? 'bg-gray-50 text-emerald-tech font-bold border border-emerald-tech/20' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}>
-                      <div className="flex items-center gap-3">
-                        {item.icon}
-                        {item.name}
-                      </div>
-                    </a>
+                <a href="/admin/editor" className="flex items-center justify-between px-4 py-3 rounded-xl transition-all text-sm cursor-pointer bg-orange-50 text-[#f97316] font-bold border border-orange-200">
+                  <div className="flex items-center gap-3">
+                    <FileEdit className="w-4 h-4" />
+                    콘텐츠 검수 & 발행
                   </div>
-                ))}
+                </a>
+                <a href="/admin/users" className="flex items-center justify-between px-4 py-3 rounded-xl transition-all text-sm cursor-pointer text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+                  <div className="flex items-center gap-3">
+                    <Users className="w-4 h-4" />
+                    사용자 및 서비스 관리
+                  </div>
+                </a>
               </div>
             </nav>
           </div>
@@ -127,19 +178,57 @@ export default function UnifiedEditor() {
           <div className="max-w-5xl mx-auto flex flex-col gap-8">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">통합 콘텐츠 에디터</h1>
-                <p className="text-xs text-gray-500 mt-1">AIditor 포털 및 AI-Root 교재 아티클 통합 발행 콘솔</p>
+                <h1 className="text-2xl font-bold text-gray-900">AI 생성 아티클 검수센터</h1>
+                <p className="text-xs text-gray-500 mt-1">AI가 1차 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
               </div>
               <button 
-                onClick={handleSave}
-                disabled={isSaving}
-                className="flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer"
+                onClick={handlePublish}
+                disabled={isSaving || !selectedDraftId}
+                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
               >
-                <Save className="w-4 h-4" />
-                {isSaving ? "저장 중..." : "발행하기"}
+                <CheckCircle2 className="w-4 h-4" />
+                {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 사이트 노출)"}
               </button>
             </div>
 
+            {/* Draft Selector List */}
+            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#f97316]" />
+                  검수 대기중인 아티클 목록 ({drafts.length}건)
+                </h2>
+                <span className="text-xs text-gray-400">클릭하여 선택 후 수정/승인할 수 있습니다.</span>
+              </div>
+
+              {loadingDrafts ? (
+                <div className="text-xs text-gray-400 p-4">아티클 목록을 불러오는 중...</div>
+              ) : drafts.length === 0 ? (
+                <div className="text-xs text-gray-400 p-4 border border-dashed border-gray-200 rounded-xl text-center">
+                  현재 검수 대기 중인 아티클이 없습니다.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {drafts.map((item) => (
+                    <div 
+                      key={item.id}
+                      onClick={() => loadDraftIntoEditor(item)}
+                      className={`p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between gap-2 ${selectedDraftId === item.id ? 'border-[#f97316] bg-orange-50/50 shadow-sm' : 'border-gray-200 hover:border-gray-300 bg-white'}`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-bold text-sm text-gray-900 line-clamp-1">{item.title}</h3>
+                        <span className={`text-[10px] px-2 py-0.5 font-bold rounded shrink-0 ${item.status === 'Published' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                          {item.status === 'Published' ? '🟢 노출중 (OK)' : '🟡 검수대기 (Draft)'}
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-gray-400">생성일: {new Date(item.created_at).toLocaleString('ko-KR')}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Editor Workspace */}
             <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col gap-6">
               <div>
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">아티클 제목</label>
@@ -148,21 +237,66 @@ export default function UnifiedEditor() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="제목을 입력하세요..."
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-lg font-bold focus:outline-none focus:border-[#f97316]"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-bold text-base bg-[#f8f9fa]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">뱃지 카테고리</label>
+                  <input 
+                    type="text"
+                    value={badge}
+                    onChange={(e) => setBadge(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-[#f8f9fa]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">해시태그 칩</label>
+                  <input 
+                    type="text"
+                    value={chip}
+                    onChange={(e) => setChip(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-[#f8f9fa]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">1초 복붙 프롬프트 (Copy-Paste Prompt)</label>
+                <textarea 
+                  rows={3}
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-mono text-xs leading-relaxed bg-[#f8f9fa]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">본문 에디터</label>
-                <div className="min-h-[400px]">
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">본문 및 가이드 내용</label>
+                <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
                   <ReactQuill 
                     theme="snow"
                     value={content}
                     onChange={setContent}
                     modules={modules}
-                    className="h-[350px] mb-12"
+                    className="h-64 mb-12"
                   />
                 </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                <a href="/article" target="_blank" className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors">
+                  <Eye className="w-4 h-4" /> 미리보기 화면 새창으로 열기
+                </a>
+                <button 
+                  onClick={handlePublish}
+                  disabled={isSaving || !selectedDraftId}
+                  className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 사이트 노출)"}
+                </button>
               </div>
             </div>
           </div>
