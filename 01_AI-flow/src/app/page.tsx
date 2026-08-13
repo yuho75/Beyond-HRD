@@ -201,7 +201,14 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
           {displayList.map((article, i) => (
             <a href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
               <div className="h-40 bg-gray-900 relative">
-                <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img 
+                  src={article.image} 
+                  alt={article.title} 
+                  onError={(e: any) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
+                  }}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
                 <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
                   <span className="bg-slate-900/90 text-white text-[10px] px-2 py-0.5 font-bold rounded">
                     {article.badge}

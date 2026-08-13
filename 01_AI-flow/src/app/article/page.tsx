@@ -139,15 +139,26 @@ function ArticleContent() {
         </p>
       </div>
 
-      {/* Direct Inline YouTube Video Player */}
-      <div className="w-full aspect-video rounded-2xl overflow-hidden relative shadow-lg border border-gray-200 bg-black mb-10">
-        <iframe
-          src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=0&rel=0`}
-          title={article.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="w-full h-full border-0"
-        />
+      {/* Direct Inline YouTube Video Player & Direct Link Bar */}
+      <div className="w-full flex flex-col gap-3 mb-10">
+        <div className="w-full aspect-video rounded-2xl overflow-hidden relative shadow-lg border border-gray-200 bg-black">
+          <iframe
+            src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=0&rel=0`}
+            title={article.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full border-0"
+          />
+        </div>
+        <div className="flex items-center justify-between text-xs text-gray-500 px-2 flex-wrap gap-2">
+          <span>※ 영상 소유자의 퍼가기 제한 시 아래 원본 링크로 1초 재생이 가능합니다.</span>
+          <button
+            onClick={() => window.open(article.video_url, "_blank")}
+            className="font-bold text-[#f97316] hover:underline flex items-center gap-1 cursor-pointer bg-orange-50 px-3 py-1.5 rounded-lg border border-orange-200"
+          >
+            <ExternalLink className="w-4 h-4" /> YouTube에서 [{article.channel_name}] 원본 영상 1초 재생 ↗
+          </button>
+        </div>
       </div>
 
       {/* Editor Ratings Box */}
