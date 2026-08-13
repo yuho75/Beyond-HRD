@@ -196,18 +196,7 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
               <div key={n} className="h-64 rounded-xl bg-gray-100 animate-pulse border border-gray-200" />
             ))}
           </div>
-        ) : displayList.length === 0 ? (
-          <div className="p-12 text-center border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50 flex flex-col items-center justify-center gap-3">
-            <Sparkles className="w-8 h-8 text-[#f97316]" />
-            <h3 className="font-bold text-gray-900 text-base">🎉 현재 등록된 실시간 콘텐츠가 없습니다!</h3>
-            <p className="text-xs text-gray-500 max-w-md">
-              관리자 검수센터에서 [⚡ 즉시 수집] 버튼을 누르시면, 발급받으신 정식 유튜브 API 기반 실시간 최신 콘텐츠가 생성됩니다.
-            </p>
-            <a href="/admin/editor" className="mt-2 inline-flex items-center gap-2 bg-[#f97316] text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-sm hover:bg-[#ea580c] transition-all">
-              ⚡ 관리자 검수센터로 이동하여 새 콘텐츠 수집하기 ↗
-            </a>
-          </div>
-        ) : (
+        ) : displayList.length === 0 ? null : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayList.map((article, i) => (
               <a href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
