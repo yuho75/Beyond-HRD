@@ -1,4 +1,4 @@
-// v2.2.0 - Clean production build
+// v2.3.0 - Added Bulk Deletion & Multi-Select Checkboxes
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -21,10 +21,12 @@ import {
   Sparkles,
   Check,
   Eye,
-  Trash2
+  Trash2,
+  CheckSquare,
+  Square,
+  AlertTriangle
 } from "lucide-react";
 import nextDynamic from "next/dynamic";
-import { createClient } from "@supabase/supabase-js";
 import "react-quill-new/dist/quill.snow.css";
 
 const ReactQuill = nextDynamic(async () => {
@@ -46,6 +48,7 @@ export default function UnifiedEditor() {
   const [drafts, setDrafts] = useState<any[]>([]);
   const [filterStatus, setFilterStatus] = useState<"Draft" | "Published" | "All">("Draft");
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [title, setTitle] = useState("");
   const [badge, setBadge] = useState("AI 따라하기");
   const [chip, setChip] = useState("#수익자동화");
@@ -140,6 +143,24 @@ export default function UnifiedEditor() {
     setContent(richArticleHtml);
   };
 
+  const toggleSelectId = (id: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  const toggleSelectAll = () => {
+    const currentTabIds = filteredDrafts.map(d => String(d.id));
+    const allSelected = currentTabIds.length > 0 && currentTabIds.every(id => selectedIds.includes(id));
+    if (allSelected) {
+      setSelectedIds(prev => prev.filter(id => !currentTabIds.includes(id)));
+    } else {
+      const combined = new Set([...selectedIds, ...currentTabIds]);
+      setSelectedIds(Array.from(combined));
+    }
+  };
+
   const handlePublish = async () => {
     if (!selectedDraftId) {
       alert("발행할 아티클을 먼저 선택해 주세요.");
@@ -166,14 +187,12 @@ export default function UnifiedEditor() {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDeleteSingle = async () => {
     if (!selectedDraftId) {
-      alert("삭제할 아티클을 먼저 선택해 주세요.");
+      alert("삭제할 아티클을 선택해 주세요.");
       return;
     }
-    if (!confirm("정말 이 아티클을 Supabase DB에서 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.")) {
-      return;
-    }
+    if (!confirm("정말 이 아티클을 Supabase DB에서 삭제하시겠습니까?")) return;
     setIsSaving(true);
     try {
       const res = await fetch("/api/ingest", {
@@ -183,9 +202,44 @@ export default function UnifiedEditor() {
       });
       const json = await res.json();
       if (json.success) {
-        alert("🗑️ 해당 아티클이 Supabase DB에서 깔끔하게 삭제되었습니다!");
-        const updated = drafts.filter(d => d.id !== selectedDraftId);
+        alert("🗑️ 해당 아티클이 삭제되었습니다.");
+        const updated = drafts.filter(d => String(d.id) !== String(selectedDraftId));
         setDrafts(updated);
+        setSelectedIds(prev => prev.filter(id => id !== String(selectedDraftId)));
+        if (updated.length > 0) loadDraftIntoEditor(updated[0]);
+        else {
+          setSelectedDraftId(null);
+          setTitle(""); setBadge(""); setChip(""); setPrompt(""); setContent("");
+        }
+      }
+    } catch (e: any) {
+      alert("삭제 오류: " + e.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedIds.length === 0) {
+      alert("삭제할 아티클을 1개 이상 체크박스로 선택해 주세요.");
+      return;
+    }
+    if (!confirm(`선택한 ${selectedIds.length}개의 아티클을 정말 일괄 삭제하시겠습니까?`)) {
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const res = await fetch("/api/ingest", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: selectedIds })
+      });
+      const json = await res.json();
+      if (json.success) {
+        alert(`🗑️ 선택한 ${selectedIds.length}개의 아티클이 성공적으로 일괄 삭제되었습니다!`);
+        const updated = drafts.filter(d => !selectedIds.includes(String(d.id)));
+        setDrafts(updated);
+        setSelectedIds([]);
         if (updated.length > 0) {
           loadDraftIntoEditor(updated[0]);
         } else {
@@ -193,10 +247,34 @@ export default function UnifiedEditor() {
           setTitle(""); setBadge(""); setChip(""); setPrompt(""); setContent("");
         }
       } else {
-        alert("삭제 오류: " + (json.error || "알 수 없는 오류"));
+        alert("일괄 삭제 오류: " + (json.error || "알 수 없는 오류"));
       }
     } catch (e: any) {
       alert("오류 발생: " + e.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handlePurgeAll = async () => {
+    if (!confirm("🚨 정말로 DB의 모든 테스트 아티클 데이터를 전체 삭제(초기화)하시겠습니까?")) return;
+    setIsSaving(true);
+    try {
+      const res = await fetch("/api/ingest", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deleteAll: true })
+      });
+      const json = await res.json();
+      if (json.success) {
+        alert("💥 모든 테스트 데이터가 성공적으로 전체 삭제되었습니다!");
+        setDrafts([]);
+        setSelectedIds([]);
+        setSelectedDraftId(null);
+        setTitle(""); setBadge(""); setChip(""); setPrompt(""); setContent("");
+      }
+    } catch (e: any) {
+      alert("초기화 오류: " + e.message);
     } finally {
       setIsSaving(false);
     }
@@ -234,6 +312,8 @@ export default function UnifiedEditor() {
       setIsSaving(false);
     }
   };
+
+  const isAllCurrentTabSelected = filteredDrafts.length > 0 && filteredDrafts.every(d => selectedIds.includes(String(d.id)));
 
   return (
     <div className="font-body-md text-gray-900 min-h-screen bg-[#f8f9fa] flex flex-col w-full">
@@ -286,13 +366,23 @@ export default function UnifiedEditor() {
                 <p className="text-xs text-gray-500 mt-1">Opal 및 AI가 수집/생성한 아티클을 검수하여 승인(OK)하면 실시간 라이브 사이트에 노출됩니다.</p>
               </div>
               <div className="flex items-center gap-3">
+                {selectedIds.length > 0 && (
+                  <button 
+                    onClick={handleBulkDelete}
+                    disabled={isSaving}
+                    className="flex items-center gap-1.5 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer shadow-sm animate-pulse"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    선택한 {selectedIds.length}개 일괄 삭제
+                  </button>
+                )}
                 <button 
-                  onClick={handleDelete}
+                  onClick={handleDeleteSingle}
                   disabled={isSaving || !selectedDraftId}
                   className="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-4 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Trash2 className="w-4 h-4" />
-                  삭제하기
+                  단일 삭제
                 </button>
                 <button 
                   onClick={handlePublish}
@@ -331,13 +421,44 @@ export default function UnifiedEditor() {
                     </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={toggleSelectAll}
+                    disabled={filteredDrafts.length === 0}
+                    className="text-xs font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-40"
+                  >
+                    {isAllCurrentTabSelected ? <CheckSquare className="w-4 h-4 text-[#f97316]" /> : <Square className="w-4 h-4 text-gray-400" />}
+                    {isAllCurrentTabSelected ? "전체 선택 해제" : "현재 탭 전체 선택"}
+                  </button>
+
+                  {selectedIds.length > 0 && (
+                    <button
+                      onClick={handleBulkDelete}
+                      disabled={isSaving}
+                      className="text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      선택 {selectedIds.length}개 일괄 삭제
+                    </button>
+                  )}
+
+                  <button
+                    onClick={handlePurgeAll}
+                    disabled={isSaving || drafts.length === 0}
+                    className="text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3 py-2 rounded-xl flex items-center gap-1 transition-all cursor-pointer disabled:opacity-40"
+                    title="모든 구버전 테스트 데이터를 전체 삭제합니다"
+                  >
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    전체 초기화
+                  </button>
+
                   <button 
                     onClick={handleManualTriggerCollect}
                     disabled={isSaving}
                     className="text-xs font-bold text-[#f97316] bg-orange-50 hover:bg-orange-100 border border-orange-200 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
                   >
-                    ⚡ 지금 1초 즉시 수집 테스트
+                    ⚡ 1초 즉시 수집 테스트
                   </button>
                 </div>
               </div>
@@ -350,21 +471,35 @@ export default function UnifiedEditor() {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[360px] overflow-y-auto pr-1">
-                  {filteredDrafts.map((item) => (
-                    <div 
-                      key={item.id}
-                      onClick={() => loadDraftIntoEditor(item)}
-                      className={`p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between gap-2 ${selectedDraftId === item.id ? 'border-[#f97316] bg-orange-50/50 shadow-sm' : 'border-gray-200 hover:border-gray-300 bg-white'}`}
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <h3 className="font-bold text-sm text-gray-900 line-clamp-1">{item.title}</h3>
-                        <span className={`text-[10px] px-2 py-0.5 font-bold rounded shrink-0 ${item.status === 'Published' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
-                          {item.status === 'Published' ? '🟢 노출중 (OK)' : '🟡 검수대기 (Draft)'}
-                        </span>
+                  {filteredDrafts.map((item) => {
+                    const itemIdStr = String(item.id);
+                    const isChecked = selectedIds.includes(itemIdStr);
+                    const isSelected = String(selectedDraftId) === itemIdStr;
+                    return (
+                      <div 
+                        key={item.id}
+                        onClick={() => loadDraftIntoEditor(item)}
+                        className={`p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-3 ${isSelected ? 'border-[#f97316] bg-orange-50/50 shadow-sm' : 'border-gray-200 hover:border-gray-300 bg-white'}`}
+                      >
+                        <input 
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={(e) => toggleSelectId(itemIdStr)}
+                          onClick={(e) => e.stopPropagation()}
+                          className="mt-1 w-4 h-4 text-[#f97316] focus:ring-[#f97316] rounded border-gray-300 cursor-pointer accent-[#f97316]"
+                        />
+                        <div className="flex-1 flex flex-col justify-between gap-2 overflow-hidden">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="font-bold text-sm text-gray-900 line-clamp-1">{item.title}</h3>
+                            <span className={`text-[10px] px-2 py-0.5 font-bold rounded shrink-0 ${item.status === 'Published' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                              {item.status === 'Published' ? '🟢 노출중 (OK)' : '🟡 검수대기 (Draft)'}
+                            </span>
+                          </div>
+                          <span className="text-[11px] text-gray-400">생성일: {new Date(item.created_at).toLocaleString('ko-KR')}</span>
+                        </div>
                       </div>
-                      <span className="text-[11px] text-gray-400">생성일: {new Date(item.created_at).toLocaleString('ko-KR')}</span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -378,7 +513,7 @@ export default function UnifiedEditor() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="제목을 입력하세요..."
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-bold text-base bg-[#f8f9fa]"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-bold text-lg text-gray-900 bg-gray-50/50"
                 />
               </div>
 
@@ -389,7 +524,7 @@ export default function UnifiedEditor() {
                     type="text"
                     value={badge}
                     onChange={(e) => setBadge(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-[#f8f9fa]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-gray-50/50"
                   />
                 </div>
                 <div>
@@ -398,55 +533,32 @@ export default function UnifiedEditor() {
                     type="text"
                     value={chip}
                     onChange={(e) => setChip(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-[#f8f9fa]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] text-sm bg-gray-50/50"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">1초 복붙 프롬프트 (Copy-Paste Prompt)</label>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">📋 원클릭 복붙 프롬프트 레시피</label>
                 <textarea 
-                  rows={3}
+                  rows={4}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-mono text-xs leading-relaxed bg-[#f8f9fa]"
+                  placeholder="프롬프트 레시피 내용..."
+                  className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] font-mono text-xs text-gray-800 bg-gray-900 text-slate-100"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">본문 및 가이드 내용</label>
-                <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">본문 세부 구성 리포트 (WYSIWYG 에디터)</label>
+                <div className="rounded-xl border border-gray-200 overflow-hidden">
                   <ReactQuill 
                     theme="snow"
                     value={content}
                     onChange={setContent}
                     modules={modules}
-                    className="h-64 mb-12"
+                    className="min-h-[300px]"
                   />
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                <a href={selectedDraftId ? `/article?id=${selectedDraftId}` : "/article"} target="_blank" className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors">
-                  <Eye className="w-4 h-4" /> 미리보기 화면 새창으로 열기
-                </a>
-                <div className="flex items-center gap-3">
-                  <button 
-                    onClick={handleDelete}
-                    disabled={isSaving || !selectedDraftId}
-                    className="flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-4 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer disabled:opacity-50"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    삭제하기
-                  </button>
-                  <button 
-                    onClick={handlePublish}
-                    disabled={isSaving || !selectedDraftId}
-                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm cursor-pointer disabled:opacity-50"
-                  >
-                    <CheckCircle2 className="w-4 h-4" />
-                    {isSaving ? "승인 및 발행 중..." : "🚀 최종 승인 (라이브 노출)"}
-                  </button>
                 </div>
               </div>
             </div>

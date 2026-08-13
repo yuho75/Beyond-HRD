@@ -124,12 +124,19 @@ export async function PATCH(request: Request) {
   }
 }
 
-// DELETE: delete by id
+// DELETE: delete single id or bulk ids array
 export async function DELETE(request: Request) {
   try {
-    const { id } = await request.json();
+    const body = await request.json();
     const key = getKey();
-    await nodeHttpsRequest(`${supabaseUrl}/rest/v1/contents?id=eq.${id}`, 'DELETE', key);
+    if (body.ids && Array.isArray(body.ids) && body.ids.length > 0) {
+      const idsStr = body.ids.map((i: any) => String(i)).join(",");
+      await nodeHttpsRequest(`${supabaseUrl}/rest/v1/contents?id=in.(${idsStr})`, 'DELETE', key);
+    } else if (body.id) {
+      await nodeHttpsRequest(`${supabaseUrl}/rest/v1/contents?id=eq.${body.id}`, 'DELETE', key);
+    } else if (body.deleteAll) {
+      await nodeHttpsRequest(`${supabaseUrl}/rest/v1/contents?id=gt.0`, 'DELETE', key);
+    }
     return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
