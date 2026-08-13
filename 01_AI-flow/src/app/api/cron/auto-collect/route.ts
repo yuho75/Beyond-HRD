@@ -102,7 +102,7 @@ async function handleAutoCollect() {
       "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
     ],
     editor_rating: { ease_of_use: 5, time_saving: 5, cost_effort: 5, practicality: 5 },
-    editor_comment: `별점 5.0 / [${selectedChannel.name}] 소스 풀의 ${selectedChannel.topic} 노하우를 바탕으로 자동 인제스트된 24시간 수집 아티클입니다.`
+    editor_comment: `별점 5.0 / [${selectedChannel.name}] 소스 풀의 최근 7일(1주일) 이내 신규 업로드 영상 노하우를 바탕으로 자동 인제스트된 24시간 수집 아티클입니다.`
   };
 
   try {
