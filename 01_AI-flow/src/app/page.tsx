@@ -56,7 +56,7 @@ export default function Home() {
                 date: new Date(item.created_at).toISOString().split("T")[0].replace(/-/g, "."),
                 color: "bg-emerald-100 text-emerald-700",
                 image: item.thumbnail || "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
-                href: "/article"
+                href: `/article?id=${item.id}`
               };
             });
             setArticles([...parsed, ...defaultDispatches]);

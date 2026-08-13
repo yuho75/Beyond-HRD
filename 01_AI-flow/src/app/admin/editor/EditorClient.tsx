@@ -427,7 +427,7 @@ export default function UnifiedEditor() {
               </div>
 
               <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                <a href="/article" target="_blank" className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors">
+                <a href={selectedDraftId ? `/article?id=${selectedDraftId}` : "/article"} target="_blank" className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors">
                   <Eye className="w-4 h-4" /> 미리보기 화면 새창으로 열기
                 </a>
                 <div className="flex items-center gap-3">
