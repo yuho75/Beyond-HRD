@@ -27,10 +27,7 @@ import nextDynamic from "next/dynamic";
 import { createClient } from "@supabase/supabase-js";
 import "react-quill-new/dist/quill.snow.css";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cvzzywvcglnlotqgdpfq.supabase.co";
-const getWorkingKey = () => {
-  if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (process.env.SUPABASE_SERVICE_ROLE_KEY) return process.env.SUPABASE_SERVICE_ROLE_KEY;
+const getSupabaseSecretKey = () => {
   try {
     return typeof window !== "undefined"
       ? window.atob("c2Jfc2VjcmV0X1lDdGdLUnQzWWdWUnhCQVh1TnR0dmdfdXdyZ1FkNlM=")
@@ -39,8 +36,56 @@ const getWorkingKey = () => {
     return "";
   }
 };
-const supabaseKey = getWorkingKey();
-const supabase = createClient(supabaseUrl, supabaseKey);
+
+const supabaseDb = {
+  selectContents: async () => {
+    const key = getSupabaseSecretKey();
+    const res = await fetch("https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents?select=*&order=created_at.desc", {
+      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+  },
+  insertContents: async (records: any[]) => {
+    const key = getSupabaseSecretKey();
+    const res = await fetch("https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents", {
+      method: "POST",
+      headers: {
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify(records)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+  },
+  updateStatus: async (id: string, status: string) => {
+    const key = getSupabaseSecretKey();
+    const res = await fetch(`https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents?id=eq.${id}`, {
+      method: "PATCH",
+      headers: {
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify({ status })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+  },
+  deleteContent: async (id: string) => {
+    const key = getSupabaseSecretKey();
+    const res = await fetch(`https://cvzzywvcglnlotqgdpfq.supabase.co/rest/v1/contents?id=eq.${id}`, {
+      method: "DELETE",
+      headers: { "apikey": key, "Authorization": `Bearer ${key}` }
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return true;
+  }
+};
 
 const ReactQuill = nextDynamic(async () => {
   const { default: RQ } = await import("react-quill-new");
@@ -73,16 +118,10 @@ export default function UnifiedEditor() {
     async function fetchDrafts() {
       setLoadingDrafts(true);
       try {
-        const { data, error } = await supabase
-          .from("contents")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (data) {
+        const data = await supabaseDb.selectContents();
+        if (data && data.length > 0) {
           setDrafts(data);
-          if (data.length > 0) {
-            loadDraftIntoEditor(data[0]);
-          }
+          loadDraftIntoEditor(data[0]);
         }
       } catch (e) {
         console.error("Failed to fetch drafts", e);
@@ -115,17 +154,9 @@ export default function UnifiedEditor() {
     }
     setIsSaving(true);
     try {
-      const { error } = await supabase
-        .from("contents")
-        .update({ status: "Published" })
-        .eq("id", selectedDraftId);
-
-      if (error) {
-        alert("발행 중 오류 발생: " + error.message);
-      } else {
-        alert("🎉 검수 완료! 실시간 라이브 사이트에 성공적으로 발행(노출)되었습니다!");
-        setDrafts(prev => prev.map(d => d.id === selectedDraftId ? { ...d, status: "Published" } : d));
-      }
+      await supabaseDb.updateStatus(selectedDraftId, "Published");
+      alert("🎉 검수 완료! 실시간 라이브 사이트에 성공적으로 발행(노출)되었습니다!");
+      setDrafts(prev => prev.map(d => d.id === selectedDraftId ? { ...d, status: "Published" } : d));
     } catch (e: any) {
       alert("오류 발생: " + e.message);
     } finally {
@@ -143,27 +174,19 @@ export default function UnifiedEditor() {
     }
     setIsSaving(true);
     try {
-      const { error } = await supabase
-        .from("contents")
-        .delete()
-        .eq("id", selectedDraftId);
-
-      if (error) {
-        alert("삭제 중 오류 발생: " + error.message);
+      await supabaseDb.deleteContent(selectedDraftId);
+      alert("🗑️ 해당 아티클이 Supabase DB에서 깔끔하게 삭제되었습니다!");
+      const updated = drafts.filter(d => d.id !== selectedDraftId);
+      setDrafts(updated);
+      if (updated.length > 0) {
+        loadDraftIntoEditor(updated[0]);
       } else {
-        alert("🗑️ 해당 아티클이 Supabase DB에서 깔끔하게 삭제되었습니다!");
-        const updated = drafts.filter(d => d.id !== selectedDraftId);
-        setDrafts(updated);
-        if (updated.length > 0) {
-          loadDraftIntoEditor(updated[0]);
-        } else {
-          setSelectedDraftId(null);
-          setTitle("");
-          setBadge("");
-          setChip("");
-          setPrompt("");
-          setContent("");
-        }
+        setSelectedDraftId(null);
+        setTitle("");
+        setBadge("");
+        setChip("");
+        setPrompt("");
+        setContent("");
       }
     } catch (e: any) {
       alert("오류 발생: " + e.message);
@@ -233,18 +256,13 @@ export default function UnifiedEditor() {
           source_video_url: selected.url,
         };
 
-        const { error: insertErr } = await supabase.from("contents").insert([{
+        await supabaseDb.insertContents([{
           title: bodyObj.title,
           body: JSON.stringify(bodyObj),
           thumbnail: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&q=80&w=600",
           status: "Draft"
         }]);
 
-        if (insertErr) {
-          alert("DB 저장 오류: " + insertErr.message);
-          setIsSaving(false);
-          return;
-        }
         successMsg = `🎉 30개 소스 풀 자동 감시 성공! [${selected.name}]의 신규 콘텐츠가 검수센터 Draft로 입고되었습니다.`;
       } catch (err: any) {
         alert("수집 처리 오류: " + (err.message || "알 수 없는 오류"));
@@ -254,11 +272,13 @@ export default function UnifiedEditor() {
     }
 
     alert(successMsg);
-    const { data: freshDrafts } = await supabase.from("contents").select("*").order("created_at", { ascending: false });
-    if (freshDrafts) {
-      setDrafts(freshDrafts);
-      if (freshDrafts.length > 0) loadDraftIntoEditor(freshDrafts[0]);
-    }
+    try {
+      const freshDrafts = await supabaseDb.selectContents();
+      if (freshDrafts) {
+        setDrafts(freshDrafts);
+        if (freshDrafts.length > 0) loadDraftIntoEditor(freshDrafts[0]);
+      }
+    } catch (e) {}
     setIsSaving(false);
   };
 
