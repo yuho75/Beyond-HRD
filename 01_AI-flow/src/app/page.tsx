@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { Copy, ExternalLink, Check, Sparkles, Flame, Bookmark, ArrowRight, ChevronDown, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import NotionThumbnailCard from "@/components/NotionThumbnailCard";
 
 const TOPIC_CARD_THUMBNAILS: Record<string, string> = {
   "일잘러 장피엠": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
@@ -153,9 +154,9 @@ function HomeContent() {
         <section className="bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-xs hover:shadow-md transition-all group overflow-hidden">
           <Link href={featuredArticle.href} className="flex flex-col lg:flex-row items-stretch gap-6 sm:gap-8 cursor-pointer">
             {/* Left: 16:9 Wide Thumbnail */}
-            <div className="w-full lg:w-[48%] aspect-[16/9] bg-gray-900 rounded-2xl overflow-hidden relative shrink-0 shadow-xs">
+            <div className="w-full lg:w-[48%] aspect-[16/9] bg-slate-50 rounded-2xl overflow-hidden relative shrink-0 shadow-xs border border-gray-100">
               <img 
-                src={featuredArticle.image} 
+                src="/thumbnails/hero_notion.jpg" 
                 alt={featuredArticle.title} 
                 onError={(e: any) => {
                   e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
@@ -330,26 +331,21 @@ function HomeContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {gridDisplayList.slice(0, visibleCount).map((article, i) => (
                 <Link href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col">
-                  <div className="aspect-[16/9] w-full bg-gray-900 relative overflow-hidden">
-                    <img 
-                      src={article.image} 
-                      alt={article.title} 
-                      onError={(e: any) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
-                      }}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  <div className="aspect-[16/9] w-full relative overflow-hidden">
+                    <NotionThumbnailCard
+                      title={article.title}
+                      category={article.badge}
+                      difficulty={article.difficulty}
+                      channelName={article.channel_name}
                     />
-                    {/* Top Badges / Hashtag Chips */}
-                    <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap z-10">
-                      <span className="bg-slate-900/90 backdrop-blur-sm text-white text-[10px] px-2.5 py-0.5 font-bold rounded shadow-sm">
-                        {article.badge}
-                      </span>
-                      <span className={`text-[10px] px-2 py-0.5 font-bold rounded shadow-sm backdrop-blur-sm ${
+                    {/* Top Badges / Difficulty */}
+                    <div className="absolute top-2.5 left-2.5 flex gap-1.5 flex-wrap z-10 pointer-events-none">
+                      <span className={`text-[10px] px-2 py-0.5 font-bold rounded shadow-2xs ${
                         article.difficulty === "초급" 
-                          ? "bg-blue-600/90 text-white" 
+                          ? "bg-blue-600 text-white" 
                           : article.difficulty === "중급" 
-                            ? "bg-amber-600/90 text-white" 
-                            : "bg-purple-600/90 text-white"
+                            ? "bg-amber-600 text-white" 
+                            : "bg-purple-600 text-white"
                       }`}>
                         {article.difficulty}
                       </span>
