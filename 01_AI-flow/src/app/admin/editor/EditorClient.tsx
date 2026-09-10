@@ -46,7 +46,7 @@ const ReactQuill = nextDynamic(async () => {
 
 export default function UnifiedEditor() {
   const [drafts, setDrafts] = useState<any[]>([]);
-  const [filterStatus, setFilterStatus] = useState<"Draft" | "Published" | "All">("Draft");
+  const [filterStatus, setFilterStatus] = useState<"Draft" | "Published">("Draft");
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [title, setTitle] = useState("");
@@ -391,12 +391,6 @@ export default function UnifiedEditor() {
                       className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === "Published" ? "bg-emerald-600 text-white shadow-2xs" : "text-gray-600 hover:text-gray-900"}`}
                     >
                       🟢 승인/발행 완료 ({drafts.filter(d => d.status === "Published").length})
-                    </button>
-                    <button
-                      onClick={() => setFilterStatus("All")}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === "All" ? "bg-slate-800 text-white shadow-2xs" : "text-gray-600 hover:text-gray-900"}`}
-                    >
-                      📋 전체 ({drafts.length})
                     </button>
                   </div>
                 </div>
