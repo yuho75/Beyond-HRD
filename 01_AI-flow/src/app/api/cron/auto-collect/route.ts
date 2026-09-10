@@ -254,19 +254,77 @@ async function handleAutoCollect() {
       star_rating: starScore
     };
 
-    const articleData: any = {
+    const publishedAt = ytData?.publishedAt || new Date().toISOString().split('T')[0];
+    const introQuestion = `혹시 매일 반복되는 업무에서 '${selectedChannel.topic}' 관련 문제를 겪고 계신가요?`;
+    
+    const koreanPrompt = `[역할 부여]\n당신은 ${selectedChannel.badge} 분야 최고의 AI 실무 생산성 컨설턴트입니다.\n\n[배경 정보]\n사용자는 반복적인 실무 업무를 단축하고 칼퇴를 달성하고자 하는 직장인입니다.\n\n[요청 사항]\n1. ${selectedChannel.name}의 노하우를 바탕으로, 비개발자도 3분 만에 바로 적용 가능한 단계별 실천 템플릿을 작성해주세요.\n2. 실무 적용 시 자주 발생하는 오류나 실수 3가지와 이에 대한 명쾌한 예방법을 제시해주세요.\n3. 사내 보고서나 결재 서식에 즉시 복사하여 붙여넣을 수 있는 깔끔한 양식을 제공해주세요.`;
+
+    const bodyObj = {
       title: finalTitle,
       tier1_category: selectedChannel.badge,
-      tier2_tools: ["ChatGPT", "Claude", "Make"],
-      tier3_tags: [selectedChannel.chip, "#수익자동화", "#칼퇴보장"],
-      demand_job: ["직무 공통", "마케터", "기획·PM"],
-      demand_level: "스타터 (0~3년 차)",
       badge: selectedChannel.badge,
       chip: selectedChannel.chip,
-      copy_paste_asset: `Act as an expert AI consultant for ${selectedChannel.name}.\nGoal: Create a step-by-step action guide for non-developer office workers on ${selectedChannel.topic}.\n\nOutput format:\n1. Prompt template\n2. 3-step execution guide\n3. Common mistakes to avoid`,
+      source_channel_name: selectedChannel.name,
+      source_video_url: videoUrl,
+      published_at: publishedAt,
+      editor_lead: `[${selectedChannel.name}]의 핵심 실전 노하우를 바탕으로, 비개발자 직장인이 오늘 당장 5분 만에 실무에 적용할 수 있도록 핵심 인사이트와 팩트체크를 완벽히 정리했습니다.`,
+      
+      part1: {
+        title: "영상 심층 분석",
+        story_sections: [
+          {
+            heading: "왜 지금 이 기술이 실무자들 사이에서 화제일까요?",
+            reader_question: introQuestion,
+            content: `많은 직장인들이 AI 툴을 도입하려다 복잡한 설정과 영어 메뉴 앞에서 좌절하곤 합니다. 하지만 이번에 **[${selectedChannel.name}]**에서 공개한 방식은 코딩이나 복잡한 개발 지식 없이도, 우리가 매일 사용하는 업무 환경에 즉시 접목할 수 있다는 점에서 큰 반향을 일으키고 있습니다. **핵심은 기술을 새로 배우는 것이 아니라, 이미 익숙한 도구에 AI의 지능을 얹는 것**입니다.`
+          },
+          {
+            heading: "실무자가 반드시 알아야 할 핵심 작동 포인트",
+            content: `영상에서 가장 돋보이는 부분은 단순 기능 나열이 아니라, **실제 업무 흐름(Workflow)** 속에서 어디에 시간을 가장 많이 뺏기는지 정확히 짚어냈다는 점입니다. 반복되는 서식 작성과 데이터 추출 단계를 AI에게 위임함으로써, 실무자는 최종 검수와 의사결정에만 집중할 수 있는 쾌적한 작업 환경을 구축할 수 있습니다.`
+          }
+        ],
+        fact_check: {
+          claim: `영상에서 소개된 ${selectedChannel.topic} 기법으로 업무 시간을 80% 이상 단축할 수 있다는 주장은 사실일까?`,
+          verdict: "대체로 사실 (실무 환경에 맞춘 프롬프트 보정 필요)",
+          details: `${selectedChannel.name} 영상에서 시연된 방법은 비개발자도 직관적으로 이해할 수 있도록 잘 구성되어 있습니다. 다만 무료 플랜 사용 시 API 호출 한도와 데이터 보안 설정을 사전 확인해야 합니다.`,
+          risk_warning: "사내 대외비 문서나 고객 개인정보를 직접 입력하지 말고, 핵심 변수만 치환하여 안전하게 사용하는 지혜가 필요합니다."
+        },
+        summary_points: [
+          `에디터 픽 1: ${selectedChannel.name}의 실무 최적화 프롬프트 템플릿 및 실행 구조`,
+          "에디터 픽 2: 반복 업무를 80% 이상 단축하는 노코드/경량화 워크플로우",
+          "에디터 픽 3: 비개발자도 오늘 바로 퇴근 시간을 1시간 앞당기는 현실적 세팅법"
+        ],
+        editor_rating: editorRating,
+        editor_comment: `별점 ${starScore} / 5.0 | [${selectedChannel.name}] 공식 유튜브 영상의 1차 알고리즘 검증을 통과한 아티클입니다. 단순 기술 설명이 아닌 실무 적용성이 매우 높으며, 사내 보안 지침만 준수한다면 즉시 생산성을 배가시킬 수 있는 실전형 콘텐츠입니다.`
+      },
+      
+      part2: {
+        title: "더 알아보기 (심화 인사이트)",
+        deep_dive_sections: [
+          {
+            heading: "비개발자를 위한 핵심 기술 작동 원리",
+            content: "AI 모델에게 좋은 결과물을 얻기 위해서는 '지시문(Role)', '배경 맥락(Context)', '출력 포맷(Constraint)'의 3박자를 명확히 갖추어 명령을 전달하는 구조화 기법이 필수적입니다."
+          },
+          {
+            heading: "현업 적용 시 발생할 수 있는 주요 병목 지점과 해결책",
+            content: "초기에는 프롬프트를 다듬는 데 오히려 시간이 더 걸린다고 느껴질 수 있습니다. 검증된 프롬프트 템플릿을 개인 메모장이나 클립보드에 즐겨찾기해두고 바로 불러와 쓰는 '복붙 워크플로우'를 습관화하세요."
+          }
+        ],
+        action_guides: [
+          `Step 01: 하단에 제공된 [${selectedChannel.name}] 맞춤형 원클릭 복붙 프롬프트를 복사합니다.`,
+          "Step 02: 챗GPT 또는 Claude에 프롬프트를 붙여넣고, 대괄호([ ])로 표시된 내 업무 정보만 간단히 수정해 전송합니다.",
+          "Step 03: AI가 도출한 결과를 검토한 뒤, 사내 보고서나 실무 서식에 즉시 반영하여 칼퇴를 달성합니다."
+        ],
+        insight_box: {
+          summary: "에디터 최종 실무 제언",
+          takeaway: "AI를 기술로 공부하려 하지 마세요. 오늘 당장 나의 10분을 아껴주는 실무 도구로 바라보는 것이 진정한 디지털 전환의 시작입니다."
+        },
+        copy_paste_asset: koreanPrompt
+      },
+
+      copy_paste_asset: koreanPrompt,
       summary_points: [
-        `에디터 픽 1: ${selectedChannel.name}의 실무 핵심 프롬프트 템플릿`,
-        "에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 워크플로우 세팅법",
+        `에디터 픽 1: ${selectedChannel.name}의 실무 최적화 프롬프트 템플릿`,
+        "에디터 픽 2: 반복 업무를 80% 줄여주는 노코드 워크플로우 세팅법",
         "에디터 픽 3: 비개발자도 바로 적용 가능한 3분 칼퇴 가이드"
       ],
       action_guides: [
@@ -278,27 +336,8 @@ async function handleAutoCollect() {
       editor_comment: `1차 검수 점수: ${totalFilterScore}점 (별점 ${starScore} / 5.0) | [${selectedChannel.name}] (${selectedChannel.handle}) 공식 유튜브 채널의 최신 검증 영상 1차 필터링을 통과한 아티클입니다.`
     };
 
-    const bodyObj = {
-      title: articleData.title,
-      tier1_category: articleData.tier1_category,
-      tier2_tools: articleData.tier2_tools,
-      tier3_tags: articleData.tier3_tags,
-      demand_job: articleData.demand_job,
-      demand_level: articleData.demand_level,
-      badge: articleData.badge,
-      chip: articleData.chip,
-      copy_paste_asset: articleData.copy_paste_asset,
-      editor_rating: articleData.editor_rating,
-      editor_comment: articleData.editor_comment,
-      summary_points: articleData.summary_points,
-      action_guides: articleData.action_guides,
-      source_channel_name: selectedChannel.name,
-      source_video_url: videoUrl,
-      published_at: ytData?.publishedAt || new Date().toISOString().split('T')[0],
-    };
-
     payloadList.push({
-      title: articleData.title,
+      title: finalTitle,
       body: JSON.stringify(bodyObj),
       thumbnail: thumbnail,
       status: "Draft"

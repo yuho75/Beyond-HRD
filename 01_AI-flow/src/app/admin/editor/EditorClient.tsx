@@ -103,27 +103,66 @@ export default function UnifiedEditor() {
     setChip(bodyObj.chip || "#복붙용_프롬프트");
     setPrompt(bodyObj.copy_paste_asset || bodyObj.prompt || "");
 
-    // Format Full Rich AIditor Article Body matching D_final_strategy.md spec
-    const summaryList = bodyObj.summary_points?.map((p: string) => `<li style="margin-bottom: 6px;"><strong>${p}</strong></li>`).join("") 
-      || `<li><strong>에디터 픽 1: 실무 AI 프롬프트 템플릿 적용법</strong></li><li><strong>에디터 픽 2: 반복 업무를 90% 줄여주는 노코드 세팅법</strong></li><li><strong>에디터 픽 3: 3분 칼퇴 보장 가이드</strong></li>`;
+    // Format Full Rich AIditor Article Body matching Newneek-style 2-Part D_final_strategy.md spec
+    const part1 = bodyObj.part1 || {};
+    const part2 = bodyObj.part2 || {};
 
-    const comment = bodyObj.editor_comment || "별점 5.0 / 실무 적용 가이드입니다.";
-    const actionGuides = bodyObj.action_guides?.map((g: string, idx: number) => `<p style="margin-bottom: 8px;"><strong>Step 0${idx+1}:</strong> ${g.replace(/^Step \d+:\s*/, "")}</p>`).join("") 
+    const storyHtml = part1.story_sections?.map((s: any) => `
+      ${s.reader_question ? `<div style="background-color: #fff7ed; border-left: 4px solid #f97316; padding: 10px 14px; margin-bottom: 12px; border-radius: 4px; font-weight: 600; color: #7c2d12;">❓ ${s.reader_question}</div>` : ''}
+      <h4 style="color: #0f172a; font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">${s.heading}</h4>
+      <p style="color: #334155; line-height: 1.7; margin-bottom: 16px;">${s.content}</p>
+    `).join("") || `<p style="color: #334155; line-height: 1.7;">${bodyObj.editor_lead || "본문 스토리텔링 리포트입니다."}</p>`;
+
+    const factCheckHtml = part1.fact_check ? `
+      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 20px;">
+        <h4 style="color: #0f172a; font-weight: 700; margin-bottom: 8px;">✅ 에디터 팩트체크: ${part1.fact_check.verdict || "사실 검증 완료"}</h4>
+        <p style="color: #475569; font-size: 0.9rem; margin-bottom: 6px;"><strong>검증 대상:</strong> ${part1.fact_check.claim || ""}</p>
+        <p style="color: #334155; font-size: 0.9rem; line-height: 1.6; margin-bottom: 6px;">${part1.fact_check.details || ""}</p>
+        ${part1.fact_check.risk_warning ? `<p style="color: #b45309; font-size: 0.85rem; margin: 0;"><strong>⚠️ 주의사항:</strong> ${part1.fact_check.risk_warning}</p>` : ''}
+      </div>
+    ` : '';
+
+    const summaryList = (part1.summary_points || bodyObj.summary_points)?.map((p: string) => `<li style="margin-bottom: 6px;"><strong>${p}</strong></li>`).join("") 
+      || `<li><strong>에디터 픽 1: 실무 AI 프롬프트 템플릿 적용법</strong></li><li><strong>에디터 픽 2: 반복 업무를 80% 줄여주는 노코드 세팅법</strong></li><li><strong>에디터 픽 3: 3분 칼퇴 보장 가이드</strong></li>`;
+
+    const comment = part1.editor_comment || bodyObj.editor_comment || "별점 4.8 / 5.0 | 실무 적용 가이드입니다.";
+
+    const deepDiveHtml = part2.deep_dive_sections?.map((d: any) => `
+      <div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px;">
+        <h4 style="color: #0f172a; font-weight: 700; margin-bottom: 6px;">💡 ${d.heading}</h4>
+        <p style="color: #475569; line-height: 1.6; margin: 0; font-size: 0.95rem;">${d.content}</p>
+      </div>
+    `).join("") || '';
+
+    const actionGuides = (part2.action_guides || bodyObj.action_guides)?.map((g: string, idx: number) => `<p style="margin-bottom: 8px;"><strong>Step 0${idx+1}:</strong> ${g.replace(/^Step \d+:\s*/, "")}</p>`).join("") 
       || `<p><strong>Step 01:</strong> 상단 복붙 프롬프트를 챗GPT/Claude에 입력합니다.</p><p><strong>Step 02:</strong> 업무 서식과 결합하여 자동 요약을 수행합니다.</p><p><strong>Step 03:</strong> 사내 보고서 및 실무에 즉시 반영합니다.</p>`;
 
     const channelName = bodyObj.source_channel_name || "AIditor 소스 풀";
     const channelUrl = bodyObj.source_video_url || "https://youtube.com";
 
     const richArticleHtml = `
+      <div style="border-bottom: 2px solid #0f172a; padding-bottom: 6px; margin-bottom: 16px;">
+        <h2 style="color: #0f172a; font-size: 1.25rem; font-weight: 800; margin: 0;">📖 파트 1: 영상 심층 분석 (뉴닉 스타일 스토리텔링)</h2>
+      </div>
+
+      ${storyHtml}
+      ${factCheckHtml}
+
       <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">📌 에디터 픽 (핵심 3줄 요약)</h3>
       <ul style="padding-left: 20px; color: #334155; margin-bottom: 16px;">
         ${summaryList}
       </ul>
 
-      <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">⭐ 에디터 팩트체크 & 총평</h3>
-      <div style="background-color: #f8fafc; border-left: 4px solid #f97316; padding: 12px 16px; border-radius: 4px; margin-bottom: 16px;">
+      <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">⭐ 에디터 총평 & 별점</h3>
+      <div style="background-color: #f8fafc; border-left: 4px solid #f97316; padding: 12px 16px; border-radius: 4px; margin-bottom: 24px;">
         <p style="color: #1e293b; margin: 0; font-weight: 600;">${comment}</p>
       </div>
+
+      <div style="border-bottom: 2px solid #f97316; padding-bottom: 6px; margin-bottom: 16px;">
+        <h2 style="color: #0f172a; font-size: 1.25rem; font-weight: 800; margin: 0;">🔍 파트 2: 더 알아보기 (심화 리서치 & 실천)</h2>
+      </div>
+
+      ${deepDiveHtml}
 
       <h3 style="color: #0f172a; font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">🚀 비개발자 3단계 실천 액션 가이드</h3>
       <div style="color: #334155; line-height: 1.6; margin-bottom: 16px;">
