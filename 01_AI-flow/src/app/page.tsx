@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { Copy, ExternalLink, Check, Sparkles, Flame, Bookmark, ArrowRight } from "lucide-react";
+import { Copy, ExternalLink, Check, Sparkles, Flame, Bookmark, ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -23,11 +23,13 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
     return item.thumbnail;
   }
   const channelName = bodyObj.source_channel_name || "";
-  const title = item.title || "";
-  for (const name in TOPIC_CARD_THUMBNAILS) {
-    if (channelName.includes(name) || title.includes(name)) {
-      return TOPIC_CARD_THUMBNAILS[name];
-    }
+  if (channelName && TOPIC_CARD_THUMBNAILS[channelName]) {
+    return TOPIC_CARD_THUMBNAILS[channelName];
+  }
+  const vid = item.video_url || item.url || "";
+  const match = vid.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  if (match && match[1]) {
+    return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
   }
   return "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
 }
@@ -40,6 +42,11 @@ function HomeContent() {
   const [copied, setCopied] = useState(false);
   const [articles, setArticles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(9);
+
+  useEffect(() => {
+    setVisibleCount(9);
+  }, [currentCat, selectedJob]);
 
   const jobs = ["직무 공통", "기획·PM", "마케터", "인사·HR", "재무·회계", "디자인·BX", "1인기업"];
   const samplePrompt = `Act as a senior marketer. Please analyze [제품명] target audience and generate 5 punchy headline copy ideas for [마케팅 채널].`;
@@ -234,9 +241,9 @@ function HomeContent() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="h-64 rounded-xl bg-gray-100 animate-pulse border border-gray-200" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <div key={n} className="h-72 rounded-xl bg-gray-100 animate-pulse border border-gray-200" />
             ))}
           </div>
         ) : displayList.length === 0 ? (
@@ -244,40 +251,58 @@ function HomeContent() {
             해당 카테고리에 등록된 아티클이 없습니다.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {displayList.map((article, i) => (
-              <Link href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col">
-                <div className="h-44 bg-gray-900 relative overflow-hidden">
-                  <img 
-                    src={article.image} 
-                    alt={article.title} 
-                    onError={(e: any) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
-                    }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                  />
-                  {/* Top Badges / Hashtag Chips */}
-                  <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap z-10">
-                    <span className="bg-slate-900/90 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 font-bold rounded shadow-sm">
-                      {article.badge}
-                    </span>
-                    <span className="bg-emerald-500/90 text-white backdrop-blur-sm text-[10px] px-2 py-0.5 font-bold rounded shadow-sm">
-                      {article.tag}
-                    </span>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {displayList.slice(0, visibleCount).map((article, i) => (
+                <Link href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col">
+                  <div className="aspect-[16/9] w-full bg-gray-900 relative overflow-hidden">
+                    <img 
+                      src={article.image} 
+                      alt={article.title} 
+                      onError={(e: any) => {
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
+                      }}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    />
+                    {/* Top Badges / Hashtag Chips */}
+                    <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap z-10">
+                      <span className="bg-slate-900/90 backdrop-blur-sm text-white text-[10px] px-2.5 py-0.5 font-bold rounded shadow-sm">
+                        {article.badge}
+                      </span>
+                      <span className="bg-emerald-500/90 text-white backdrop-blur-sm text-[10px] px-2.5 py-0.5 font-bold rounded shadow-sm">
+                        {article.tag}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="p-4 flex flex-col flex-grow justify-between gap-3">
-                  <h3 className="font-bold text-[15px] leading-snug text-gray-900 group-hover:text-[#f97316] transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <div className="flex items-center gap-1.5 text-xs text-gray-500 font-semibold border-t border-gray-100 pt-2.5">
-                    <span className="text-gray-400 font-normal">출처:</span>
-                    <span className="text-gray-700 font-bold truncate">{article.channel_name}</span>
+                  <div className="p-4 flex flex-col flex-grow justify-between gap-3">
+                    <h3 className="font-bold text-[16px] leading-snug text-gray-900 group-hover:text-[#f97316] transition-colors line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500 font-semibold border-t border-gray-100 pt-2.5">
+                      <span className="text-gray-400 font-normal">출처:</span>
+                      <span className="text-gray-700 font-bold truncate">{article.channel_name}</span>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Load More Button */}
+            {visibleCount < displayList.length && (
+              <div className="mt-10 flex justify-center">
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + 6)}
+                  className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-800 font-bold text-sm rounded-xl border border-gray-200 shadow-sm hover:shadow transition-all flex items-center gap-2 cursor-pointer group"
+                >
+                  <span>더보기</span>
+                  <span className="text-xs text-gray-400 font-normal">
+                    ({Math.min(visibleCount, displayList.length)} / {displayList.length})
+                  </span>
+                  <ChevronDown className="w-4 h-4 text-gray-500 group-hover:translate-y-0.5 transition-transform" />
+                </button>
+              </div>
+            )}
+          </>
         )}
       </section>
 
