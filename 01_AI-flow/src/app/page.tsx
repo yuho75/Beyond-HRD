@@ -223,11 +223,8 @@ function HomeContent() {
         <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-200">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
-              {currentCat ? `${currentCat} 아티클` : "최신 아티클 & 복붙 레시피"}
+              {currentCat ? `${currentCat} 아티클` : "최신 아티클"}
             </h2>
-            <p className="text-xs text-gray-500 mt-1">
-              유튜브 실제 시연 영상 기반으로 팩트체크 및 복붙 가이드를 제공합니다.
-            </p>
           </div>
           {currentCat && (
             <Link href="/" className="text-sm font-semibold text-[#f97316] hover:underline flex items-center gap-1 cursor-pointer">
