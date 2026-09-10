@@ -148,79 +148,7 @@ function HomeContent() {
   return (
     <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
 
-      {/* 1. Filter & Sort Bar (옵션 B: 슬로건 제거 자리에 난이도 & 정렬 위치) */}
-      <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
-        {/* Left: Difficulty Filter */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-bold text-gray-500 mr-1 uppercase tracking-wider flex items-center gap-1.5">
-            <SlidersHorizontal className="w-3.5 h-3.5 text-gray-500" /> 난이도:
-          </span>
-          {["전체", "초급", "중급", "고급"].map((diff) => (
-            <button
-              key={diff}
-              onClick={() => setSelectedDifficulty(diff)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                selectedDifficulty === diff
-                  ? "bg-[#f97316] text-white shadow-xs"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
-            >
-              {diff}
-            </button>
-          ))}
-        </div>
-
-        {/* Right: Sort By */}
-        <div className="flex items-center gap-1.5 self-end sm:self-auto text-xs font-bold">
-          <button
-            onClick={() => setSortBy("latest")}
-            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
-              sortBy === "latest"
-                ? "bg-slate-900 text-white font-extrabold shadow-2xs"
-                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
-            }`}
-          >
-            최신순
-          </button>
-          <button
-            onClick={() => setSortBy("recommended")}
-            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
-              sortBy === "recommended"
-                ? "bg-[#ea580c] text-white font-extrabold shadow-2xs"
-                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
-            }`}
-          >
-            <Flame className="w-3.5 h-3.5" />
-            <span>실무추천순</span>
-          </button>
-        </div>
-      </section>
-
-      {/* Category Active Banner (when category selected in GNB) */}
-      {currentCat && (
-        <div className="flex items-center justify-between bg-orange-50/90 border border-orange-200 rounded-xl px-5 py-3 shadow-xs">
-          <div className="flex items-center gap-2.5">
-            <span className="px-2.5 py-1 bg-[#f97316] text-white text-xs font-extrabold rounded-md shadow-xs flex items-center gap-1">
-              {currentCat === "BEST" ? <Flame className="w-3.5 h-3.5" /> : currentCat === "컬렉션" ? <Bookmark className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5" />}
-              {currentCat === "BEST" ? "인기 랭킹" : currentCat === "컬렉션" ? "에디터 큐레이션" : "대메뉴 카테고리"}
-            </span>
-            <span className="font-extrabold text-gray-900 text-base">
-              {currentCat}
-            </span>
-            <span className="text-xs text-gray-500 font-semibold">
-              총 {displayList.length}건의 실무 아티클
-            </span>
-          </div>
-          <Link 
-            href="/" 
-            className="text-xs font-bold text-gray-500 hover:text-gray-900 bg-white border border-gray-200 px-3 py-1 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-          >
-            전체 피드 보기 ✕
-          </Link>
-        </div>
-      )}
-
-      {/* 2. Today's Editor's Pick (와이드 헤드라인 카드) */}
+      {/* 1. Today's Editor's Pick (와이드 헤드라인 카드 - Hero) */}
       {!currentCat && featuredArticle && (
         <section className="bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-xs hover:shadow-md transition-all group overflow-hidden">
           <Link href={featuredArticle.href} className="flex flex-col lg:flex-row items-stretch gap-6 sm:gap-8 cursor-pointer">
@@ -299,6 +227,78 @@ function HomeContent() {
           </Link>
         </section>
       )}
+
+      {/* Category Active Banner (when category selected in GNB) */}
+      {currentCat && (
+        <div className="flex items-center justify-between bg-orange-50/90 border border-orange-200 rounded-xl px-5 py-3 shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <span className="px-2.5 py-1 bg-[#f97316] text-white text-xs font-extrabold rounded-md shadow-xs flex items-center gap-1">
+              {currentCat === "BEST" ? <Flame className="w-3.5 h-3.5" /> : currentCat === "컬렉션" ? <Bookmark className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5" />}
+              {currentCat === "BEST" ? "인기 랭킹" : currentCat === "컬렉션" ? "에디터 큐레이션" : "대메뉴 카테고리"}
+            </span>
+            <span className="font-extrabold text-gray-900 text-base">
+              {currentCat}
+            </span>
+            <span className="text-xs text-gray-500 font-semibold">
+              총 {displayList.length}건의 실무 아티클
+            </span>
+          </div>
+          <Link 
+            href="/" 
+            className="text-xs font-bold text-gray-500 hover:text-gray-900 bg-white border border-gray-200 px-3 py-1 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+          >
+            전체 피드 보기 ✕
+          </Link>
+        </div>
+      )}
+
+      {/* 2. Filter & Sort Bar (옵션 B: 난이도 필터 & 정렬) */}
+      <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-gray-200">
+        {/* Left: Difficulty Filter */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-xs font-bold text-gray-500 mr-1 uppercase tracking-wider flex items-center gap-1.5">
+            <SlidersHorizontal className="w-3.5 h-3.5 text-gray-500" /> 난이도:
+          </span>
+          {["전체", "초급", "중급", "고급"].map((diff) => (
+            <button
+              key={diff}
+              onClick={() => setSelectedDifficulty(diff)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                selectedDifficulty === diff
+                  ? "bg-[#f97316] text-white shadow-xs"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {diff}
+            </button>
+          ))}
+        </div>
+
+        {/* Right: Sort By */}
+        <div className="flex items-center gap-1.5 self-end sm:self-auto text-xs font-bold">
+          <button
+            onClick={() => setSortBy("latest")}
+            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
+              sortBy === "latest"
+                ? "bg-slate-900 text-white font-extrabold shadow-2xs"
+                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+            }`}
+          >
+            최신순
+          </button>
+          <button
+            onClick={() => setSortBy("recommended")}
+            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+              sortBy === "recommended"
+                ? "bg-[#ea580c] text-white font-extrabold shadow-2xs"
+                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5" />
+            <span>실무추천순</span>
+          </button>
+        </div>
+      </section>
 
       {/* Latest Dispatches Grid */}
       <section className="mt-2">
