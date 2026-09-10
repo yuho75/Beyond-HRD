@@ -76,8 +76,8 @@ function resolveCardThumbnail(item: any, bodyObj: any): string {
               const cleanTitle = rawTitle.replace(/^\[[^\]]+\]\s*/, "").trim();
               return {
                 title: cleanTitle,
-                badge: bodyObj.badge || "AI 따라하기",
-                tag: bodyObj.chip || "#수익자동화",
+                badge: bodyObj.badge || "AI 도구 활용",
+                tag: bodyObj.chip || "#실무생산성",
                 channel_name: bodyObj.source_channel_name || "AIditor 소스 풀",
                 image: resolveCardThumbnail(item, bodyObj),
                 href: `/article?id=${item.id}`
