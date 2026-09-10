@@ -124,33 +124,39 @@ function HomeContent() {
   }
 
   const featuredArticle = articles.length > 0 ? articles[0] : null;
+  const gridDisplayList = !currentCat && featuredArticle 
+    ? displayList.filter((a) => a.id !== featuredArticle.id) 
+    : displayList;
 
   return (
     <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
 
-      {/* 1. Compressed Slogan Bar (대안 2 압축: 1줄 브리핑 바) */}
+      {/* 1. High-Impact Brand Slogan Header */}
       {!currentCat && (
-        <section className="bg-white border border-gray-200/90 rounded-2xl px-5 py-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <span className="shrink-0 px-2.5 py-0.5 bg-orange-100 text-[#ea580c] font-black text-xs rounded-full border border-orange-200 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-[#ea580c] fill-[#ea580c]" /> AIditor Briefing
-            </span>
-            <p className="text-xs sm:text-sm text-gray-700 font-semibold truncate">
-              <span className="text-gray-900 font-extrabold">30개 검증 유튜브 채널</span>에서 엄선한 실전 AI 프롬프트 & 업무자동화 팩트체크
+        <section className="pt-1 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-gray-200">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="inline-flex items-center gap-1 text-[11px] font-extrabold tracking-wider uppercase text-[#ea580c] bg-orange-50 px-2.5 py-0.5 rounded-full border border-orange-200/80">
+                <Sparkles className="w-3 h-3 fill-[#ea580c]" /> AI Curation & Fact Check
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight leading-snug">
+              15분짜리 AI 영상, <span className="text-[#f97316]">3분 실무 복붙 가이드</span>로
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 font-medium mt-1.5">
+              유튜브 볼 시간 없는 직장인을 위해 30개 검증 채널의 핵심 AI 레시피만 엄선합니다.
             </p>
           </div>
-          <div className="shrink-0 flex items-center gap-2 text-xs font-bold text-gray-500">
-            <span className="hidden md:inline text-gray-300">|</span>
-            <span className="text-[#f97316] font-extrabold flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 fill-[#f97316]" /> 매주 3편 엄선 발행
-            </span>
+          <div className="shrink-0 flex items-center gap-2 text-xs font-bold text-gray-600 bg-white border border-gray-200 px-3.5 py-2 rounded-xl shadow-2xs">
+            <Flame className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
+            <span>매주 3편 엄선 큐레이션</span>
           </div>
         </section>
       )}
 
-      {/* 2. Today's Editor's Pick (대안 1: 와이드 헤드라인 카드) */}
+      {/* 2. Today's Editor's Pick (와이드 헤드라인 카드 - 균형 잡힌 상세 정보) */}
       {!currentCat && featuredArticle && (
-        <section className="bg-white border border-gray-200 rounded-3xl p-5 sm:p-7 shadow-xs hover:shadow-md transition-all group overflow-hidden">
+        <section className="bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-xs hover:shadow-md transition-all group overflow-hidden">
           <Link href={featuredArticle.href} className="flex flex-col lg:flex-row items-stretch gap-6 sm:gap-8 cursor-pointer">
             {/* Left: 16:9 Wide Thumbnail */}
             <div className="w-full lg:w-[48%] aspect-[16/9] bg-gray-900 rounded-2xl overflow-hidden relative shrink-0 shadow-xs">
@@ -172,23 +178,36 @@ function HomeContent() {
               </div>
             </div>
 
-            {/* Right: Editorial Content */}
+            {/* Right: Editorial Content (꽉 찬 볼륨감) */}
             <div className="flex-1 flex flex-col justify-between py-1">
               <div>
                 <div className="flex items-center gap-2 mb-2.5">
                   <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
                     {featuredArticle.tag}
                   </span>
-                  <span className="text-xs text-gray-400 font-semibold">• 실무 추천도 {featuredArticle.score}점</span>
+                  <span className="text-xs text-gray-400 font-semibold">• 에디터 실무 추천 {featuredArticle.score}점</span>
                 </div>
 
                 <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 group-hover:text-[#f97316] transition-colors leading-snug mb-3">
                   {featuredArticle.title}
                 </h2>
 
-                <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed mb-4">
+                <p className="text-sm text-gray-600 leading-relaxed line-clamp-3 mb-4">
                   {featuredArticle.summary}
                 </p>
+
+                {/* 3 Core Benefit Chips */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-gray-50 text-gray-700 px-2.5 py-1 rounded-lg border border-gray-200/80">
+                    <Check className="w-3 h-3 text-[#ea580c]" /> 실무 즉시 복붙 프롬프트
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-gray-50 text-gray-700 px-2.5 py-1 rounded-lg border border-gray-200/80">
+                    <Check className="w-3 h-3 text-[#ea580c]" /> 3단계 핵심 시연 요약
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-gray-50 text-gray-700 px-2.5 py-1 rounded-lg border border-gray-200/80">
+                    <Check className="w-3 h-3 text-[#ea580c]" /> 실제 업무 시간 단축 검증
+                  </span>
+                </div>
               </div>
 
               <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
@@ -197,8 +216,8 @@ function HomeContent() {
                   <span className="truncate max-w-[180px]">{featuredArticle.channel_name}</span>
                 </div>
 
-                <span className="inline-flex items-center gap-1 text-sm font-extrabold text-[#f97316] group-hover:translate-x-1 transition-transform">
-                  지금 읽기 <ArrowRight className="w-4 h-4" />
+                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-extrabold text-[#ea580c] bg-orange-50 hover:bg-orange-100 border border-orange-200 px-3.5 py-1.5 rounded-xl transition-all shadow-2xs">
+                  지금 읽기 <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>
             </div>
@@ -248,29 +267,6 @@ function HomeContent() {
         </div>
       )}
 
-      {/* Newsletter Subscription Banner */}
-      {!currentCat && (
-        <section className="bg-orange-50/60 border border-orange-100 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="px-2.5 py-0.5 bg-orange-100 text-[#f97316] font-extrabold text-[11px] rounded uppercase">매주 금요일 레터</span>
-              <h3 className="font-extrabold text-lg text-gray-900">AIditor 주간 AI 실무 레시피 구독하기</h3>
-            </div>
-            <p className="text-xs text-gray-600">검증된 30개 국산 소스 풀의 핵심 AI 프롬프트와 업무자동화 팁을 이메일로 받아보세요.</p>
-          </div>
-          <div className="flex items-center gap-2 w-full md:w-auto">
-            <input 
-              type="email" 
-              placeholder="이메일 주소를 입력하세요" 
-              className="px-4 py-2.5 rounded border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white"
-            />
-            <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded shadow-sm hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
-              구독하기
-            </button>
-          </div>
-        </section>
-      )}
-
       {/* Latest Dispatches Grid */}
       <section className="mt-2">
         <div className="flex items-end justify-between mb-6 pb-2 border-b border-gray-200">
@@ -292,14 +288,14 @@ function HomeContent() {
               <div key={n} className="h-72 rounded-xl bg-gray-100 animate-pulse border border-gray-200" />
             ))}
           </div>
-        ) : displayList.length === 0 ? (
+        ) : gridDisplayList.length === 0 ? (
           <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center text-gray-500">
             해당 카테고리에 등록된 아티클이 없습니다.
           </div>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayList.slice(0, visibleCount).map((article, i) => (
+              {gridDisplayList.slice(0, visibleCount).map((article, i) => (
                 <Link href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col">
                   <div className="aspect-[16/9] w-full bg-gray-900 relative overflow-hidden">
                     <img 
@@ -334,7 +330,7 @@ function HomeContent() {
             </div>
 
             {/* Load More Button */}
-            {visibleCount < displayList.length && (
+            {visibleCount < gridDisplayList.length && (
               <div className="mt-10 flex justify-center">
                 <button
                   onClick={() => setVisibleCount((prev) => prev + 6)}
@@ -342,7 +338,7 @@ function HomeContent() {
                 >
                   <span>더보기</span>
                   <span className="text-xs text-gray-400 font-normal">
-                    ({Math.min(visibleCount, displayList.length)} / {displayList.length})
+                    ({Math.min(visibleCount, gridDisplayList.length)} / {gridDisplayList.length})
                   </span>
                   <ChevronDown className="w-4 h-4 text-gray-500 group-hover:translate-y-0.5 transition-transform" />
                 </button>
@@ -351,6 +347,29 @@ function HomeContent() {
           </>
         )}
       </section>
+
+      {/* Newsletter Subscription Banner (이제 피드 탐색 후 자연스럽게 노출) */}
+      {!currentCat && (
+        <section className="mt-4 bg-orange-50/70 border border-orange-200/80 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="px-2.5 py-0.5 bg-orange-100 text-[#ea580c] font-extrabold text-[11px] rounded-md uppercase">매주 금요일 레터</span>
+              <h3 className="font-extrabold text-lg text-gray-900">AIditor 주간 AI 실무 레시피 구독하기</h3>
+            </div>
+            <p className="text-xs text-gray-600">검증된 30개 국산 소스 풀의 핵심 AI 프롬프트와 업무자동화 팁을 이메일로 받아보세요.</p>
+          </div>
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <input 
+              type="email" 
+              placeholder="이메일 주소를 입력하세요" 
+              className="px-4 py-2.5 rounded-xl border border-orange-200 focus:outline-none focus:ring-2 focus:ring-[#f97316] w-full md:w-64 text-sm bg-white shadow-2xs"
+            />
+            <button className="px-6 py-2.5 bg-[#f97316] text-white font-bold text-sm rounded-xl shadow-xs hover:bg-[#ea580c] transition-colors whitespace-nowrap cursor-pointer">
+              구독하기
+            </button>
+          </div>
+        </section>
+      )}
 
     </main>
   );
