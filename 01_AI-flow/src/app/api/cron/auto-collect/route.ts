@@ -154,6 +154,8 @@ function nodeHttpsRequest(urlStr: string, method: string, key: string, payload?:
     if (data) req.write(data);
     req.end();
   });
+}
+
 function curateHeadline(rawTitle: string, channelName: string, topic: string): string {
   if (!rawTitle) return `${channelName} | ${topic} 3분 실전 가이드`;
 
