@@ -178,6 +178,41 @@ function curateHeadline(rawTitle: string, channelName: string, topic: string): s
   return clean;
 }
 
+const CATEGORY_THUMBNAILS: Record<string, string[]> = {
+  "AI 도구 활용": [
+    "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800"
+  ],
+  "업무 자동화": [
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
+  ],
+  "콘텐츠·문서 제작": [
+    "https://images.unsplash.com/photo-1542744094-3a3172720221?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80&w=800"
+  ],
+  "AI 에이전트": [
+    "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&q=80&w=800"
+  ],
+  "AI 트렌드": [
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800"
+  ]
+};
+
+function generateCleanThumbnail(category: string, channelName: string): string {
+  const list = CATEGORY_THUMBNAILS[category] || CATEGORY_THUMBNAILS["AI 도구 활용"];
+  let sum = 0;
+  for (let i = 0; i < channelName.length; i++) sum += channelName.charCodeAt(i);
+  return list[sum % list.length];
+}
+
 async function handleAutoCollect() {
   // Shuffle 30 channels and pick 10 unique channels for bulk instant collection
   const shuffled = [...SOURCE_CHANNELS_30].sort(() => 0.5 - Math.random());
@@ -189,11 +224,9 @@ async function handleAutoCollect() {
     const ytData = await fetchYouTubeByHandle(selectedChannel.handle, selectedChannel.name);
     const finalVideoId = ytData?.videoId || "c2q0F6f9LhA";
     const videoUrl = `https://www.youtube.com/watch?v=${finalVideoId}`;
-    const rawThumb = ytData?.thumb || "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800";
     
-    const thumbnail = rawThumb.includes("ytimg.com") || rawThumb.includes("ggpht.com")
-      ? `https://images.weserv.nl/?url=${encodeURIComponent(rawThumb)}`
-      : rawThumb;
+    // Generate clean, high-resolution AI Stock Thumbnail instead of noisy YouTube raw thumbnail
+    const thumbnail = generateCleanThumbnail(selectedChannel.badge, selectedChannel.name);
 
     const defaultTitle = `${selectedChannel.name} – ${selectedChannel.topic} 3분 실전 가이드`;
     const rawTitle = ytData?.title || defaultTitle;
