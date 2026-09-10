@@ -87,7 +87,9 @@ function HomeContent() {
                 badge: bodyObj.badge || "AI 기본 활용",
                 tag: bodyObj.chip || "#실무생산성",
                 channel_name: bodyObj.source_channel_name || "AIditor 소스 풀",
-                image: resolveNewneekThumbnail(bodyObj.badge || item.category || ""),
+                image: (item.thumbnail && typeof item.thumbnail === "string" && (item.thumbnail.startsWith("/") || item.thumbnail.startsWith("http")))
+                  ? item.thumbnail
+                  : resolveNewneekThumbnail(bodyObj.badge || item.category || ""),
                 href: `/article?id=${item.id}`,
                 score: bodyObj.editor_rating?.total_score || 95,
                 summary: summary,
@@ -156,7 +158,7 @@ function HomeContent() {
             {/* Left: 16:9 Wide Thumbnail */}
             <div className="w-full lg:w-[48%] aspect-[16/9] bg-[#fcfaf7] rounded-2xl overflow-hidden relative shrink-0 shadow-xs border border-amber-100/70">
               <img 
-                src="/thumbnails/newneek/hero.jpg" 
+                src={featuredArticle.image || "/thumbnails/newneek/hero.jpg"} 
                 alt={featuredArticle.title} 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
