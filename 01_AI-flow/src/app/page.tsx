@@ -4,20 +4,20 @@ import { useState, useEffect, Suspense } from "react";
 import { Copy, ExternalLink, Check, Sparkles, Flame, Bookmark, ArrowRight, ChevronDown, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import NotionThumbnailCard from "@/components/NotionThumbnailCard";
 
-const TOPIC_CARD_THUMBNAILS: Record<string, string> = {
-  "일잘러 장피엠": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
-  "오빠두엑셀": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600",
-  "알린 ALINN": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
-  "평범한 사업가": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=600",
-  "행글라이터": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600",
-  "진한별의 AI 연구소": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600",
-  "CONNECT AI LAB": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
-  "AI 알려주는 남자 데브남": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
-  "시민개발자 구씨": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=600",
-  "디자인하는AI": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=600"
+const NEWNEEK_CATEGORY_THUMBNAILS: Record<string, string> = {
+  "AI 업무 자동화": "/thumbnails/newneek/automation.jpg",
+  "AI 도구 활용": "/thumbnails/newneek/tools.jpg",
+  "AI 기본 활용": "/thumbnails/newneek/tools.jpg",
+  "AI 에이전트": "/thumbnails/newneek/agent.jpg",
+  "AI 크리에이티브": "/thumbnails/newneek/creative.jpg",
+  "AI 리더십·트렌드": "/thumbnails/newneek/trend.jpg",
+  "AI 수익화": "/thumbnails/newneek/monetize.jpg",
 };
+
+function resolveNewneekThumbnail(category: string): string {
+  return NEWNEEK_CATEGORY_THUMBNAILS[category] || "/thumbnails/newneek/tools.jpg";
+}
 
 function resolveCardThumbnail(item: any, bodyObj: any): string {
   if (item.thumbnail && typeof item.thumbnail === "string" && item.thumbnail.startsWith("http")) {
@@ -87,7 +87,7 @@ function HomeContent() {
                 badge: bodyObj.badge || "AI 기본 활용",
                 tag: bodyObj.chip || "#실무생산성",
                 channel_name: bodyObj.source_channel_name || "AIditor 소스 풀",
-                image: resolveCardThumbnail(item, bodyObj),
+                image: resolveNewneekThumbnail(bodyObj.badge || item.category || ""),
                 href: `/article?id=${item.id}`,
                 score: bodyObj.editor_rating?.total_score || 95,
                 summary: summary,
@@ -154,20 +154,17 @@ function HomeContent() {
         <section className="bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-xs hover:shadow-md transition-all group overflow-hidden">
           <Link href={featuredArticle.href} className="flex flex-col lg:flex-row items-stretch gap-6 sm:gap-8 cursor-pointer">
             {/* Left: 16:9 Wide Thumbnail */}
-            <div className="w-full lg:w-[48%] aspect-[16/9] bg-slate-50 rounded-2xl overflow-hidden relative shrink-0 shadow-xs border border-gray-100">
+            <div className="w-full lg:w-[48%] aspect-[16/9] bg-[#fcfaf7] rounded-2xl overflow-hidden relative shrink-0 shadow-xs border border-amber-100/70">
               <img 
-                src="/thumbnails/hero_notion.jpg" 
+                src="/thumbnails/newneek/hero.jpg" 
                 alt={featuredArticle.title} 
-                onError={(e: any) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
-                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
               <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap z-10">
                 <span className="bg-[#ea580c] text-white text-[11px] px-2.5 py-0.5 font-black rounded-md shadow-xs flex items-center gap-1">
                   <Sparkles className="w-3 h-3 fill-white" /> Today's Pick
                 </span>
-                <span className="bg-slate-900/90 text-white backdrop-blur-sm text-[10px] px-2 py-0.5 font-bold rounded shadow-xs">
+                <span className="bg-amber-950/85 text-white backdrop-blur-sm text-[10px] px-2 py-0.5 font-bold rounded shadow-xs">
                   {featuredArticle.badge}
                 </span>
                 <span className={`text-[10px] px-2 py-0.5 font-bold rounded shadow-xs text-white ${
@@ -331,15 +328,17 @@ function HomeContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {gridDisplayList.slice(0, visibleCount).map((article, i) => (
                 <Link href={article.href || "/article"} key={i} className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col">
-                  <div className="aspect-[16/9] w-full relative overflow-hidden">
-                    <NotionThumbnailCard
-                      title={article.title}
-                      category={article.badge}
-                      difficulty={article.difficulty}
-                      channelName={article.channel_name}
+                  <div className="aspect-[16/9] w-full bg-[#fcfaf7] relative overflow-hidden border-b border-amber-100/60">
+                    <img 
+                      src={article.image} 
+                      alt={article.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     />
-                    {/* Top Badges / Difficulty */}
+                    {/* Top Badges / Category & Difficulty */}
                     <div className="absolute top-2.5 left-2.5 flex gap-1.5 flex-wrap z-10 pointer-events-none">
+                      <span className="bg-amber-950/85 backdrop-blur-sm text-white text-[10px] px-2.5 py-0.5 font-bold rounded shadow-2xs">
+                        {article.badge}
+                      </span>
                       <span className={`text-[10px] px-2 py-0.5 font-bold rounded shadow-2xs ${
                         article.difficulty === "초급" 
                           ? "bg-blue-600 text-white" 
