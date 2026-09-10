@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, Suspense } from "react";
-import { Search, Menu, X, Sparkles, Flame, Bookmark } from "lucide-react";
+import { Search, Menu, X, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -12,11 +12,6 @@ const MAIN_CATEGORIES = [
   { name: "AI 에이전트", href: "/?cat=AI 에이전트" },
   { name: "AI 리더십·트렌드", href: "/?cat=AI 리더십·트렌드" },
   { name: "AI 수익화", href: "/?cat=AI 수익화" },
-];
-
-const SPECIAL_MENUS = [
-  { name: "컬렉션", href: "/?cat=컬렉션", icon: Bookmark },
-  { name: "BEST", href: "/?cat=BEST", icon: Flame },
 ];
 
 function HeaderContent() {
@@ -69,7 +64,7 @@ function HeaderContent() {
           </Link>
         </div>
 
-        {/* Center: 6 Final Main Categories + 컬렉션 / BEST */}
+        {/* Center: 6 Final Main Categories + My Page */}
         <nav className="hidden lg:flex items-center gap-2 xl:gap-3.5 text-[13px] xl:text-[14px] font-bold text-gray-700 justify-center whitespace-nowrap">
           {MAIN_CATEGORIES.map((cat) => {
             const isActive = currentCat === cat.name;
@@ -84,33 +79,6 @@ function HeaderContent() {
                 }`}
               >
                 {cat.name}
-              </Link>
-            );
-          })}
-
-          {/* Divider */}
-          <div className="w-[1px] h-4 bg-gray-300 mx-1"></div>
-
-          {/* Special Menus */}
-          {SPECIAL_MENUS.map((menu) => {
-            const isActive = currentCat === menu.name;
-            const Icon = menu.icon;
-            return (
-              <Link
-                key={menu.name}
-                href={menu.href}
-                className={`flex items-center gap-1 px-2 py-1 transition-all rounded ${
-                  menu.name === "BEST"
-                    ? isActive 
-                      ? "text-red-600 font-extrabold border-b-2 border-red-500" 
-                      : "text-red-500 hover:text-red-600 hover:bg-red-50"
-                    : isActive
-                      ? "text-[#f97316] font-extrabold border-b-2 border-[#f97316]"
-                      : "text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{menu.name}</span>
               </Link>
             );
           })}
@@ -163,23 +131,6 @@ function HeaderContent() {
                 }`}
               >
                 {cat.name}
-              </Link>
-            ))}
-
-            <div className="w-full h-[1px] bg-gray-200 my-2"></div>
-
-            <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">스페셜</div>
-            {SPECIAL_MENUS.map((menu) => (
-              <Link
-                key={menu.name}
-                href={menu.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`py-1 transition-colors flex items-center gap-1.5 ${
-                  menu.name === "BEST" ? "text-red-500" : "text-indigo-600"
-                }`}
-              >
-                <menu.icon className="w-4 h-4" />
-                <span>{menu.name}</span>
               </Link>
             ))}
 
