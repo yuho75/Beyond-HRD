@@ -67,6 +67,7 @@ function HomeContent() {
               } catch(e) {}
               const rawTitle = item.title || "";
               const cleanTitle = rawTitle.replace(/^\[[^\]]+\]\s*/, "").trim();
+              const summary = bodyObj.one_line_summary || bodyObj.part1_storytelling?.intro_hook || "실제 시연 영상을 기반으로 검증한 실무 AI 활용 핵심 가이드입니다.";
               return {
                 id: item.id,
                 title: cleanTitle,
@@ -75,7 +76,8 @@ function HomeContent() {
                 channel_name: bodyObj.source_channel_name || "AIditor 소스 풀",
                 image: resolveCardThumbnail(item, bodyObj),
                 href: `/article?id=${item.id}`,
-                score: bodyObj.editor_rating?.total_score || 95
+                score: bodyObj.editor_rating?.total_score || 95,
+                summary: summary
               };
             });
             setArticles(parsed);
@@ -121,8 +123,88 @@ function HomeContent() {
     }
   }
 
+  const featuredArticle = articles.length > 0 ? articles[0] : null;
+
   return (
     <main className="w-full max-w-[1200px] px-6 py-8 flex flex-col gap-8">
+
+      {/* 1. Compressed Slogan Bar (대안 2 압축: 1줄 브리핑 바) */}
+      {!currentCat && (
+        <section className="bg-white border border-gray-200/90 rounded-2xl px-5 py-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="shrink-0 px-2.5 py-0.5 bg-orange-100 text-[#ea580c] font-black text-xs rounded-full border border-orange-200 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-[#ea580c] fill-[#ea580c]" /> AIditor Briefing
+            </span>
+            <p className="text-xs sm:text-sm text-gray-700 font-semibold truncate">
+              <span className="text-gray-900 font-extrabold">30개 검증 유튜브 채널</span>에서 엄선한 실전 AI 프롬프트 & 업무자동화 팩트체크
+            </p>
+          </div>
+          <div className="shrink-0 flex items-center gap-2 text-xs font-bold text-gray-500">
+            <span className="hidden md:inline text-gray-300">|</span>
+            <span className="text-[#f97316] font-extrabold flex items-center gap-1">
+              <Flame className="w-3.5 h-3.5 fill-[#f97316]" /> 매주 3편 엄선 발행
+            </span>
+          </div>
+        </section>
+      )}
+
+      {/* 2. Today's Editor's Pick (대안 1: 와이드 헤드라인 카드) */}
+      {!currentCat && featuredArticle && (
+        <section className="bg-white border border-gray-200 rounded-3xl p-5 sm:p-7 shadow-xs hover:shadow-md transition-all group overflow-hidden">
+          <Link href={featuredArticle.href} className="flex flex-col lg:flex-row items-stretch gap-6 sm:gap-8 cursor-pointer">
+            {/* Left: 16:9 Wide Thumbnail */}
+            <div className="w-full lg:w-[48%] aspect-[16/9] bg-gray-900 rounded-2xl overflow-hidden relative shrink-0 shadow-xs">
+              <img 
+                src={featuredArticle.image} 
+                alt={featuredArticle.title} 
+                onError={(e: any) => {
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600";
+                }}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+              />
+              <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap z-10">
+                <span className="bg-[#ea580c] text-white text-[11px] px-2.5 py-0.5 font-black rounded-md shadow-xs flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 fill-white" /> Today's Pick
+                </span>
+                <span className="bg-slate-900/90 text-white backdrop-blur-sm text-[10px] px-2 py-0.5 font-bold rounded shadow-xs">
+                  {featuredArticle.badge}
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Editorial Content */}
+            <div className="flex-1 flex flex-col justify-between py-1">
+              <div>
+                <div className="flex items-center gap-2 mb-2.5">
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                    {featuredArticle.tag}
+                  </span>
+                  <span className="text-xs text-gray-400 font-semibold">• 실무 추천도 {featuredArticle.score}점</span>
+                </div>
+
+                <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 group-hover:text-[#f97316] transition-colors leading-snug mb-3">
+                  {featuredArticle.title}
+                </h2>
+
+                <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed mb-4">
+                  {featuredArticle.summary}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-700">
+                  <span className="text-gray-400 font-normal">출처:</span>
+                  <span className="truncate max-w-[180px]">{featuredArticle.channel_name}</span>
+                </div>
+
+                <span className="inline-flex items-center gap-1 text-sm font-extrabold text-[#f97316] group-hover:translate-x-1 transition-transform">
+                  지금 읽기 <ArrowRight className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
 
       {/* Sub Filter Bar (Jobs) */}
       <section className="flex flex-wrap items-center gap-2 pb-4 border-b border-gray-200">
@@ -164,42 +246,6 @@ function HomeContent() {
             전체 피드 보기 ✕
           </Link>
         </div>
-      )}
-
-      {/* Hero Section (Hidden if specific category is selected, or shown cleanly) */}
-      {!currentCat && (
-        <section className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 md:p-8 shadow-xl border border-slate-700 relative overflow-hidden">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="px-3 py-1 bg-amber-400/20 text-amber-300 text-xs font-bold rounded-md flex items-center gap-1 border border-amber-400/30">
-              <Sparkles className="w-3.5 h-3.5" /> ⚡ 10초 칼퇴 원클릭 복붙 프롬프트
-            </span>
-            <span className="text-xs text-slate-400 font-medium">[추천 대상: {selectedJob}]</span>
-          </div>
-
-          <h2 className="text-2xl md:text-3xl font-extrabold mb-4 leading-tight">
-            구글 Lyria로 3분 만에 저작권 프리 음악 만들기
-          </h2>
-
-          <div className="bg-slate-950/80 rounded-xl p-4 md:p-5 border border-slate-800 mb-6 font-mono text-xs text-slate-300 relative group">
-            <pre className="whitespace-pre-wrap font-sans leading-relaxed text-slate-200">
-              {samplePrompt}
-            </pre>
-            <button
-              onClick={handleCopy}
-              className="absolute top-3 right-3 bg-[#f97316] hover:bg-[#ea580c] text-white px-3.5 py-1.5 rounded-lg font-sans font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
-            >
-              {copied ? <Check className="w-3.5 h-3.5" /> : null}
-              {copied ? "복사 완료!" : "1초 전체 복사 📋"}
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between text-xs text-slate-400 font-medium flex-wrap gap-2">
-            <span>※ 챗GPT, Claude, Gemini에 입력 후 [제품명]만 바꿔서 즉시 활용하세요.</span>
-            <Link href="/article" className="text-amber-400 hover:underline flex items-center gap-1 font-bold">
-              실무 적용 가이드 보러가기 ↗
-            </Link>
-          </div>
-        </section>
       )}
 
       {/* Newsletter Subscription Banner */}
